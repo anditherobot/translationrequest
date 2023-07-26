@@ -1,16 +1,28 @@
-# models.py
-
 from django.db import models
+from django.core.exceptions import ValidationError
+from django.core.validators import FileExtensionValidator
+
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.core.exceptions import ValidationError
+
 class TranslationRequest(models.Model):
+
+    def validate_no_executable(value):
+        if value.name.lower().endswith(('.exe', '.bat', '.cmd')):
+            raise ValidationError("Executable files are not allowed.")
+
+    def validate_file_size(value):
+        max_size = 10 * 1024 * 1024  # 10 MB in bytes
+        if value.size > max_size:
+            raise ValidationError(_('File size must be no more than 10 MB.'))
+
+    # Personal Information
     first_name = models.CharField(max_length=100, help_text="Please enter your first name.")
     last_name = models.CharField(max_length=100, help_text="Please enter your last name.")
-   
     email = models.EmailField(help_text="Please enter a valid email address.")
     phone_number = models.CharField(max_length=20, help_text="Please enter your phone number.")
 
+    # Language Choices
     FRENCH = 'French'
     HAITIAN_CREOLE = 'Haitian Creole'
     ENGLISH = 'English'
@@ -43,7 +55,7 @@ class TranslationRequest(models.Model):
         help_text="Select the level of translation quality you require."
     )
 
-     # Status choices
+    # Translation Request Status
     PENDING = 'Pending'
     IN_PROGRESS = 'In Progress'
     COMPLETED = 'Completed'
@@ -55,12 +67,29 @@ class TranslationRequest(models.Model):
     ]
     
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=PENDING)
-    files_to_translate = models.FileField(upload_to='uploads/', help_text="Upload the files you need to be translated.")
+
+    # File Upload
+    MAX_FILES = 5
+    MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB in bytes
+    ALLOWED_EXTENSIONS = ['.pdf', '.doc', '.docx', '.txt']
+
+    files_to_translate = models.FileField(
+        upload_to='uploads/',
+        help_text="Upload the files you need to be translated.",
+        validators=[
+            validate_file_size,
+            FileExtensionValidator(allowed_extensions=ALLOWED_EXTENSIONS),
+            validate_no_executable,
+        ],
+    )
+
     description = models.TextField(help_text="Provide additional information about your translation request.")
     discount_code = models.CharField(max_length=50, blank=True, help_text="If you have a discount code, enter it here (optional).")
     terms_and_conditions = models.BooleanField(help_text="Check this box to agree to the terms and conditions.")
     date_submitted = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
+
+    
 
     def clean(self):
         if self.source_language == self.target_language:
@@ -70,16 +99,5 @@ class TranslationRequest(models.Model):
         self.full_clean()  # Validate the instance before saving
         super().save(*args, **kwargs)
 
-class InProgressRequest(models.Model):
-    translation_request = models.OneToOneField(
-        TranslationRequest, on_delete=models.CASCADE, related_name='in_progress'
-    )
-    in_progress_at = models.DateTimeField(auto_now_add=True)
-
     def __str__(self):
-        return f"In Progress: {self.translation_request}"
-
-@receiver(post_save, sender=TranslationRequest)
-def create_in_progress_request(sender, instance, created, **kwargs):
-    if instance.status == 'in_progress':
-        InProgressRequest.objects.get_or_create(translation_request=instance)
+        return f"{self.first_name} {self.last_name}"

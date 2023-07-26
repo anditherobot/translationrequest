@@ -55,6 +55,7 @@ def translation_request_view(request):
             form.save()
 
             send_email_receipt(form.cleaned_data)
+            notifyadmin();
             #flash message , clean form or redirect to receipt page. 
             #add detail about an emila has been sent. 
 
@@ -81,6 +82,18 @@ def send_email_receipt(form_data):
 
     # Send the email
     send_mail(subject, message, 'your_email@example.com', [form_data['email']])
+
+
+from django.core.mail import send_mail
+
+def notifyadmin():
+    subject = "New Translation Request Submitted"
+    message = "A new translation request has been submitted on the website."
+    recipient_list = ["admin@example.com"]  # Replace with the admin's email address
+
+    # Using Django's built-in send_mail function
+    send_mail(subject, message, "your_email@example.com", recipient_list)
+
 
 def translation_request_dashboard(request):
     # Retrieve all submitted requests from the database

@@ -15,6 +15,8 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('translation_request/', views.translation_request_view, name='translation_request'),
     path('translationrequestdashboard/', views.translation_request_dashboard, name='translationrequestdashboard'),
+   
+   
     path('login/',
          LoginView.as_view
          (

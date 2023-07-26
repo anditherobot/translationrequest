@@ -36,6 +36,19 @@ class TranslationRequest(models.Model):
         ],
         help_text="Select the level of translation quality you require."
     )
+
+     # Status choices
+    PENDING = 'Pending'
+    IN_PROGRESS = 'In Progress'
+    COMPLETED = 'Completed'
+    
+    STATUS_CHOICES = [
+        (PENDING, 'Pending'),
+        (IN_PROGRESS, 'In Progress'),
+        (COMPLETED, 'Completed'),
+    ]
+    
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=PENDING)
     files_to_translate = models.FileField(upload_to='uploads/', help_text="Upload the files you need to be translated.")
     description = models.TextField(help_text="Provide additional information about your translation request.")
     expedited_service = models.BooleanField(default=False, help_text="Check this box if you need expedited service.")

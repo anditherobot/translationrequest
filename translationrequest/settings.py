@@ -125,3 +125,5 @@ EMAIL_PORT = '2525'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'

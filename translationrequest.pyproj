@@ -38,6 +38,9 @@
     <Compile Include="app\__init__.py" />
     <Compile Include="app\migrations\__init__.py" />
     <Compile Include="manage.py" />
+    <Compile Include="app\admin.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="translationrequest\__init__.py" />
     <Compile Include="translationrequest\settings.py" />
     <Compile Include="translationrequest\urls.py" />

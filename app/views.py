@@ -3,9 +3,9 @@ Definition of views.
 """
 
 from datetime import datetime
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpRequest
-
+from django.core.mail import send_mail
 from app.forms import TranslationRequestForm
 from app.models import TranslationRequest
 def home(request):
@@ -53,6 +53,12 @@ def translation_request_view(request):
         form = TranslationRequestForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+
+            send_email_receipt(form.cleaned_data)
+            #flash message , clean form or redirect to receipt page. 
+            #add detail about an emila has been sent. 
+
+            return redirect('translationrequestdashboard')
             # Redirect to a success page or do any other processing.
     else:
         form = TranslationRequestForm()
@@ -61,7 +67,20 @@ def translation_request_view(request):
 
 
 
+def send_email_receipt(form_data):
+    # Format the email content using the form data
+    subject = 'Translation Request Receipt'
+    message = f'Thank you for your translation request!\n\n' \
+              f'Here are the details of your request:\n' \
+              f'First Name: {form_data["first_name"]}\n' \
+              f'Last Name: {form_data["last_name"]}\n' \
+              f'Company: {form_data["company"]}\n' \
+              f'Email: {form_data["email"]}\n' \
+              f'Phone Number: {form_data["phone_number"]}\n' \
+              # Include other relevant form fields here
 
+    # Send the email
+    send_mail(subject, message, 'your_email@example.com', [form_data['email']])
 
 def translation_request_dashboard(request):
     # Retrieve all submitted requests from the database

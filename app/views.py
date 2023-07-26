@@ -105,3 +105,5 @@ def translation_request_dashboard(request):
 def faq(request):
     return render(request, 'app/faq.html')
 
+def services(request):
+    return render(request, 'app/services.html')

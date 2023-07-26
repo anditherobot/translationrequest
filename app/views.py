@@ -101,3 +101,7 @@ def translation_request_dashboard(request):
 
     return render(request, 'app/translation_request_dashboard.html', {'submitted_requests': submitted_requests})
 
+
+def faq(request):
+    return render(request, 'app/faq.html')
+

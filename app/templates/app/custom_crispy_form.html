@@ -1,0 +1,18 @@
+{% load crispy_forms_tags %}
+
+{% for field in form %}
+<div class="form-group {% if field.errors %}has-error{% endif %}">
+    {% if field.label_tag %}
+    <label for="{{ field.id_for_label }}" class="control-label">{{ field.label_tag }}</label>
+    {% endif %}
+    {{ field|as_crispy_field }}
+    {% if field.errors %}
+    <div class="help-block">
+        {% for error in field.errors %}
+        {{ error }}
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endfor %}
+

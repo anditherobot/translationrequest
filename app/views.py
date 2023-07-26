@@ -48,23 +48,25 @@ def about(request):
 
 
 
+
+
 def translation_request_view(request):
+    form = TranslationRequestForm(request.POST or None, request.FILES or None)
+    #form.helper.template = 'app/custom_crispy_form.html'
+
     if request.method == 'POST':
-        form = TranslationRequestForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-
             send_email_receipt(form.cleaned_data)
-            notifyadmin();
-            #flash message , clean form or redirect to receipt page. 
-            #add detail about an emila has been sent. 
+            notifyadmin()
+            # Flash message, clean form or redirect to receipt page.
+            # Add details about an email has been sent.
 
             return redirect('translationrequestdashboard')
             # Redirect to a success page or do any other processing.
-    else:
-        form = TranslationRequestForm()
-    
+
     return render(request, 'app/translation_request_form.html', {'form': form})
+
 
 
 
@@ -75,13 +77,12 @@ def send_email_receipt(form_data):
               f'Here are the details of your request:\n' \
               f'First Name: {form_data["first_name"]}\n' \
               f'Last Name: {form_data["last_name"]}\n' \
-              f'Company: {form_data["company"]}\n' \
               f'Email: {form_data["email"]}\n' \
               f'Phone Number: {form_data["phone_number"]}\n' \
               # Include other relevant form fields here
 
     # Send the email
-    send_mail(subject, message, 'your_email@example.com', [form_data['email']])
+    send_mail(subject, message, 'info@example.com', [form_data['email']])
 
 
 from django.core.mail import send_mail
@@ -89,10 +90,10 @@ from django.core.mail import send_mail
 def notifyadmin():
     subject = "New Translation Request Submitted"
     message = "A new translation request has been submitted on the website."
-    recipient_list = ["admin@example.com"]  # Replace with the admin's email address
+    recipient_list = ["info@mokreyol.com"]  # Replace with the admin's email address
 
     # Using Django's built-in send_mail function
-    send_mail(subject, message, "your_email@example.com", recipient_list)
+    send_mail(subject, message, "info@mokreyol.com", recipient_list)
 
 
 def translation_request_dashboard(request):

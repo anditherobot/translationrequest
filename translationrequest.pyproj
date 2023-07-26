@@ -61,6 +61,7 @@
     <Folder Include="uploads\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
     <Content Include="app\templates\app\faq.html">
       <SubType>Code</SubType>
     </Content>

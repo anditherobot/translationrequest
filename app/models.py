@@ -3,17 +3,28 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from django.core.exceptions import ValidationError
 class TranslationRequest(models.Model):
     first_name = models.CharField(max_length=100, help_text="Please enter your first name.")
     last_name = models.CharField(max_length=100, help_text="Please enter your last name.")
-    company = models.CharField(max_length=200, blank=True, help_text="Please enter your company name (optional).")
+   
     email = models.EmailField(help_text="Please enter a valid email address.")
     phone_number = models.CharField(max_length=20, help_text="Please enter your phone number.")
-    source_language = models.CharField(max_length=100, help_text="Please select the source language.")
-    target_language = models.CharField(max_length=100, help_text="Please select the target language.")
-    additional_languages = models.CharField(max_length=200, blank=True, help_text="If you need to translate to multiple languages, please specify here.")
-    translate_to_multiple_languages = models.BooleanField(default=False, help_text="Check this box if you need to translate into multiple languages.")
+
+    FRENCH = 'French'
+    HAITIAN_CREOLE = 'Haitian Creole'
+    ENGLISH = 'English'
+    SPANISH = 'Spanish'
+    
+    LANGUAGE_CHOICES = [
+        (FRENCH, 'French'),
+        (HAITIAN_CREOLE, 'Haitian Creole'),
+        (ENGLISH, 'English'),
+        (SPANISH, 'Spanish'),
+    ]
+
+    source_language = models.CharField(max_length=100, choices=LANGUAGE_CHOICES, help_text="Choose the language of the document.")
+    target_language = models.CharField(max_length=100, choices=LANGUAGE_CHOICES, help_text="Choose your destination language")
     certified_translation_needed = models.CharField(
         max_length=100,
         choices=[
@@ -46,9 +57,18 @@ class TranslationRequest(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=PENDING)
     files_to_translate = models.FileField(upload_to='uploads/', help_text="Upload the files you need to be translated.")
     description = models.TextField(help_text="Provide additional information about your translation request.")
-    expedited_service = models.BooleanField(default=False, help_text="Check this box if you need expedited service.")
     discount_code = models.CharField(max_length=50, blank=True, help_text="If you have a discount code, enter it here (optional).")
     terms_and_conditions = models.BooleanField(help_text="Check this box to agree to the terms and conditions.")
+    date_submitted = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
+
+    def clean(self):
+        if self.source_language == self.target_language:
+            raise ValidationError("Source and target languages cannot be the same.")
+
+    def save(self, *args, **kwargs):
+        self.full_clean()  # Validate the instance before saving
+        super().save(*args, **kwargs)
 
 class InProgressRequest(models.Model):
     translation_request = models.OneToOneField(

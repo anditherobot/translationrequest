@@ -57,6 +57,7 @@
     <Folder Include="app\templates\" />
     <Folder Include="app\templates\app\" />
     <Folder Include="translationrequest\" />
+    <Folder Include="uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\templates\app\translation_request_dashboard.html">
@@ -95,6 +96,15 @@
     <Content Include="app\templates\app\layout.html" />
     <Content Include="app\templates\app\login.html" />
     <Content Include="app\templates\app\loginpartial.html" />
+    <Content Include="uploads\pawol.txt" />
+    <Content Include="uploads\pawol_KYzmA5t.txt" />
+    <Content Include="uploads\pawol_sTmaOY9.txt" />
+    <Content Include="uploads\pawol_UTcJkKv.txt" />
+    <Content Include="uploads\todo.txt" />
+    <Content Include="uploads\todo_6w10tkJ.txt" />
+    <Content Include="uploads\todo_F3i2m1T.txt" />
+    <Content Include="uploads\todo_RUvfPxh.txt" />
+    <Content Include="uploads\todo_v5ty03A.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="readme.html">

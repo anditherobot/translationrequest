@@ -1,13 +1,8 @@
-"""
-Definition of models.
-"""
-
-
-
-# Create your models here.
-from django.db import models
+# models.py
 
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class TranslationRequest(models.Model):
     first_name = models.CharField(max_length=100, help_text="Please enter your first name.")
@@ -55,6 +50,16 @@ class TranslationRequest(models.Model):
     discount_code = models.CharField(max_length=50, blank=True, help_text="If you have a discount code, enter it here (optional).")
     terms_and_conditions = models.BooleanField(help_text="Check this box to agree to the terms and conditions.")
 
-    def __str__(self):
-        return f"{self.first_name} {self.last_name} - {self.source_language} to {self.target_language}"
+class InProgressRequest(models.Model):
+    translation_request = models.OneToOneField(
+        TranslationRequest, on_delete=models.CASCADE, related_name='in_progress'
+    )
+    in_progress_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"In Progress: {self.translation_request}"
+
+@receiver(post_save, sender=TranslationRequest)
+def create_in_progress_request(sender, instance, created, **kwargs):
+    if instance.status == 'in_progress':
+        InProgressRequest.objects.get_or_create(translation_request=instance)

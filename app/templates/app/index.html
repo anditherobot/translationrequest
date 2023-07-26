@@ -1,33 +1,60 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-
 <div class="jumbotron">
-    <h1>Django</h1>
-    <p class="lead">Django is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://www.djangoproject.com/" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+    <h1>Document Translation Services</h1>
+    <p class="lead">Translation services with human and machine, fast delivery, quality, and affordable prices.</p>
+    <p>
+        <a href="{% url 'translation_request' %}" class="btn btn-primary btn-lg">Create Request</a>
+        <a href="#" class="btn btn-info btn-lg">FAQ</a>
+        <a href="#}" class="btn btn-success btn-lg">Services</a>
+    </p>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
+        <h2>Request Translation</h2>
         <p>
-            Django gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+            Easily submit your translation requests through our user-friendly form. Our team of skilled translators will ensure accurate and timely translations.
         </p>
-        <p><a class="btn btn-default" href="https://djangobook.com/django-tutorials/">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" href="{% url 'translation_request' %}">Submit Request &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>The Python Package Index is a repository of software for the Python programming language.</p>
-        <p><a class="btn btn-default" href="https://pypi.org/">Learn more &raquo;</a></p>
+        <h2>Track Progress</h2>
+        <p>Track the progress of your translation requests with our Translation Request Tracker. Stay informed about the status of your translations.</p>
+        <p><a class="btn btn-default" href="#">Track Progress &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Microsoft Azure</h2>
-        <p>You can easily publish to Microsoft Azure using Visual Studio. Find out how you can host your application using a free trial today.</p>
-        <p><a class="btn btn-default" href="http://azure.microsoft.com">Learn more &raquo;</a></p>
+        <h2>FAQs</h2>
+        <p>Have questions? Check out our Frequently Asked Questions to find answers to common queries about our translation services.</p>
+        <p><a class="btn btn-default" href="#">View FAQs &raquo;</a></p>
     </div>
 </div>
 
+<div class="row">
+    <div class="col-md-6">
+        <h2>Professional Document Translations for All Industries</h2>
+        <p>
+            Our professional translation services cover a wide range of industries and domains, ensuring that your documents are accurately translated for your target audience. We specialize in translating documents for the following industries:
+        </p>
+        <ul>
+            <li>Medical</li>
+            <li>Personal</li>
+            <li>Financial</li>
+            <li>Marketing, Promotional</li>
+            <li>Software, Website, Social Media</li>
+            <li>Manuals</li>
+            <li>Notices</li>
+            <li>Video Subtitles</li>
+            <li>Audio Visualization with Text</li>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <h2>About Us</h2>
+        <p>
+           Professional multilingual system that can translate all of your documents and texts between french, english, haitian creole, spanish.
+        </p>
+      
+    </div>
+</div>
 {% endblock %}

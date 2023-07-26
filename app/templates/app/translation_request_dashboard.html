@@ -1,0 +1,25 @@
+{% extends "app/layout.html" %}
+{% block content %}
+<h1>Translation Request Dashboard</h1>
+<ul>
+    {% for request in submitted_requests %}
+    <li>
+        <strong>First Name:</strong> {{ request.first_name }}<br>
+        <strong>Last Name:</strong> {{ request.last_name }}<br>
+        <strong>Company:</strong> {{ request.company }}<br>
+        <strong>Email:</strong> {{ request.email }}<br>
+        <strong>Phone Number:</strong> {{ request.phone_number }}<br>
+        <strong>Source Language:</strong> {{ request.source_language }}<br>
+        <strong>Target Language:</strong> {{ request.target_language }}<br>
+        <strong>Need to translate to more languages:</strong> {% if request.more_languages %}Yes{% else %}No{% endif %}<br>
+        <strong>Other Target Languages:</strong> {{ request.other_target_languages }}<br>
+        <strong>Certified Translation:</strong> {% if request.certified_translation %}Yes{% else %}No{% endif %}<br>
+        <strong>Translation Quality:</strong> {{ request.translation_quality }}<br>
+        <strong>Files to Translate:</strong> {{ request.files_to_translate }}<br>
+        <strong>Tell Us What You Need:</strong> {{ request.tell_us }}<br>
+        <strong>Expedited Service:</strong> {% if request.expedited_service %}Yes{% else %}No{% endif %}<br>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

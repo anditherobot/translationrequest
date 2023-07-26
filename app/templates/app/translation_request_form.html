@@ -1,45 +1,13 @@
 {% extends "app/layout.html" %}
+{% load crispy_forms_tags %}
+
 {% block content %}
 <h1>Translation Request Form</h1>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
-
+    {% crispy form %}
     <button type="button" id="fillDummyButton">Fill with Dummy Values</button>
     <input type="submit" value="Submit">
 </form>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // Your JavaScript object with dummy values
-    var dummyData = {
-      first_name: "John",
-      last_name: "Doe",
-      company: "Acceleara",
-      email: "john.doe@example.com",
-      phone_number: "123-456-7890",
-      source_language: "English",
-      target_language: "Spanish",
-      // Add other dummy fields here
-    };
-
-    // Function to fill the form with dummy values
-    function fillFormWithDummyValues() {
-      document.getElementById("id_first_name").value = dummyData.first_name;
-      document.getElementById("id_last_name").value = dummyData.last_name;
-      document.getElementById("id_company").value = dummyData.company;
-      document.getElementById("id_email").value = dummyData.email;
-      document.getElementById("id_phone_number").value = dummyData.phone_number;
-      document.getElementById("id_source_language").value = dummyData.source_language;
-      document.getElementById("id_target_language").value = dummyData.target_language;
-      // Add other form fields here
-    }
-
-    // Attach the click event to the button
-    document.getElementById("fillDummyButton").addEventListener("click", function () {
-      fillFormWithDummyValues();
-    });
-  });
-</script>
 {% endblock %}
 

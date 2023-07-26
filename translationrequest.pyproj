@@ -5,6 +5,7 @@
     <Name>translationrequest</Name>
     <RootNamespace>translationrequest</RootNamespace>
     <InterpreterId>MSBuild|venv|$(MSBuildProjectFullPath)</InterpreterId>
+    <TestFramework>Pytest</TestFramework>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -60,6 +61,10 @@
     <Folder Include="uploads\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\templates\app\faq.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="app\templates\app\services.html" />
     <Content Include="app\templates\app\translation_request_dashboard.html">
       <SubType>Code</SubType>
     </Content>

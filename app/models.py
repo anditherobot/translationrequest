@@ -4,6 +4,8 @@ from django.core.validators import FileExtensionValidator
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import os
+from django import forms
 
 class TranslationRequest(models.Model):
 
@@ -85,7 +87,7 @@ class TranslationRequest(models.Model):
     ALLOWED_EXTENSIONS = ['.pdf', '.doc', '.docx', '.txt']
 
     files_to_translate = models.FileField(
-        upload_to='uploads/',
+        upload_to='uploads/request/',
         help_text="Upload the files you need to be translated.",
         validators=[
             validate_file_size,
@@ -113,3 +115,43 @@ class TranslationRequest(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+
+
+# models.py
+
+
+
+
+def file_size(value):
+    limit = 10 * 1024 * 1024  # 10 MB
+
+    if isinstance(value, (list, tuple)):
+        for file in value:
+            if file.size > limit:
+                raise forms.ValidationError('File size should not exceed 10 MB.')
+    else:
+        if value.size > limit:
+            raise forms.ValidationError('File size should not exceed 10 MB.')
+
+def client_directory_path(instance, filename):
+    return f"uploads/clientfiles/{instance.client.id}/{filename}"
+
+class ClientInfo(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    term_condition = models.BooleanField(default=False)
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
+class ClientFiles(models.Model):
+    client = models.ForeignKey(ClientInfo, on_delete=models.CASCADE, related_name='client_files')
+    file = models.FileField(upload_to=client_directory_path, validators=[file_size],)
+
+    def __str__(self):
+        return f"{self.file_type} - {os.path.basename(self.file.name)}"
+

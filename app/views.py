@@ -3,11 +3,11 @@ Definition of views.
 """
 
 from datetime import datetime
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,  get_object_or_404
 from django.http import HttpRequest
 from django.core.mail import send_mail
 from app.forms import TranslationRequestForm
-from app.models import TranslationRequest
+from app.models import TranslationRequest, ClientFiles, ClientInfo
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
@@ -111,3 +111,37 @@ def services(request):
 
 def translation_tracker(request):
     return render(request, 'app/translation_tracker.html')
+
+
+from django.shortcuts import render, redirect
+from .forms import ClientInfoForm, ClientFilesForm
+
+def create_client(request):
+    if request.method == 'POST':
+        form = ClientInfoForm(request.POST)
+        if form.is_valid():
+            client = form.save()
+            return redirect('client_dashboard', client_id=client.pk)
+    else:
+        form = ClientInfoForm()
+    return render(request, 'app/create_client.html', {'form': form})
+
+def upload_files(request, client_id):
+    client = ClientInfo.objects.get(pk=client_id)
+
+    if request.method == 'POST':
+        form = ClientFilesForm(request.POST, request.FILES)
+        if form.is_valid():
+            files = form.cleaned_data['file']
+            for file in files:
+                ClientFiles.objects.create(client=client, file=file)
+        # Redirect to the 'client_dashboard' URL with the 'client_id' argument
+        return redirect('client_dashboard', client_id=client_id)
+    else:
+        form = ClientFilesForm()
+
+    return render(request, 'app/upload_files.html', {'form': form, 'client': client})
+
+def client_dashboard(request, client_id):
+    client = get_object_or_404(ClientInfo, pk=client_id)
+    return render(request, 'app/client_dashboard.html', {'client': client})

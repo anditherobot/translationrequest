@@ -72,6 +72,9 @@
     <Content Include="app\templates\app\translation_request_form.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="app\templates\app\translation_tracker.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

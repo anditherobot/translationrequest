@@ -34,4 +34,5 @@ urlpatterns = [
 
     path('faq/', views.faq, name='faq'),
     path('services/', views.services, name='services'),
+     path('tracker/', views.translation_tracker, name='tracker'),
 ]

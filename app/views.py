@@ -108,3 +108,6 @@ def faq(request):
 
 def services(request):
     return render(request, 'app/services.html')
+
+def translation_tracker(request):
+    return render(request, 'app/translation_tracker.html')

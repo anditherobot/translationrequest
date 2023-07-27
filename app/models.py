@@ -16,6 +16,17 @@ class TranslationRequest(models.Model):
         if value.size > max_size:
             raise ValidationError(_('File size must be no more than 10 MB.'))
 
+    def validate_max_files(value):
+    # Count the number of uploaded files
+        file_count = 0
+        if isinstance(value, list):
+            file_count = len(value)
+        elif value:
+            file_count = 1
+
+        if file_count > TranslationRequest.MAX_FILES:
+            raise ValidationError(f"You can upload up to {TranslationRequest.MAX_FILES} files.")
+
     # Personal Information
     first_name = models.CharField(max_length=100, help_text="Please enter your first name.")
     last_name = models.CharField(max_length=100, help_text="Please enter your last name.")
@@ -80,6 +91,7 @@ class TranslationRequest(models.Model):
             validate_file_size,
             FileExtensionValidator(allowed_extensions=ALLOWED_EXTENSIONS),
             validate_no_executable,
+            validate_max_files,
         ],
     )
 

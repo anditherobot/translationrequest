@@ -6,8 +6,29 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% crispy form %}
-   
+    <div id="file-list">
+        <!-- Selected file names will be displayed here -->
+    </div>
 </form>
+
+<script>
+    const fileList = document.getElementById('file-list');
+    const inputFiles = document.querySelector('input[type="file"]');
+
+    // Display selected file names before upload
+    inputFiles.addEventListener('change', (event) => {
+        fileList.innerHTML = '';
+        const files = event.target.files;
+        for (const file of files) {
+            const fileName = document.createElement('p');
+            fileName.innerText = file.name;
+            fileList.appendChild(fileName);
+        }
+    });
+
+    // Implement drag and drop functionality (optional)
+    // ... (Add your own JavaScript code for drag and drop)
+</script>
 {% endblock %}
 
 

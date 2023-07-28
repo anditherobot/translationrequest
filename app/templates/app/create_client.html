@@ -1,8 +1,18 @@
 <!-- create_client.html -->
+{% extends "app/layout.html" %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Create Client">
-</form>
 
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h3>Create a client</h3>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Create Client">
+        </form>
+    </div>
+    </div>
+
+
+    {% endblock %}

@@ -10,11 +10,9 @@
 <p>{{ file.file_type }}: <a href="{{ file.file.url }}" target="_blank">{{ file.file.name }}</a></p>
     {% endfor %}
 
-<h2>Upload New File:</h2>
-<form method="post" enctype="multipart/form-data" action="{% url 'upload_files' client.id %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Upload">
-</form>
+<a href="{% url 'upload_files' client.id %}"> Upload files</a>
+<p>you can upload up to 5 files </p>
+<p>and each file can be up to 10MB</p>
+
 
 {% endblock %}

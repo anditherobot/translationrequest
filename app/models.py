@@ -7,114 +7,7 @@ from django.dispatch import receiver
 import os
 from django import forms
 
-class TranslationRequest(models.Model):
 
-    def validate_no_executable(value):
-        if value.name.lower().endswith(('.exe', '.bat', '.cmd')):
-            raise ValidationError("Executable files are not allowed.")
-
-    def validate_file_size(value):
-        max_size = 10 * 1024 * 1024  # 10 MB in bytes
-        if value.size > max_size:
-            raise ValidationError(_('File size must be no more than 10 MB.'))
-
-    def validate_max_files(value):
-    # Count the number of uploaded files
-        file_count = 0
-        if isinstance(value, list):
-            file_count = len(value)
-        elif value:
-            file_count = 1
-
-        if file_count > TranslationRequest.MAX_FILES:
-            raise ValidationError(f"You can upload up to {TranslationRequest.MAX_FILES} files.")
-
-    # Personal Information
-    first_name = models.CharField(max_length=100, help_text="Please enter your first name.")
-    last_name = models.CharField(max_length=100, help_text="Please enter your last name.")
-    email = models.EmailField(help_text="Please enter a valid email address.")
-    phone_number = models.CharField(max_length=20, help_text="Please enter your phone number.")
-
-    # Language Choices
-    FRENCH = 'French'
-    HAITIAN_CREOLE = 'Haitian Creole'
-    ENGLISH = 'English'
-    SPANISH = 'Spanish'
-    
-    LANGUAGE_CHOICES = [
-        (FRENCH, 'French'),
-        (HAITIAN_CREOLE, 'Haitian Creole'),
-        (ENGLISH, 'English'),
-        (SPANISH, 'Spanish'),
-    ]
-
-    source_language = models.CharField(max_length=100, choices=LANGUAGE_CHOICES, help_text="Choose the language of the document.")
-    target_language = models.CharField(max_length=100, choices=LANGUAGE_CHOICES, help_text="Choose your destination language")
-    certified_translation_needed = models.CharField(
-        max_length=100,
-        choices=[
-            ('uscis', 'Yes - Documents for the USCIS, certificates, contracts'),
-            ('non_uscis', 'No - Websites, marketing, e-commerce'),
-        ],
-        help_text="Select whether you need a certified translation for documents related to the USCIS or other purposes."
-    )
-    translation_quality = models.CharField(
-        max_length=100,
-        choices=[
-            ('superior', 'Superior - Websites and material for print, as well as legal, financial and medical documents. Higher price.'),
-            ('good', 'Good - Material for internal use and correspondence. Mid-range.'),
-            ('basic', 'Basic - I just need to understand the text. Low price.'),
-        ],
-        help_text="Select the level of translation quality you require."
-    )
-
-    # Translation Request Status
-    PENDING = 'Pending'
-    IN_PROGRESS = 'In Progress'
-    COMPLETED = 'Completed'
-    
-    STATUS_CHOICES = [
-        (PENDING, 'Pending'),
-        (IN_PROGRESS, 'In Progress'),
-        (COMPLETED, 'Completed'),
-    ]
-    
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=PENDING)
-
-    # File Upload
-    MAX_FILES = 5
-    MAX_FILE_SIZE = 10 * 1024 * 1024  # 10 MB in bytes
-    ALLOWED_EXTENSIONS = ['.pdf', '.doc', '.docx', '.txt']
-
-    files_to_translate = models.FileField(
-        upload_to='uploads/request/',
-        help_text="Upload the files you need to be translated.",
-        validators=[
-            validate_file_size,
-            FileExtensionValidator(allowed_extensions=ALLOWED_EXTENSIONS),
-            validate_no_executable,
-            validate_max_files,
-        ],
-    )
-
-    description = models.TextField(help_text="Provide additional information about your translation request.")
-    discount_code = models.CharField(max_length=50, blank=True, help_text="If you have a discount code, enter it here (optional).")
-    terms_and_conditions = models.BooleanField(help_text="Check this box to agree to the terms and conditions.")
-    date_submitted = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
-
-    
-
-    def clean(self):
-        if self.source_language == self.target_language:
-            raise ValidationError("Source and target languages cannot be the same.")
-
-    def save(self, *args, **kwargs):
-        self.full_clean()  # Validate the instance before saving
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return f"{self.first_name} {self.last_name}"
 
 
 
@@ -145,13 +38,51 @@ class ClientInfo(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
-class ClientFiles(models.Model):
-    client = models.ForeignKey(ClientInfo, on_delete=models.CASCADE, related_name='client_files')
-    file = models.FileField(upload_to=client_directory_path, validators=[file_size],)
+
+
+
+
+
+
+
+# Define the choices for source and target languages
+LANGUAGE_CHOICES = (
+    ('French', 'French'),
+    ('Haitian Creole', 'Haitian Creole'),
+    ('English', 'English'),
+    ('Spanish', 'Spanish'),
+    # Add more languages here if needed
+)
+
+# Define the choices for request status
+STATUS_CHOICES = (
+    ('Pending', 'Pending'),
+    ('In Progress', 'In Progress'),
+    ('Completed', 'Completed'),
+)
+
+class TranslationRequest(models.Model):
+    client = models.ForeignKey('ClientInfo', on_delete=models.CASCADE)
+    request_date = models.DateTimeField(auto_now_add=True)
+    source_language = models.CharField(max_length=50, choices=LANGUAGE_CHOICES)
+    target_language = models.CharField(max_length=50, choices=LANGUAGE_CHOICES)
+    content = models.TextField(help_text="Additional information")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
+    completed_files = models.PositiveIntegerField(default=0)  # New field to track completed files
 
     def __str__(self):
-        return f"{self.file_type} - {os.path.basename(self.file.name)}"
+        return f"Translation Request {self.pk} - Client: {self.client}, Status: {self.status}"
 
+class ClientFiles(models.Model):
+    client = models.ForeignKey(ClientInfo, on_delete=models.CASCADE, related_name='client_files')
+    translation_request = models.ForeignKey(TranslationRequest, on_delete=models.CASCADE, related_name='files')
+    original_file = models.FileField(upload_to=client_directory_path, validators=[FileExtensionValidator(['pdf', 'doc', 'docx', 'txt', 'jpg', 'png', 'jpeg', 'gif']), file_size])
+    processed_file = models.FileField(upload_to=client_directory_path, blank=True, null=True, validators=[file_size])
+
+
+    def __str__(self):
+        return f"ClientFiles - Client: {self.client}"

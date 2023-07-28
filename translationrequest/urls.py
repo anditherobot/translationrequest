@@ -14,8 +14,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('contact/', views.contact, name='contact'),
     path('about/', views.about, name='about'),
-    path('translation_request/', views.translation_request_view, name='translation_request'),
-    path('translationrequestdashboard/', views.translation_request_dashboard, name='translationrequestdashboard'),
+
    
    
     path('login/',
@@ -37,14 +36,18 @@ urlpatterns = [
     path('services/', views.services, name='services'),
     path('tracker/', views.translation_tracker, name='tracker'),
 
+   
+
+
     path('create_client/', views.create_client, name='create_client'),
     path('client/<int:client_id>/', views.client_dashboard, name='client_dashboard'),
-    path('upload_files/<int:client_id>/', views.upload_files, name='upload_files'),
+    path('client/<int:client_id>/create_request/', views.create_translation_request_view, name='create_translation_request'),
 
+    path('client/request/<int:request_id>/upload_files/', views.upload_files_for_request, name='upload_files_for_request'),
 
-
-
+     # View Translation Request Details
+    path('request/<int:request_id>/', views.view_translation_request, name='view_translation_request'),
+    path('list_clients/', views.list_clients, name='list_clients'),
 ]
-
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

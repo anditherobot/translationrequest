@@ -1,0 +1,14 @@
+<!-- Your template content, e.g., header, navigation, etc. -->
+
+<h2>List of Current Clients</h2>
+{% if clients %}
+<ul>
+    {% for client in clients %}
+    <li><a href="{% url 'client_dashboard' client_id=client.id %}">{{ client.first_name }} {{ client.last_name }}</a></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No clients found.</p>
+{% endif %}
+
+<!-- Your other template content, e.g., links to create new clients, etc. -->

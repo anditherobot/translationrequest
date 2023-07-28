@@ -1,0 +1,11 @@
+<!-- templates/widgets/multiple_file_input.html -->
+<div>
+    {% for file in widget.value %}
+    <div>
+        <input type="checkbox" name="{{ widget.name }}" id="{{ widget.attrs.id }}_{{ forloop.counter0 }}" value="{{ file.file|default_if_none:"" }}" class="clearablefileinput-checkbox">
+        <label for="{{ widget.attrs.id }}_{{ forloop.counter0 }}">{{ file.name }}</label>
+    </div>
+    {% endfor %}
+    <input type="file" name="{{ widget.name }}" id="{{ widget.attrs.id }}" class="clearablefileinput">
+    <label for="{{ widget.attrs.id }}">{{ widget.attrs.attrs.label }}</label>
+</div>

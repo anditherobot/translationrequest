@@ -44,60 +44,6 @@ class BootstrapAuthenticationForm(AuthenticationForm):
 
  #User forms
 
-class TranslationRequestForm(forms.ModelForm):
-
-  
-
-    class Meta:
-        model = TranslationRequest
-        fields = [
-            'first_name',
-            'last_name',
-            'email',
-            'phone_number',
-            'source_language',
-            'target_language',
-            'certified_translation_needed',
-            'translation_quality',
-            'files_to_translate',
-            'description',
-            'discount_code',
-            'terms_and_conditions',
-        ]
-
-        # Define the MultipleFileField for files_to_translate
-    files_to_translate = MultipleFileField(
-        help_text="Upload the files you need to be translated.",
-       
-    )
-    helper = FormHelper()
-   
-    helper.form_method = 'POST'
-    helper.layout = Layout(
-            Row(
-                Column('first_name', css_class='form-group col-md-3'),
-                Column('last_name', css_class='form-group col-md-3'),
-            ),
-            Row(
-                Column('email', css_class='form-group col-md-3'),
-                Column('phone_number', css_class='form-group col-md-3'),
-            ),
-            Row(
-                Column('source_language', css_class='form-group col-md-3'),
-                Column('target_language', css_class='form-group col-md-3'),
-            ),
-            Row(
-                Column('certified_translation_needed', css_class='form-group col-md-3'),
-                Column('translation_quality', css_class='form-group col-md-3'),
-            ),
-            'files_to_translate',
-            'description',
-            'discount_code',
-            'terms_and_conditions',
-            ButtonHolder(
-                Submit('submit', 'Create Translation Request', css_class='btn btn-primary btn-success')
-            )
-        )
 
 
 class ClientInfoForm(forms.ModelForm):
@@ -108,7 +54,6 @@ class ClientInfoForm(forms.ModelForm):
    
 
 BLACKLISTED_EXTENSIONS = ['.exe', '.bat', '.cmd']  # Add any other blacklisted extensions here
-
 
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
@@ -125,13 +70,19 @@ class LimitedMultipleFileField(forms.FileField):
         if isinstance(data, (list, tuple)):
             if len(data) > self.max_files:
                 raise forms.ValidationError(f"You can upload up to {self.max_files} files only.")
-            result = [single_file_clean(d, initial) for d in data]
-            for file in result:
-                if file.size > self.max_file_size:
-                    raise forms.ValidationError(f"File size should not exceed {self.max_file_size} bytes.")
+            for file in data:
+                self.validate_file(file)
         else:
-            result = single_file_clean(data, initial)
-        return result
+            self.validate_file(data)
+
+        return data
+
+    def validate_file(self, file):
+        if file.size > self.max_file_size:
+            raise forms.ValidationError(f"File size should not exceed {self.max_file_size} bytes.")
+        _, ext = os.path.splitext(file.name)
+        if ext.lower() in BLACKLISTED_EXTENSIONS:
+            raise forms.ValidationError("Files with this extension are not allowed.")
 
 class ClientFilesForm(forms.ModelForm):
     class Meta:
@@ -139,5 +90,11 @@ class ClientFilesForm(forms.ModelForm):
         fields = ['file']
 
     file = LimitedMultipleFileField()
+
+
+class TranslationRequestForm(forms.ModelForm):
+    class Meta:
+        model = TranslationRequest
+        fields = ['client', 'source_language', 'target_language', 'content']
 
 

@@ -3,9 +3,24 @@
 {% block content %}
 <div class="jumbotron">
     <h1>Document Translation Services</h1>
+
+
+    <h1>User Dashboard</h1>
+    <p>Welcome to your dashboard! Here are some useful links:</p>
+    <ul>
+
+        <li><a href="{% url 'create_client' %}">Create New Client</a></li>
+        <li><a href="{% url 'list_clients' %}">List Clients</a></li>
+
+
+    </ul>
+    <p>Click on the links to access different features of the app.</p>
+
+
+
     <p class="lead">Translation services with human and machine, fast delivery, quality, and affordable prices.</p>
     <p>
-        <a href="{% url 'translation_request' %}" class="btn btn-primary btn-lg">Create Request</a>
+      
         <a href="{% url 'faq' %}" class="btn btn-info btn-lg">FAQ</a>
         <a href="{% url 'services' %}" class="btn btn-success btn-lg">Services</a>
         <a href="{% url 'create_client' %}" class="btn btn-success btn-lg">Create Client</a>
@@ -18,7 +33,7 @@
         <p>
             Easily submit your translation requests through our user-friendly form. Our team of skilled translators will ensure accurate and timely translations.
         </p>
-        <p><a class="btn btn-default" href="{% url 'translation_request' %}">Submit Request &raquo;</a></p>
+        
     </div>
     <div class="col-md-4">
         <h2>Track Progress</h2>

@@ -34,6 +34,9 @@
   <ItemGroup>
     <Compile Include="app\forms.py" />
     <Compile Include="app\models.py" />
+    <Compile Include="app\notification_utils.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\tests.py" />
     <Compile Include="app\views.py" />
     <Compile Include="app\__init__.py" />
@@ -62,6 +65,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="app\templates\app\client_dashboard.html" />
+    <Content Include="app\templates\app\create_client.html" />
     <Content Include="app\templates\app\faq.html">
       <SubType>Code</SubType>
     </Content>
@@ -69,10 +74,16 @@
     <Content Include="app\templates\app\translation_request_dashboard.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="app\templates\app\translation_request_form.html">
+    <Content Include="app\templates\app\create_translation_request.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="app\templates\app\translation_tracker.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="app\templates\app\upload_files_for_request.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="app\templates\app\view_translation_request.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="requirements.txt" />

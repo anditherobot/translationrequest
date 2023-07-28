@@ -2,11 +2,9 @@ from django.contrib import admin
 from .models import TranslationRequest
 
 class TranslationRequestAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'status')
-    list_filter = ('status','last_name')
-    search_fields = ('first_name', 'last_name')
-    actions = ['mark_as_in_progress']
-
+    list_display = ['client', 'source_language', 'target_language', 'request_date', 'status']
+    list_filter = ['source_language', 'target_language', 'status']
+    search_fields = ['client__first_name', 'client__last_name', 'content'] 
    
 
 

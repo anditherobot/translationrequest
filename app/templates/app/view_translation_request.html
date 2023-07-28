@@ -1,0 +1,21 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+<h1>Translation Request Details</h1>
+<h3>Source Language: {{ translation_request.source_language }}</h3>
+<h3>Target Language: {{ translation_request.target_language }}</h3>
+<p>Status: {{ translation_request.status }}</p>
+<p>Content: {{ translation_request.content }}</p>
+
+<ul>
+    {% for file in client_files %}
+    <li><a href="{{ file.original_file.url }}">{{ file.original_file.name }}</a></li>
+    {% if file.processed_file %}
+    <li>Processed File: <a href="{{ file.processed_file.url }}">{{ file.processed_file.name }}</a></li>
+    {% endif %}
+    {% endfor %}
+</ul>
+
+<p><a href="{% url 'client_dashboard' client_id=translation_request.client.id %}">Back to Client Dashboard</a></p>
+{% endblock %}
+

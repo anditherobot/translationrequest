@@ -1,0 +1,25 @@
+{% extends "app/layout.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h1>Translation Request Form</h1>
+<form method="post">
+    {% csrf_token %}
+    <label for="{{ form.client.id_for_label }}">Client:</label>
+    {{ form.client }}
+    <br>
+    <label for="{{ form.source_language.id_for_label }}">Source Language:</label>
+    {{ form.source_language }}
+    <br>
+    <label for="{{ form.target_language.id_for_label }}">Target Language:</label>
+    {{ form.target_language }}
+    <br>
+    <label for="{{ form.content.id_for_label }}">Translation Content:</label>
+    {{ form.content }}
+    <br>
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock %}
+
+

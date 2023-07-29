@@ -7,7 +7,7 @@ from django.dispatch import receiver
 import os
 from django import forms
 
-
+from django.utils.translation import gettext_lazy as _
 
 
 
@@ -65,10 +65,21 @@ STATUS_CHOICES = (
     ('Completed', 'Completed'),
 )
 
+
+def validate_different_languages(cleaned_data):
+    source_language = cleaned_data.get('source_language')
+    target_language = cleaned_data.get('target_language')
+
+    if source_language == target_language:
+        raise ValidationError(
+            _('Source language and target language cannot be the same.'),
+            code='invalid'
+        )
+
 class TranslationRequest(models.Model):
     client = models.ForeignKey('ClientInfo', on_delete=models.CASCADE)
     request_date = models.DateTimeField(auto_now_add=True)
-    source_language = models.CharField(max_length=50, choices=LANGUAGE_CHOICES)
+    source_language = models.CharField(max_length=50, choices=LANGUAGE_CHOICES )
     target_language = models.CharField(max_length=50, choices=LANGUAGE_CHOICES)
     content = models.TextField(help_text="Additional information")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
@@ -76,6 +87,10 @@ class TranslationRequest(models.Model):
 
     def __str__(self):
         return f"Translation Request {self.pk} - Client: {self.client}, Status: {self.status}"
+
+    def clean(self):
+        if self.source_language == self.target_language:
+            raise ValidationError("Source and target languages cannot be the same.")
 
 class ClientFiles(models.Model):
     client = models.ForeignKey(ClientInfo, on_delete=models.CASCADE, related_name='client_files')

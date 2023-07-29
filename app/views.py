@@ -120,17 +120,17 @@ def client_dashboard(request, client_id):
 
 
 def create_translation_request_view(request, client_id):
+    client = get_object_or_404(ClientInfo, id=client_id)
     if request.method == 'POST':
         form = TranslationRequestForm(request.POST)
         if form.is_valid():
             translation_request = form.save(commit=False)
-            client = get_object_or_404(ClientInfo, id=client_id)
-            translation_request.client = client
+          
+            translation_request.client_id = client_id  # Set the client using the foreign key ID
             translation_request.save()
             return redirect('upload_files_for_request', request_id=translation_request.id)
     else:
-        # Fetch the current client info associated with the user
-        client = get_object_or_404(ClientInfo, id=client_id)
+       
         form = TranslationRequestForm(initial={'client': client})  # Pass the client info to the form as an initial value
 
     return render(request, 'app/create_translation_request.html', {'form': form})

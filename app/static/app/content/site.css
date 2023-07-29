@@ -40,3 +40,68 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+/* Client dashboard*/
+
+/* Add this CSS to your stylesheet */
+/* Add this CSS to your stylesheet */
+.dashboard {
+    padding: 20px;
+}
+
+.client-info h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.file-section,
+.request-section {
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+    .file-section h2,
+    .request-section h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .file-section p,
+    .request-section p {
+        margin-bottom: 10px;
+    }
+
+ul.request-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+    ul.request-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        padding: 10px 0;
+    }
+
+        ul.request-list li:last-child {
+            border-bottom: none;
+        }
+
+.request-id {
+    font-weight: bold;
+}
+
+.btn {
+    padding: 8px 15px;
+    background-color: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+    .btn:hover {
+        background-color: #0056b3;
+    }

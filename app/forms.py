@@ -6,7 +6,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import gettext_lazy as _
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import ButtonHolder, Submit, Layout, Row, Column
+from crispy_forms.layout import ButtonHolder, Submit, Layout, Row, Column, Field
 from app.models import TranslationRequest, ClientFiles, ClientInfo
 
 
@@ -93,8 +93,20 @@ class ClientFilesForm(forms.ModelForm):
 
 
 class TranslationRequestForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.form_class = 'translation-form'  # Add a custom CSS class to the form
+        self.helper.layout = Layout(
+            Field('client', css_class='form-control'),
+            Field('source_language', css_class='form-control'),
+            Field('target_language', css_class='form-control'),
+            Field('content', css_class='form-control'),
+            Submit('submit', 'Submit', css_class='btn btn-primary')
+        )
     class Meta:
         model = TranslationRequest
-        fields = ['client', 'source_language', 'target_language', 'content']
+        fields = ['source_language', 'target_language', 'content']
 
 

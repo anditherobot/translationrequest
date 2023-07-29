@@ -1,4 +1,4 @@
-Document Translation System - README
+# Document Translation System - README
 
 This document provides an overview and instructions for using the Document Translation System, a Django-based web application for managing document translation requests. The system allows users to submit translation requests, track their progress, and download translated files. Administrators can manage translation requests, update their status, and notify users when their requests are completed.
 Getting Started

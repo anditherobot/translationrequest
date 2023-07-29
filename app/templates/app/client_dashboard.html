@@ -1,31 +1,35 @@
 {% extends "app/layout.html" %}
+{% load static %} <!-- Load the static files -->
 {% block content %}
-<h1>Client Request Dashboard</h1>
-<h1>Welcome, {{ client.first_name }} {{ client.last_name }}!</h1>
-<p>Email: {{ client.email }}</p>
-<p>Term and Conditions: {% if client.term_condition %}Accepted{% else %}Not Accepted{% endif %}</p>
+<div class="dashboard">
+    <h1>Client Request Dashboard</h1>
+    <div class="client-info">
+        <h2>Welcome, {{ client_info.first_name }} {{ lient_info.last_name }}!</h2>
+        <p>Email: {{  client_info.email }}</p>
+        <p>Term and Conditions: {% if client.term_condition %}Accepted{% else %}Not Accepted{% endif %}</p>
+    </div>
 
-<h2>Uploaded Files:</h2>
-    {% for file in client.client_files.all %}
-<p>{{ file.file_type }}: <a href="{{ file.file.url }}" target="_blank">{{ file.file.name }}</a></p>
-    {% endfor %}
+    <div class="file-section">
 
+        <a href="{% url 'create_translation_request' client_id=client_info.id %}" class="btn">Create New Translation Request</a>
+      
+    </div>
 
-
-<a href="{% url 'create_translation_request' client_id=client_info.id %}">Create New Translation Request</a>
-<p>you can upload up to 5 files </p>
-<p>and each file can be up to 10MB</p>
-
-
-<h2>Current Translation Requests</h2>
-{% if translation_requests %}
-<ul>
-    {% for request in translation_requests %}
-    <li><a href="{% url 'view_translation_request' request_id=request.id %}">Translation Request {{ request.id }}</a></li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>No current translation requests found.</p>
-{% endif %}
+    <div class="request-section">
+        <h2>Current Translation Requests</h2>
+        {% if translation_requests %}
+        <ul class="request-list">
+            {% for request in translation_requests %}
+            <li>
+                <span class="request-id">Request ID: {{ request.id }}</span>
+                <a href="{% url 'view_translation_request' request_id=request.id %}" class="btn">View Request</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No current translation requests found.</p>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %}

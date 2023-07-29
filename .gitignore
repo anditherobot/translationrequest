@@ -366,3 +366,5 @@ venv/
 
 media/
 static/
+
+db.sqlite3

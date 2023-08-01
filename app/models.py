@@ -30,6 +30,9 @@ def file_size(value):
 def client_directory_path(instance, filename):
     return f"uploads/clientfiles/{instance.client.id}/{filename}"
 
+def client_processed_directory_path(instance, filename):
+    return f"uploads/clientfiles/{instance.client.id}/processed/{filename}"
+
 class ClientInfo(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -93,11 +96,21 @@ class TranslationRequest(models.Model):
             raise ValidationError("Source and target languages cannot be the same.")
 
 class ClientFiles(models.Model):
+    PENDING = 'Pending'
+    IN_PROGRESS = 'In Progress'
+    COMPLETED = 'Completed'
+    VOID = 'Void'
+    STATUS_CHOICES = [
+        (PENDING, 'Pending'),
+        (IN_PROGRESS, 'In Progress'),
+        (COMPLETED, 'Completed'),
+        (VOID, 'Void'),
+    ]
     client = models.ForeignKey(ClientInfo, on_delete=models.CASCADE, related_name='client_files')
     translation_request = models.ForeignKey(TranslationRequest, on_delete=models.CASCADE, related_name='files')
     original_file = models.FileField(upload_to=client_directory_path, validators=[FileExtensionValidator(['pdf', 'doc', 'docx', 'txt', 'jpg', 'png', 'jpeg', 'gif']), file_size])
-    processed_file = models.FileField(upload_to=client_directory_path, blank=True, null=True, validators=[file_size])
-
+    processed_file = models.FileField(upload_to= client_processed_directory_path, blank=True, null=True, validators=[file_size])
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=PENDING)
 
     def __str__(self):
         return f"ClientFiles - Client: {self.client}"

@@ -3,11 +3,12 @@ Definition of views.
 """
 
 from datetime import datetime
+from django.http import HttpResponse    
 from django.shortcuts import render, redirect,  get_object_or_404
 from django.http import HttpRequest
 from .models import ClientInfo, TranslationRequest, ClientFiles
 from .forms import ClientInfoForm, TranslationRequestForm, ClientFilesForm
-
+import mimetypes, os
 from .notification_utils import send_email_receipt, notify_admin
 
 def home(request):
@@ -178,7 +179,67 @@ def list_clients(request):
     clients = ClientInfo.objects.all()
     return render(request, 'app/list_clients.html', {'clients': clients})
 
+def file_details(request, request_id, file_id):
+    # Retrieve the translation request and file objects based on the IDs
+    translation_request = get_object_or_404(TranslationRequest, id=request_id)
+    file_object = get_object_or_404(ClientFiles, id=file_id)
 
+    # Your view logic here
+
+    return render(request, 'app/file_details.html', {
+        'translation_request': translation_request,
+        'file': file_object
+    })
+
+
+def download_file(request, request_id, file_id):
+    # Retrieve the file object based on the file_id and request_id
+    file_object = get_object_or_404(ClientFiles, id=file_id, translation_request_id=request_id)
+
+    # Verify that the file exists and has content
+    if not file_object.original_file:
+        raise Http404("The requested file does not exist.")
+
+    # Get the file path and content type using mimetypes
+    file_path = file_object.original_file.path
+    content_type, encoding = mimetypes.guess_type(file_path)
+
+    # If the content type is not determined, use a default value
+    if not content_type:
+        content_type = 'application/octet-stream'
+
+    # Prepare the response with file content and content type
+    with open(file_path, 'rb') as file:
+        response = HttpResponse(file.read(), content_type=content_type)
+
+    # Set the 'Content-Disposition' header to trigger the download behavior in the browser
+    response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
+
+    return response
+
+def update_file_status(request, request_id, file_id):
+    # Your view logic here
+
+    return redirect('file_details', request_id=request_id, file_id=file_id)
+
+def message_user_about_file(request, request_id, file_id):
+    # Your view logic here
+
+    return redirect('file_details', request_id=request_id, file_id=file_id)
+
+
+# View stub for deleting a file
+def delete_file(request, request_id, file_id):
+    # Your view logic here
+
+    return redirect('file_details', request_id=request_id, file_id=file_id)
+
+
+# View stub for uploading a translated file
+def upload_translated_file(request, request_id, file_id):
+    # Your view logic here
+
+    return redirect('file_details', request_id=request_id, file_id=file_id)
 
 
 

@@ -6,6 +6,7 @@
     <RootNamespace>translationrequest</RootNamespace>
     <InterpreterId>MSBuild|venv|$(MSBuildProjectFullPath)</InterpreterId>
     <TestFramework>Pytest</TestFramework>
+    <WebBrowserPort>5555</WebBrowserPort>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -37,6 +38,12 @@
     <Compile Include="app\notification_utils.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="app\templatetags\custom_filters.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="app\templatetags\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\tests.py" />
     <Compile Include="app\views.py" />
     <Compile Include="app\__init__.py" />
@@ -53,6 +60,7 @@
   <ItemGroup>
     <Folder Include="app\" />
     <Folder Include="app\migrations\" />
+    <Folder Include="app\templatetags\" />
     <Folder Include="app\static\" />
     <Folder Include="app\static\app\" />
     <Folder Include="app\static\app\content\" />
@@ -65,15 +73,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="app\static\app\content\dashboard.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="app\templates\app\client_dashboard.html" />
     <Content Include="app\templates\app\create_client.html" />
+    <Content Include="app\templates\app\dashboard_layout.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="app\templates\app\faq.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="app\templates\app\services.html" />
-    <Content Include="app\templates\app\translation_request_dashboard.html">
+    <Content Include="app\templates\app\file_details.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="app\templates\app\list_clients.html" />
+    <Content Include="app\templates\app\services.html" />
     <Content Include="app\templates\app\create_translation_request.html">
       <SubType>Code</SubType>
     </Content>

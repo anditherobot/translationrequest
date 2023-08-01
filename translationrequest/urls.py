@@ -48,6 +48,15 @@ urlpatterns = [
      # View Translation Request Details
     path('request/<int:request_id>/', views.view_translation_request, name='view_translation_request'),
     path('list_clients/', views.list_clients, name='list_clients'),
+
+    #file Details
+    path('request/<int:request_id>/file/<int:file_id>/', views.file_details, name='file_details'),
+    path('request/<int:request_id>/file/<int:file_id>/download/', views.download_file, name='download_file'),
+    path('request/<int:request_id>/file/<int:file_id>/updatestatus/', views.update_file_status, name='update_file_status'),
+    path('request/<int:request_id>/file/<int:file_id>/message/', views.message_user_about_file, name='message_user_about_file'),
+    path('request/<int:request_id>/file/<int:file_id>/delete/', views.delete_file, name='delete_file'),
+    path('request/<int:request_id>/file/<int:file_id>/upload/', views.upload_translated_file, name='upload_translated_file'),
 ]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

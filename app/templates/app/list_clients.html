@@ -1,14 +1,50 @@
-<!-- Your template content, e.g., header, navigation, etc. -->
+{% extends "app/layout.html" %}
+{% load custom_filters %}
 
-<h2>List of Current Clients</h2>
-{% if clients %}
-<ul>
-    {% for client in clients %}
-    <li><a href="{% url 'client_dashboard' client_id=client.id %}">{{ client.first_name }} {{ client.last_name }}</a></li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>No clients found.</p>
-{% endif %}
+{% block content %}
+<div class="container">
+    <h2>List of Current Clients</h2>
+    {% if clients %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Term & Condition</th>
+                    <th>Date Created</th>
+                    <th>Date Modified</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in clients %}
+                <tr class="clickable-row" data-href="{% url 'client_dashboard' client_id=client.id %}">
+                    <td>{{ client.first_name }}</td>
+                    <td>{{ client.last_name }}</td>
+                    <td>{{ client.email }}</td>
+                    <td>{{ client.term_condition|yesno:"Yes,No" }}</td>
+                    <td>{{ client.date_created|date:"M d, Y" }}</td>
+                    <td>{{ client.date_modified|date:"M d, Y" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>No clients found.</p>
+    {% endif %}
+</div>
 
-<!-- Your other template content, e.g., links to create new clients, etc. -->
+<script>document.addEventListener("DOMContentLoaded", function () {
+        const rows = document.querySelectorAll(".clickable-row");
+        rows.forEach(row => {
+            row.addEventListener("click", function () {
+                const href = this.dataset.href;
+                if (href) {
+                    window.location.href = href;
+                }
+            });
+        });
+    });</script>
+{% endblock %}

@@ -18,14 +18,27 @@
     <div class="request-section">
         <h2>Current Translation Requests</h2>
         {% if translation_requests %}
-        <ul class="request-list">
-            {% for request in translation_requests %}
-            <li>
-                <span class="request-id">Request ID: {{ request.id }}</span>
-                <a href="{% url 'view_translation_request' request_id=request.id %}" class="btn">View Request</a>
-            </li>
-            {% endfor %}
-        </ul>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Request ID</th>
+                    <th>Request Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in translation_requests %}
+                <tr>
+                    <td>{{ request.id }}</td>
+                    <td>{{ request.request_date }}</td>
+                    <td>{{ request.status }}</td>
+                    <td><a href="{% url 'view_translation_request' request_id=request.id %}" class="btn">View Request</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
         {% else %}
         <p>No current translation requests found.</p>
         {% endif %}

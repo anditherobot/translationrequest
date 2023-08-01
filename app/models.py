@@ -66,6 +66,7 @@ STATUS_CHOICES = (
     ('Pending', 'Pending'),
     ('In Progress', 'In Progress'),
     ('Completed', 'Completed'),
+    ('void', 'Void'),
 )
 
 

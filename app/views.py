@@ -1,7 +1,7 @@
 """
 Definition of views.
 """
-
+from django.contrib import messages
 from datetime import datetime
 from django.http import HttpResponse    
 from django.shortcuts import render, redirect,  get_object_or_404
@@ -49,10 +49,6 @@ def about(request):
         }
     )
 
-
-
-
-
 def translation_request_view(request):
     form = TranslationRequestForm(request.POST or None, request.FILES or None)
    
@@ -69,11 +65,6 @@ def translation_request_view(request):
             # Redirect to a success page or do any other processing.
 
     return render(request, 'app/create_translation_request.html', {'form': form})
-
-
-
-
-
 
 
 def translation_request_dashboard(request):
@@ -161,9 +152,6 @@ def upload_files_for_request(request, request_id):
     }
     return render(request, 'app/upload_files_for_request.html', context)
 
-
-
-
 def view_translation_request(request, request_id):
     translation_request = get_object_or_404(TranslationRequest, id=request_id)
     client_files = translation_request.files.all()  
@@ -172,8 +160,6 @@ def view_translation_request(request, request_id):
         'client_files': client_files,
     }
     return render(request, 'app/view_translation_request.html', context)
-
-
 
 def list_clients(request):
     clients = ClientInfo.objects.all()
@@ -190,7 +176,6 @@ def file_details(request, request_id, file_id):
         'translation_request': translation_request,
         'file': file_object
     })
-
 
 def download_file(request, request_id, file_id):
     # Retrieve the file object based on the file_id and request_id
@@ -217,16 +202,37 @@ def download_file(request, request_id, file_id):
 
     return response
 
-def update_file_status(request, request_id, file_id):
-    # Your view logic here
+from django.views.decorators.http import require_POST
 
+@require_POST
+def update_file_status(request, request_id, file_id):
+    # Retrieve the translation request and file objects based on the IDs
+    translation_request = get_object_or_404(TranslationRequest, id=request_id)
+    file = get_object_or_404(ClientFiles, id=file_id)
+
+    # Get the new status from the form data
+    new_status = request.POST.get('status')
+
+    if new_status not in dict(ClientFiles.STATUS_CHOICES):
+        # Invalid status, don't update and show an error message
+        messages.error(request, f"Invalid status: {new_status}")
+    else:
+        # Update the status and save the object
+        file.status = new_status
+        file.save()
+
+        # Flash a success message
+        messages.success(request, "File status updated successfully!")
+
+    # Redirect back to the file details page
     return redirect('file_details', request_id=request_id, file_id=file_id)
+
+   
 
 def message_user_about_file(request, request_id, file_id):
     # Your view logic here
 
     return redirect('file_details', request_id=request_id, file_id=file_id)
-
 
 # View stub for deleting a file
 def delete_file(request, request_id, file_id):

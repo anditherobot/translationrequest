@@ -1,0 +1,15 @@
+{% extends "app/layout.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Upload Translated File</h1>
+        <p>Upload the translated file for "{{ file.original_file.name }}" below:</p>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Upload File</button>
+        </form>
+        <a class="btn btn-secondary mt-3" href="{% url 'file_details' request_id=request_id file_id=file_id %}">Cancel</a>
+    </div>
+</div>
+{% endblock %}

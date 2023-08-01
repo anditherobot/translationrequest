@@ -110,3 +110,10 @@ class TranslationRequestForm(forms.ModelForm):
         fields = ['source_language', 'target_language', 'content']
 
 
+
+
+class TranslatedFileUploadForm(forms.Form):
+    processed_file = forms.FileField()
+
+
+

@@ -7,7 +7,7 @@
         <h1>File Details || Status: {{ file.status }}</h1>
         <h3>Source Language: {{ file.translation_request.source_language }} || Target Language: {{ file.translation_request.target_language }}</h3>
         <p>Instructions: {{ file.translation_request.content }}</p>
-      
+
     </div>
 </div>
 
@@ -15,37 +15,70 @@
     <div class="col-md-12">
         <!-- Action Buttons Row -->
         <div class="btn-group" role="group" aria-label="File Actions">
-       
+
         </div>
     </div>
 </div>
 
-<div class="row mt-3">
-    <div class="col-md-12">
-        <!-- File List Table -->
-        <table class="table table-bordered">
+<div class="row">
+    <div class="col-md-6">
+        <h4>Files Pending</h4>
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Original File</th>
-                    <th>Processed File</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 {% for file in client_files %}
+                {% if file.status == 'Pending' %}
                 <tr>
-                    <td><a href="{% url 'file_details' request_id=translation_request.id file_id=file.id %}">View File</a></td>
+                    <td><a href="{% url 'file_details' request_id=file.translation_request.id file_id=file.id %}">{{ file.original_file.name }}</a></td>
                     <td>
-                        {% if file.processed_file %}
-                        <a href="{% url 'file_details' file_id=file.id %}">{{ file.processed_file.name }}</a>
-                        {% else %}
-                        N/A
-                        {% endif %}
+
+                        <form method="post" action="{% url 'update_file_status' request_id=translation_request.id file_id=file.id %}">
+                            {% csrf_token %}
+                            <label for="file-status">Select Status:</label>
+                            <select name="status" id="file-status">
+                                {% for value, label in file.STATUS_CHOICES %}
+                                <option value="{{ value }}" {% if value == file.status %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit">Update Status</button>
+                        </form>
                     </td>
                 </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h4>Files Processed</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Processed File</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in client_files %}
+                {% if file.processed_file %}
+                <tr>
+                    <td><a href="{% url 'file_details' request_id=file.translation_request.id file_id=file.id %}">{{ file.processed_file.name }}</a></td>
+                    <td>
+                        <a class="btn btn-info" href="{% url 'message_user_about_file' request_id=file.translation_request.id file_id=file.id %}">Message User</a>
+                    </td>
+                </tr>
+                {% endif %}
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
+
+
 
 {% endblock %}

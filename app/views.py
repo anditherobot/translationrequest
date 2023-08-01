@@ -242,12 +242,25 @@ def delete_file(request, request_id, file_id):
 
 
 # View stub for uploading a translated file
+from .forms import TranslatedFileUploadForm
+
 def upload_translated_file(request, request_id, file_id):
-    # Your view logic here
+    # Retrieve the file object based on the file_id and request_id
+    file_object = get_object_or_404(ClientFiles, id=file_id, translation_request_id=request_id)
 
-    return redirect('file_details', request_id=request_id, file_id=file_id)
+    if request.method == 'POST':
+        form = TranslatedFileUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Save the processed file to the file object
+            file_object.processed_file = form.cleaned_data['processed_file']
+            file_object.save()
 
+            # Redirect back to the file details page after successful file upload
+            return redirect('file_details', request_id=request_id, file_id=file_id)
+    else:
+        form = TranslatedFileUploadForm()
 
+    return render(request, 'app/upload_translated_file.html', {'form': form, 'request_id': request_id, 'file_id': file_id})
 
 
 

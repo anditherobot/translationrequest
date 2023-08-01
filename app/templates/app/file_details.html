@@ -22,10 +22,8 @@
             <!-- Action Buttons Row -->
             <div class="btn-group" role="group" aria-label="File Actions">
                 <a class="btn btn-primary" href="{% url 'download_file' request_id=file.translation_request.id file_id=file.id %}">Download</a>
-                <a class="btn btn-info" href="{% url 'update_file_status' request_id=file.translation_request.id file_id=file.id %}">Mark as In Translation</a>
                 <a class="btn btn-danger" href="{% url 'delete_file' request_id=file.translation_request.id file_id=file.id %}">Delete</a>
                 <a class="btn btn-success" href="{% url 'upload_translated_file' request_id=file.translation_request.id file_id=file.id %}">Upload Translated File</a>
-                <a class="btn btn-success" href="{% url 'update_file_status' request_id=file.translation_request.id file_id=file.id %}">Update Status</a>
                 <a class="btn btn-info" href="{% url 'message_user_about_file' request_id=file.translation_request.id file_id=file.id %}">Message User</a>
             </div>
 

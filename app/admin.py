@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import TranslationRequest
+from .models import TranslationRequest, ClientInfo, ClientFile
 
 class TranslationRequestAdmin(admin.ModelAdmin):
     list_display = ['client', 'source_language', 'target_language', 'request_date', 'status']
@@ -9,3 +9,5 @@ class TranslationRequestAdmin(admin.ModelAdmin):
 
 
 admin.site.register(TranslationRequest, TranslationRequestAdmin)
+admin.site.register(ClientInfo)
+admin.site.register(ClientFile)

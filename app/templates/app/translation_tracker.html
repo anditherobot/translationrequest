@@ -1,48 +1,26 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<div class="container">
-    <h1>Translation Request Progress Tracker</h1>
-    <form method="post">
-        {% csrf_token %}
-        <div class="user-info">
-            <!-- User information section -->
-            <input type="text" name="user_name" placeholder="User Name" value="John Doe" required>
-            <input type="email" name="user_email" placeholder="Email" value="john@example.com" required>
-            <input type="text" name="user_phone" placeholder="Phone" value="123-456-7890" required>
-        </div>
-        <div class="document-list">
-            <!-- Document list section -->
-            <h2>Document List</h2>
-            <ul>
-                <li>Status: In Progress | Date Added: 2023-07-26</li>
-                <li>Status: Received | Date Added: 2023-07-25</li>
-                <li>Status: Finished | Date Added: 2023-07-24</li>
-            </ul>
-        </div>
-        <div class="translation-status">
-            <!-- Translation status section -->
-            <h2>Translation Status</h2>
-            <label for="status">Select Status:</label>
-            <select name="status" id="status">
-                <option value="in_progress">In Progress</option>
-                <option value="received">Received</option>
-                <option value="finished">Finished</option>
-            </select>
-        </div>
-        <div class="new-request">
-            <!-- Button to start a new translation request -->
-            <button type="submit">Start New Request</button>
-        </div>
-        <div class="request-info">
-            <!-- Request ID, price, and invoice info section -->
-            <h2>Request Information</h2>
-            <input type="text" name="request_id" placeholder="Request ID" value="12345" required>
-            <input type="text" name="price" placeholder="Price" value="$100" required>
-            <input type="text" name="invoice_info" placeholder="Invoice Info" value="Invoice #7890" required>
-        </div>
-    </form>
-</div>
+<h1>Translation Tracker</h1>
 
+<ul class="timeline">
+    {% for request in translation_requests %}
+    <li>
+        <div class="timeline-badge">{{ request.request_date|date:"M d" }}</div>
+        <div class="timeline-panel">
+            <div class="timeline-heading">
+                <h4 class="timeline-title">Request ID: {{ request.id }}</h4>
+                <p>Status: {{ request.status }}</p>
+            </div>
+            <div class="timeline-body">
+                <p>Client: {{ request.client.first_name }} {{ request.client.last_name }}</p>
+                <p>Source Language: {{ request.source_language }}</p>
+                <p>Target Language: {{ request.target_language }}</p>
+                <p>Content: {{ request.content }}</p>
+                <!-- Add more details about the translation request here -->
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
 {% endblock %}
-

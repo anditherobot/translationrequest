@@ -34,8 +34,64 @@
     </div>
 
     <div class="container body-content">
-{% block content %}{% endblock %}
-        <hr/>
+        <div class="row">
+            <div class="col-md-3">
+                <nav class="navbar navbar-default">
+                    <ul class="nav nav-pills nav-stacked mega-menu">
+                        <!-- Home link -->
+                        <li><a href="{% url 'home' %}">Home</a></li>
+
+                        <!-- About link -->
+                        <li><a href="{% url 'about' %}">About</a></li>
+
+                        <!-- Contact link -->
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+
+                        <!-- Login link -->
+                        <li><a href="{% url 'login' %}">Login</a></li>
+
+                        <!-- Logout link -->
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+
+                        <!-- Admin link -->
+                        <li><a href="{% url 'admin:index' %}">Admin</a></li>
+
+                        <!-- FAQ link -->
+                        <li><a href="{% url 'faq' %}">FAQ</a></li>
+
+                        <!-- Services link -->
+                        <li><a href="{% url 'services' %}">Services</a></li>
+
+                        <!-- Translation Tracker link -->
+                        <li><a href="{% url 'translation_tracker' %}">Translation Tracker</a></li>
+
+                        <!-- Create Client link -->
+                        <li><a href="{% url 'create_client' %}">Create Client</a></li>
+
+                        <!-- List Clients link -->
+                        <li><a href="{% url 'list_clients' %}">List Clients</a></li>
+
+                        <!-- View All Translation Requests link -->
+                        <li><a href="{% url 'translation_request_all' %}">View All Translation Requests</a></li>
+
+                        <!-- Client Dashboard link -->
+                        {% for client in allrequests %}
+                        <li><a href="{% url 'client_dashboard' client_id=client.client.id %}">Client Dashboard ({{ client.client.id }})</a></li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+
+            </div>
+
+            <div class="col-md-9">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+        
+
+       
+        <hr />
         <footer>
             <p>&copy; {{ year }} - Anditherobot</p>
         </footer>

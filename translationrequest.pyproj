@@ -101,6 +101,7 @@
     <Content Include="app\templates\app\upload_translated_file.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="app\templates\app\view_all_translation_request.html" />
     <Content Include="app\templates\app\view_translation_request.html">
       <SubType>Code</SubType>
     </Content>

@@ -28,10 +28,10 @@ def file_size(value):
             raise forms.ValidationError('File size should not exceed 10 MB.')
 
 def client_directory_path(instance, filename):
-    return f"uploads/clientfiles/{instance.client.id}/{filename}"
+    return f"uploads/ClientFile/{instance.client.id}/{filename}"
 
 def client_processed_directory_path(instance, filename):
-    return f"uploads/clientfiles/{instance.client.id}/processed/{filename}"
+    return f"uploads/ClientFile/{instance.client.id}/processed/{filename}"
 
 class ClientInfo(models.Model):
     first_name = models.CharField(max_length=100)
@@ -96,7 +96,7 @@ class TranslationRequest(models.Model):
         if self.source_language == self.target_language:
             raise ValidationError("Source and target languages cannot be the same.")
 
-class ClientFiles(models.Model):
+class ClientFile(models.Model):
     PENDING = 'Pending'
     IN_PROGRESS = 'In Progress'
     COMPLETED = 'Completed'
@@ -114,4 +114,4 @@ class ClientFiles(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=PENDING)
 
     def __str__(self):
-        return f"ClientFiles - Client: {self.client}"
+        return f"ClientFile - Client: {self.client}"

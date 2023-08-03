@@ -34,8 +34,8 @@ urlpatterns = [
 
     path('faq/', views.faq, name='faq'),
     path('services/', views.services, name='services'),
-    path('tracker/', views.translation_tracker, name='tracker'),
-
+ 
+    path('tracker/', views.translation_tracker, name='translation_tracker'),
    
 
 
@@ -47,6 +47,7 @@ urlpatterns = [
 
      # View Translation Request Details
     path('request/<int:request_id>/', views.view_translation_request, name='view_translation_request'),
+     path('request/all/', views.translation_request_all, name='translation_request_all'),
     path('list_clients/', views.list_clients, name='list_clients'),
 
     #file Details

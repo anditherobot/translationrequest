@@ -7,7 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import gettext_lazy as _
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import ButtonHolder, Submit, Layout, Row, Column, Field
-from app.models import TranslationRequest, ClientFiles, ClientInfo
+from app.models import TranslationRequest, ClientFile, ClientInfo
 
 
 class MultipleFileInput(forms.ClearableFileInput):
@@ -84,9 +84,9 @@ class LimitedMultipleFileField(forms.FileField):
         if ext.lower() in BLACKLISTED_EXTENSIONS:
             raise forms.ValidationError("Files with this extension are not allowed.")
 
-class ClientFilesForm(forms.ModelForm):
+class ClientFileForm(forms.ModelForm):
     class Meta:
-        model = ClientFiles
+        model = ClientFile
         fields = ['file']
 
     file = LimitedMultipleFileField()

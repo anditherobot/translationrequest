@@ -10,6 +10,7 @@ from .models import ClientInfo, TranslationRequest, ClientFile
 from .forms import ClientInfoForm, TranslationRequestForm, ClientFileForm
 import mimetypes, os
 from .notification_utils import send_email_receipt, notify_admin
+from django.http import JsonResponse
 
 def home(request):
     """Renders the home page."""
@@ -302,3 +303,32 @@ def view_files_by_status(request, client_id, request_id, status):
         'status': status,
         'client_files': client_files,
     })
+
+
+
+def generate_fictional_receipt(request):
+    # Replace the example data with your actual data from the models
+    receipt_data = {
+        "receipt_id": "RECEIPT123",
+        "date": "July 28, 2023",
+        "customer_details": {
+            "name": "John Doe",
+            "email": "john.doe@example.com",
+            "address": "123 Main Street, City, Country"
+        },
+        "payment_details": {
+            "total_amount_paid": 12.30
+        },
+        "invoice_details": {
+            "invoice_number": "INV123",
+            "invoice_date": "July 28, 2023",
+            "due_date": "August 28, 2023",
+            "quote_amount": 25.50
+        },
+        "file_payment_details": {
+            "number_of_files_paid": 3
+        }
+    }
+
+    # Return the JSON response
+    return JsonResponse(receipt_data)

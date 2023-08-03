@@ -4,7 +4,8 @@
 
   {% for message in messages %}
 <div{% if message.tags %} class="{{ message.tags }} alert alert-info" {% endif %}>
-    {{ message }}</div>
+    {{ message }}
+    </div>
     {% endfor %}
 
     <div class="row">
@@ -12,7 +13,7 @@
             <h1>File Details || Status: {{ file.status }}</h1>
             <h3>Source Language: {{ file.translation_request.source_language }} || Target Language: {{ file.translation_request.target_language }}</h3>
             <p>Instructions: {{ file.translation_request.content }}</p>
-            <p>Current status: {{file.status}}</p>
+            <p>Current status: {{ file.status }}</p>
             <a class="btn btn-danger" href="{% url 'view_translation_request' request_id=file.translation_request.id %}">Back to File List</a>
         </div>
     </div>
@@ -27,7 +28,7 @@
                 <a class="btn btn-info" href="{% url 'message_user_about_file' request_id=file.translation_request.id file_id=file.id %}">Message User</a>
             </div>
 
-            <form method="post" action="{% url 'update_file_status' request_id=translation_request.id file_id=file.id %}">
+            <form method="post" action="{% url 'update_file_status' request_id=file.translation_request.id file_id=file.id %}">
                 {% csrf_token %}
                 <label for="file-status">Select Status:</label>
                 <select name="status" id="file-status">
@@ -38,31 +39,39 @@
                 <button type="submit">Update Status</button>
             </form>
 
-
-
-
-
-
         </div>
     </div>
 
     <div class="row mt-3">
         <div class="col-md-6">
-            <!-- File Preview -->
+            <!-- Old File Preview -->
+            <h3>{{ file.original_file.name }}</h3>
             {% if file.original_file %}
             {% if file.original_file.url|lower|endswith:'.jpg' or file.original_file.url|lower|endswith:'.png' or file.original_file.url|lower|endswith:'.jpeg' or file.original_file.url|lower|endswith:'.gif' %}
             <!-- Display an image preview -->
-            <img src="{{ file.original_file.url }}" alt="File Preview" class="img-responsive">
+            <img src="{{ file.original_file.url }}" alt="Old File Preview" class="img-responsive">
             {% else %}
             <!-- Display a link to download non-image files -->
-            <p><a href="{{ file.original_file.url }}" target="_blank">Download File</a></p>
+            <p><a href="{{ file.original_file.url }}" target="_blank">Download Old File</a></p>
             {% endif %}
             {% else %}
-            <p>No file available for preview.</p>
+            <p>No old file available for preview.</p>
             {% endif %}
         </div>
         <div class="col-md-6">
-            <!-- Additional Details or Description about the File (if needed) -->
+            <!-- New File Preview -->
+            <h3>{{ file.processed_file.name }}</h3>
+            {% if file.processed_file %}
+            {% if file.processed_file.url|lower|endswith:'.jpg' or file.processed_file.url|lower|endswith:'.png' or file.processed_file.url|lower|endswith:'.jpeg' or file.processed_file.url|lower|endswith:'.gif' %}
+            <!-- Display an image preview -->
+            <img src="{{ file.processed_file.url }}" alt="New File Preview" class="img-responsive">
+            {% else %}
+            <!-- Display a link to download non-image files -->
+            <p><a href="{{ file.processed_file.url }}" target="_blank">Download New File</a></p>
+            {% endif %}
+            {% else %}
+            <p>No new file available for preview.</p>
+            {% endif %}
         </div>
     </div>
 

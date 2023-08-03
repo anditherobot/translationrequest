@@ -1,13 +1,13 @@
 {% extends "app/layout.html" %}
-
+{% load custom_filters %}
 {% block content %}
 
 <div class="row">
     <div class="col-md-12">
-        <h1>Translation Request Details: {{ file.status }}</h1>
-        <h3>Source Language: {{ file.translation_request.source_language }} || Target Language: {{ file.translation_request.target_language }}</h3>
-        <p>Instructions: {{ file.translation_request.content }}</p>
-
+        <h1>Translation Request Summary</h1>
+        <p><a href="{% url 'client_dashboard' client_id=translation_request.client.id %}">{{ translation_request.client }}</a> | Date Request: {{ translation_request.request_date }} | Status: {{ translation_request.status }}</p>
+        <p>Source Language: {{ translation_request.source_language }} | Target Language: {{ translation_request.target_language }}</p>
+        <p>Instructions: {{ translation_request.content }}</p>
     </div>
 </div>
 
@@ -15,73 +15,63 @@
     <div class="col-md-12">
         <!-- Action Buttons Row -->
         <div class="btn-group" role="group" aria-label="File Actions">
-
+            <a class="btn btn-danger" href="#">Cancel Request</a>
+            <a class="btn btn-info" href="#">Message Client</a>
+            <a class="btn btn-primary" href="#">View Log</a>
+            <a class="btn btn-success" href="#">Financials</a>
         </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-6">
-        <h4>Files Pending</h4>
-
-        {% if all_files_completed %}
-        <!-- Display the button to create a new request -->
-
-        <p>All files have been completed. </p>
-        <a class="btn btn-default"
-           href="{% url 'create_translation_request' client_id=translation_request.client.id %}">
-
-            Create a new Translation Request
-        </a>
-
-
-        {% else %}
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Original File</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                <!-- Display the list of client files -->
-                {% for file in client_files %}
-                <tr>
-                    <td><a href="{% url 'file_details' request_id=file.translation_request.id file_id=file.id %}">{{ file.original_file.name }}</a></td>
-                    <td>{{ file.status }}</td>
-                </tr>
-                {% endfor %}
-                {% endif %}
-            </tbody>
-
-        </table>
+<div class="row mt-3">
+    <div class="col-md-3">
+        <h4>Void</h4>
+        <ul class="list-group file-list" style="background-color: #f8f9fa; border: 1px solid #d1d3e2;">
+            {% for file in client_files %}
+            {% if file.status == 'Void' %}
+            <li class="list-group-item">
+                {{ file.original_file.name|get_filename:True }}
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
     </div>
-    <div class="col-md-6">
-        <h4>Files Processed</h4>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Processed File</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for file in client_files %}
-                {% if file.processed_file %}
-                <tr>
-                    <td><a href="{% url 'file_details' request_id=file.translation_request.id file_id=file.id %}">{{ file.processed_file.name }}</a></td>
-                    <td>
-                        <a class="btn btn-info" href="{% url 'message_user_about_file' request_id=file.translation_request.id file_id=file.id %}">Message User</a>
-                    </td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="col-md-3">
+        <h4>Pending</h4>
+        <ul class="list-group file-list" style="background-color: #f8f9fa; border: 1px solid #d1d3e2;">
+            {% for file in client_files %}
+            {% if file.status == 'Pending' %}
+            <li class="list-group-item">
+                {{ file.original_file.name|get_filename:True }}
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-md-3">
+        <h4>In Progress</h4>
+        <ul class="list-group file-list" style="background-color: #f8f9fa; border: 1px solid #d1d3e2;">
+            {% for file in client_files %}
+            {% if file.status == 'In Progress' %}
+            <li class="list-group-item">
+                {{ file.original_file.name|get_filename:True }}
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-md-3">
+        <h4>Completed</h4>
+        <ul class="list-group file-list" style="background-color: #f8f9fa; border: 1px solid #d1d3e2;">
+            {% for file in client_files %}
+            {% if file.status == 'Completed' %}
+            <li class="list-group-item">
+                {{ file.original_file.name|get_filename:True }}
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
     </div>
 </div>
-
-
 
 {% endblock %}

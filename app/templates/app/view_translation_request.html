@@ -24,54 +24,63 @@
 </div>
 
 <div class="row mt-3">
+   
     <div class="col-md-3">
         <h4>Void</h4>
+        <a href="{% url 'view_files_by_status' client_id=translation_request.client.id request_id=translation_request.id status='Void' %}">View All Void Files</a>
         <ul class="list-group file-list" style="background-color: #f8f9fa; border: 1px solid #d1d3e2;">
             {% for file in client_files %}
             {% if file.status == 'Void' %}
             <li class="list-group-item">
-                {{ file.original_file.name|get_filename:True }}
+                <a href="{% url 'file_details' request_id=file.translation_request.id file_id=file.id %}">{{ file.original_file.name|get_filename:True }}</a>
             </li>
             {% endif %}
             {% endfor %}
         </ul>
     </div>
+
     <div class="col-md-3">
         <h4>Pending</h4>
+        <a href="{% url 'view_files_by_status' client_id=translation_request.client.id request_id=translation_request.id status='Pending' %}">View All Pending Files</a>
         <ul class="list-group file-list" style="background-color: #f8f9fa; border: 1px solid #d1d3e2;">
             {% for file in client_files %}
             {% if file.status == 'Pending' %}
             <li class="list-group-item">
-                {{ file.original_file.name|get_filename:True }}
+                <a href="{% url 'file_details' request_id=file.translation_request.id file_id=file.id %}">{{ file.original_file.name|get_filename:True }}</a>
             </li>
             {% endif %}
             {% endfor %}
         </ul>
     </div>
+
     <div class="col-md-3">
         <h4>In Progress</h4>
+        <a href="{% url 'view_files_by_status' client_id=translation_request.client.id request_id=translation_request.id status='In Progress' %}">View All In Progress Files</a>
         <ul class="list-group file-list" style="background-color: #f8f9fa; border: 1px solid #d1d3e2;">
             {% for file in client_files %}
             {% if file.status == 'In Progress' %}
             <li class="list-group-item">
-                {{ file.original_file.name|get_filename:True }}
+                <a href="{% url 'file_details' request_id=file.translation_request.id file_id=file.id %}">{{ file.original_file.name|get_filename:True }}</a>
             </li>
             {% endif %}
             {% endfor %}
         </ul>
     </div>
+
     <div class="col-md-3">
         <h4>Completed</h4>
+        <a href="{% url 'view_files_by_status' client_id=translation_request.client.id request_id=translation_request.id status='Completed' %}">View All Completed Files</a>
         <ul class="list-group file-list" style="background-color: #f8f9fa; border: 1px solid #d1d3e2;">
             {% for file in client_files %}
             {% if file.status == 'Completed' %}
             <li class="list-group-item">
-                {{ file.original_file.name|get_filename:True }}
+                <a href="{% url 'file_details' request_id=file.translation_request.id file_id=file.id %}">{{ file.original_file.name|get_filename:True }}</a>
             </li>
             {% endif %}
             {% endfor %}
         </ul>
     </div>
+
 </div>
 
 {% endblock %}

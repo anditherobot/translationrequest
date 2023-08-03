@@ -38,6 +38,9 @@
     <Compile Include="app\notification_utils.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="app\templates\app\view_files_by_status.html">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\templatetags\custom_filters.py">
       <SubType>Code</SubType>
     </Compile>

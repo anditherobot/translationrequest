@@ -57,7 +57,7 @@ urlpatterns = [
     path('request/<int:request_id>/file/<int:file_id>/message/', views.message_user_about_file, name='message_user_about_file'),
     path('request/<int:request_id>/file/<int:file_id>/delete/', views.delete_file, name='delete_file'),
     path('request/<int:request_id>/file/<int:file_id>/upload/', views.upload_translated_file, name='upload_translated_file'),
+    path('view_files_by_status/<int:client_id>/<int:request_id>/<str:status>/', views.view_files_by_status, name='view_files_by_status'),
 ]
-
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -290,3 +290,15 @@ def upload_translated_file(request, request_id, file_id):
 
 
 
+
+def view_files_by_status(request, client_id, request_id, status):
+    client = get_object_or_404(ClientInfo, id=client_id)
+    translation_request = get_object_or_404(TranslationRequest, id=request_id)
+    client_files = ClientFile.objects.filter(client=client, translation_request=translation_request, status=status)
+
+    return render(request, 'app/view_files_by_status.html', {
+        'client': client,
+        'translation_request': translation_request,
+        'status': status,
+        'client_files': client_files,
+    })

@@ -1,0 +1,34 @@
+{% extends "app/layout.html" %}
+{% load custom_filters %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>Files for {{ client }} - Translation Request {{ translation_request.id }} - Status: {{ status }}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- Action Buttons Row -->
+        <div class="btn-group" role="group" aria-label="File Actions">
+            <a class="btn btn-primary" href="{% url 'view_translation_request' request_id=translation_request.id %}">Back to Translation Request</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-12">
+        <h4>Files</h4>
+        <ul class="list-group file-list" style="background-color: #f8f9fa; border: 1px solid #d1d3e2;">
+            {% for file in client_files %}
+            <li class="list-group-item">
+                {{ file.original_file.name|get_filename:True }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

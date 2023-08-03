@@ -24,7 +24,6 @@
             <div class="btn-group" role="group" aria-label="File Actions">
                 <a class="btn btn-primary" href="{% url 'download_file' request_id=file.translation_request.id file_id=file.id %}">Download</a>
                 <a class="btn btn-danger" href="{% url 'delete_file' request_id=file.translation_request.id file_id=file.id %}">Delete</a>
-                <a class="btn btn-success" href="{% url 'upload_translated_file' request_id=file.translation_request.id file_id=file.id %}">Upload Translated File</a>
                 <a class="btn btn-info" href="{% url 'message_user_about_file' request_id=file.translation_request.id file_id=file.id %}">Message User</a>
             </div>
 
@@ -38,7 +37,6 @@
                 </select>
                 <button type="submit">Update Status</button>
             </form>
-
         </div>
     </div>
 
@@ -69,10 +67,20 @@
             <!-- Display a link to download non-image files -->
             <p><a href="{{ file.processed_file.url }}" target="_blank">Download New File</a></p>
             {% endif %}
+
             {% else %}
             <p>No new file available for preview.</p>
             {% endif %}
+
+            {% if file.status == 'In Progress' and file.processed_file %}
+            <!-- If file is in progress and has a processed file, display "Upload New Translated Version" -->
+            <a class="btn btn-success" href="{% url 'upload_translated_file' request_id=file.translation_request.id file_id=file.id %}">Upload and Overwrite Translated Version</a>
+            {% elif file.status == 'In Progress' %}
+            <!-- If file is in progress and has no processed file, display the regular "Upload Translated File" -->
+            <a class="btn btn-success" href="{% url 'upload_translated_file' request_id=file.translation_request.id file_id=file.id %}">Upload Translated File</a>
+            {% endif %}
         </div>
+
     </div>
 
     {% endblock %}

@@ -3,24 +3,33 @@
 {% block content %}
 <h1>Translation Tracker</h1>
 
-<ul class="timeline">
-    {% for request in translation_requests %}
-    <li>
-        <div class="timeline-badge">{{ request.request_date|date:"M d" }}</div>
-        <div class="timeline-panel">
-            <div class="timeline-heading">
-                <h4 class="timeline-title">Request ID: {{ request.id }}</h4>
-                <p>Status: {{ request.status }}</p>
-            </div>
-            <div class="timeline-body">
-                <p>Client: {{ request.client.first_name }} {{ request.client.last_name }}</p>
-                <p>Source Language: {{ request.source_language }}</p>
-                <p>Target Language: {{ request.target_language }}</p>
-                <p>Content: {{ request.content }}</p>
-                <!-- Add more details about the translation request here -->
-            </div>
-        </div>
-    </li>
-    {% endfor %}
-</ul>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Request ID</th>
+                <th>Status</th>
+                <th>Client</th>
+                <th>Source Language</th>
+                <th>Target Language</th>
+                <th>Content</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in translation_requests %}
+            <tr>
+                <td>{{ request.request_date|date:"M d" }}</td>
+                <td>{{ request.id }}</td>
+                <td>{{ request.status }}</td>
+                <td>{{ request.client.first_name }} {{ request.client.last_name }}</td>
+                <td>{{ request.source_language }}</td>
+                <td>{{ request.target_language }}</td>
+                <td>{{ request.content | truncatechars:255}}</td>
+                <!-- Add more table columns for additional details about the translation request if needed -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

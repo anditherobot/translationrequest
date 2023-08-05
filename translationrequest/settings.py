@@ -26,7 +26,7 @@ SECRET_KEY = "d5f2d6eb-8e00-4443-92bf-30ae8180337f"
 DEBUG = True
 
 ALLOWED_HOSTS = []
-CRISPY_TEMPLATE_PACK = "bootstrap3"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

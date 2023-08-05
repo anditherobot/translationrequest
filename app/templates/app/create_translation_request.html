@@ -1,13 +1,13 @@
 
 {% extends "app/layout.html" %}
-{% load crispy_forms_tags %}  <!-- Load the crispy_forms_tags -->
+
 {% block content %}
 <h1>Translation Request Form</h1>
 
 <div class="translation-form">
     <form method="post">
         {% csrf_token %}
-        {{ form|crispy }}  <!-- Use the crispy filter to render the form with Bootstrap 3 styles -->
+        {{ form.as_table }}  
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>

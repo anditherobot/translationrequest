@@ -1,18 +1,30 @@
-<!-- create_client.html -->
 {% extends "app/layout.html" %}
-
 
 {% block content %}
 <div class="container">
     <div class="row">
-        <h3>Start by putting your information </h3>
+        <h3>Start by putting your information</h3>
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Create Client">
+            <div class="form-group">
+                <label for="{{ form.first_name.id_for_label }}">First Name:</label>
+                {{ form.first_name }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.last_name.id_for_label }}">Last Name:</label>
+                {{ form.last_name }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">Email:</label>
+                {{ form.email }}
+            </div>
+            <div class="form-group">
+                <input type="checkbox" id="term_condition" name="term_condition" required>
+                <label for="term_condition">I accept the <a href="{% url 'terms_conditions' %}" target="_blank">Terms and Conditions</a></label>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Create Client">
         </form>
     </div>
-    </div>
+</div>
+{% endblock %}
 
-
-    {% endblock %}

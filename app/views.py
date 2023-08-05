@@ -84,6 +84,11 @@ def services(request):
 def translation_tracker(request):
     return render(request, 'app/translation_tracker.html')
 
+def terms_conditions(request):
+        return HttpResponse("Faq and stuff here, accept" )
+    
+          
+    
 
 from django.shortcuts import render, redirect
 from .forms import ClientInfoForm, ClientFileForm

@@ -1,78 +1,240 @@
 {% extends "app/layout.html" %}
-
+{% load static %}
 {% block content %}
-<div class="jumbotron">
+<div class="jumbotron bg-info text-center">
     <h1>Document Translation Services</h1>
 
 
     <h1>User Dashboard</h1>
     <p>Welcome to your dashboard! Here are some useful links:</p>
-    <ul>
 
-        <li><a href="{% url 'create_client' %}">Create New Client</a></li>
-        <li><a href="{% url 'list_clients' %}">List Clients</a></li>
-
-
-    </ul>
-
-
-    <p>Click on the links to access different features of the app.</p>
-
-
-
-    <p class="lead">Translation services with human and machine, fast delivery, quality, and affordable prices.</p>
+    <h2 class="lead">Get any document translated in Haitian Kreyol, French, Spanish, English</h2>
     <p>
 
-        <a href="{% url 'faq' %}" class="btn btn-info btn-lg">FAQ</a>
+        <a href="{% url 'faq' %}" class="btn btn-success btn-lg">FAQ</a>
         <a href="{% url 'services' %}" class="btn btn-success btn-lg">Services</a>
-        <a href="{% url 'create_client' %}" class="btn btn-success btn-lg">Create Client</a>
+        <a href="{% url 'create_client' %}" class="btn btn-success btn-lg">Get Started</a>
     </p>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Request Translation</h2>
-        <p>
-            Easily submit your translation requests through our user-friendly form. Our team of skilled translators will ensure accurate and timely translations.
-        </p>
-        
-    </div>
-    <div class="col-md-4">
-        <h2>Track Progress</h2>
-        <p>Track the progress of your translation requests with our Translation Request Tracker. Stay informed about the status of your translations.</p>
-        <p><a class="btn btn-default" href="#">Track Progress &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>FAQs</h2>
-        <p>Have questions? Check out our Frequently Asked Questions to find answers to common queries about our translation services.</p>
-        <p><a class="btn btn-default" href="#">View FAQs &raquo;</a></p>
-    </div>
-</div>
 
+<style>
+    .doc-type:before {
+        content: '✓ '; 
+       }
+
+       .flag-item {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+
+    .flag-image {
+        max-height: 50px;
+        margin-right: 10px;
+    }
+
+    .flag-name {
+        font-weight: bold;
+    }
+</style>
 <div class="row">
     <div class="col-md-6">
-        <h2>Professional Document Translations for All Industries</h2>
+        <h2>High Quality Translations for All Industries</h2>
         <p>
             Our professional translation services cover a wide range of industries and domains, ensuring that your documents are accurately translated for your target audience. We specialize in translating documents for the following industries:
         </p>
-        <ul>
-            <li>Medical</li>
-            <li>Personal</li>
-            <li>Financial</li>
-            <li>Marketing, Promotional</li>
-            <li>Software, Website, Social Media</li>
-            <li>Manuals</li>
-            <li>Notices</li>
-            <li>Video Subtitles</li>
-            <li>Audio Visualization with Text</li>
-        </ul>
+        <div class="row">
+            <div class="col">
+                <ul class="doc-type" style="border: 4px solid black; border-radius: 15px; list-style:none">
+                    <li>Medical</li>
+                    <li>Personal</li>
+                    <li>Financial</li>
+                    <li>Marketing, Promotional</li>
+                    <li>Software, Website, Social Media</li>
+                    <li>Manuals</li>
+                    <li>Notices</li>
+                    <li>Video Subtitles</li>
+                    <li>Audio Visualization with Text</li>
+                </ul>
+            </div>
+            <div class="col">
+                <ul style="border: 4px solid black; border-radius: 15px; list-style:none">
+                    <li>Medical</li>
+                    <li>Personal</li>
+                    <li>Financial</li>
+                    <li>Marketing, Promotional</li>
+                    <li>Software, Website, Social Media</li>
+                    <li>Manuals</li>
+                    <li>Notices</li>
+                    <li>Video Subtitles</li>
+                    <li>Audio Visualization with Text</li>
+                </ul>
+            </div>
+        </div>
+       
     </div>
     <div class="col-md-6">
-        <h2>About Us</h2>
+        <h2>Supported Languages</h2>
+        <style>
+            h2 {
+                color: #363446;
+                margin-top: 20px;
+                margin-bottom: 10px;
+                font-size: 3rem;
+                font-weight: 700;
+                line-height: 120%;
+            }
+
+            .testimonial-content {
+  width: 100%;
+  background-color: #363446;
+  border-radius: 12px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  transition: background-color .2s, box-shadow .2s;
+  display: flex;
+  box-shadow: 4px 4px #87f8ae;
+}
+        </style>
         <p>
            Professional multilingual system that can translate all of your documents and texts between french, english, haitian creole, spanish.
         </p>
+        <ul style="list-style: none;">
+            <li class="flag-item">
+                <img src="{% static 'app/images/ht.svg' %}" alt="Flag 1" class="flag-image">
+                <span class="flag-name">Haitian Creole</span>
+            </li>
+            <li class="flag-item">
+                <img src="{% static 'app/images/fr.svg' %}" alt="Flag 2" class="flag-image">
+                <span class="flag-name">French</span>
+            </li>
+            <li class="flag-item">
+                <img src="{% static 'app/images/us.svg' %}" alt="Flag 3" class="flag-image">
+                <span class="flag-name">English</span>
+            </li>
+            <li class="flag-item">
+                <img src="{% static 'app/images/es.svg' %}" alt="Flag 4" class="flag-image">
+                <span class="flag-name">Spanish</span>
+            </li>
+        </ul>
+        
+        
       
     </div>
+</div>
+
+<div class="row bg-secondary  pb-2">
+    <section class="section-2 small-boxs">
+        <div class="small-box-wapper">
+            <div class="container">
+                <div class="heading-section">
+                    <div class="flags-head text-center">
+                        <h2 class="h1 blue">Unlock the Power of Certified Translation<br><p class="darg-blue">Experience the Rapid Translate Advantage</p></h2>
+                    </div>
+                    <div class="text-center content-s-2 mx-auto">
+                        <p class="content-boxs">Elevate your documents with our certified translation services backed by a trusted process.</p>
+                    </div>
+                </div>
+                <div class="boxs-container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card box_1">
+                                <div class="card-body">
+                                    <h3 class="card-title">Expert Human Translators</h3>
+                                    <p class="card-text">Our professional translators ensure impeccable accuracy and quality in every translation.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card box_2">
+                                <div class="card-body">
+                                    <h3 class="card-title">Lightning-Fast Turnaround</h3>
+                                    <p class="card-text">Get up to 3 pages translated within 24 hours. Choose from notarized or expedited options.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card box_3">
+                                <div class="card-body">
+                                    <h3 class="card-title">Globally Accepted Accuracy</h3>
+                                    <p class="card-text">Our word-for-word translations are recognized by USCIS and various government agencies worldwide.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card box_4">
+                                <div class="card-body">
+                                    <h3 class="card-title">Effortless Upload & Retrieval</h3>
+                                    <p class="card-text">Securely upload documents from any device and effortlessly download completed translations.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card box_5">
+                                <div class="card-body">
+                                    <h3 class="card-title">Private & Secure Process</h3>
+                                    <p class="card-text">Your data is safe with us. Our website's encryption and confidentiality measures ensure peace of mind.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card box_6">
+                                <div class="card-body">
+                                    <h3 class="card-title">Trusted by Thousands</h3>
+                                    <p class="card-text">Join a community of satisfied clients. We're the preferred choice for certified translations.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+</div>
+
+<div class="row bg-warning">
+    <div class="col-md-6">
+        <img style="max-height: 400px;" src="{% static 'app/images/3-steps.jpg' %}" class="img-fluid mt-3 round-border-radius" alt="Mokreyol Image">
+    </div>
+    <div class="col-md-6">
+        <h3>Translate Your  Document in Three Simple Steps</h3>
+        <ol>
+            <li>1. Send us your files.</li>
+            <li>2. Pay online.</li>
+            <li>3. Receive the translation.</li>
+        </ol>
+        <button class="btn btn-danger">Get Started today</button>
+        <p>Security, Privacy and Confidentiality Guarantee
+            Your information is protected by 256-bit SSL encryption.
+            We never store your credit card information.</p>
+    </div>
+
+</div>
+
+<div class="row bg-warning ">
+   
+    <div class="col-md-6">
+        <h3>Choose between 4 languages</h3>
+        <p>We offer excellent translation in between 4 languages</p>
+        <ol>
+            <li>Haitian Creole</li>
+            <li>French</li>
+            <li>English </li>
+            <li>Spanish </li>
+        </ol>
+        <button class="btn btn-danger">Get Started today</button>
+        <p>Security, Privacy and Confidentiality Guarantee
+            Your information is protected by 256-bit SSL encryption.
+            We never store your credit card information.</p>
+    </div>
+    <div class="col-md-6">
+        <img style="max-height: 400px;"  src="{% static 'app/images/3-steps.jpg' %}" class="img-fluid mt-3 round-border-radius" alt="Mokreyol Image">
+    </div>
+
 </div>
 {% endblock %}

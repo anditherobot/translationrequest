@@ -20,10 +20,10 @@
 
 <style>
     .doc-type:before {
-        content: '✓ '; 
-       }
+        content: '✓ ';
+    }
 
-       .flag-item {
+    .flag-item {
         display: flex;
         align-items: center;
         justify-content: flex-start;
@@ -34,14 +34,166 @@
     .flag-image {
         max-height: 50px;
         margin-right: 10px;
+        display: block;
+        margin: -10px auto 0;
     }
 
     .flag-name {
         font-weight: bold;
     }
+
+    .flag-card {
+        text-align: center;
+        border-radius: 0px;
+        height: 300px;
+        margin-top: 40px;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top:-80px;
+        padding: 20px;
+    }
+
+    .flag-container {
+        background-color: white;
+        border:1px solid #808080;
+        border-radius:20px;
+        padding: 20px;
+        width: 100px;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 5px;
+    }
+
+    .flag-image {
+        width: 50px;
+        height: 60px;
+    }
+
+    .card-title {
+        font-size: 25px;
+        font-family: Lato, sans-serif;
+        font-weight: 600;
+        color: #31274f;
+        margin-bottom: 0;
+    }
+
+    .card-text {
+        font-size: 18px;
+        font-family: Lato, sans-serif;
+        font-weight: 400;
+        line-height: 28px;
+        color: #7d7b8f;
+    }
+
+    h2 {
+        color: #363446;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-size: 3rem;
+        font-weight: 700;
+        line-height: 120%;
+    }
+    .language-stats {
+        list-style:none;
+        text-align:left;
+    }
+
 </style>
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <h2 class="text-center">Supported Languages</h2>
+            <style>
+              
+            </style>
+            <p style="margin-top: -10px;">
+                Professional multilingual system that can translate all of your documents and texts between french, english, haitian creole, spanish.
+            </p>
+            <div class="row" style="margin-top:30px;">
+                <div class="col-md-3">
+                    <div class="card flag-card" style="background-color: #e9f2f4; ">
+                        <div class="card-body" style="padding: 20px;">
+                            <div class=" flag-container" style="background-color: white; padding: 20px; width: 100px; height: 100px;">
+                                <img src="{% static 'app/images/ht.svg' %}" alt="Flag 1" style="width: 50px; height: 60px;">
+                            </div>
+                            <h4 class="card-title" style="font-size: 25px; font-family: sans-serif;">Haitian Creole</h4>
+                            <ul class="language-stats">
+                                <li><b>Classification: </b>French Based Creole</li>
+                                <li><b>Speakers: </b>Speakers: 12M</li>
+                                <li><b>Origin:</b> Haiti</li>
+                                <li><b>Essence:</b> Haitian Creole, French-based language spoken primarily in Haiti.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card flag-card" style="background-color: #ece6f2; border-radius: 10px; ">
+                        <div class="card-body" style="padding: 20px;">
+                            <div class=" flag-container" style="background-color: white; padding: 20px; width: 100px; height: 100px;">
+                                <img src="{% static 'app/images/fr.svg' %}" alt="Flag 2" style="width: 50px; height: 60px;">
+                            </div>
+                            <h4 class="card-title" style="font-size: 25px; font-family: sans-serif;">French</h4>
+                            <ul class="language-stats">
+                                <li><b>Classification: </b>Romance</li>
+                                <li><b>Speakers: </b>274M</li>
+                                <li><b>Origin: </b>France</li>
+                                <li><b>Essence: </b>Widely spoken, influential in diplomacy, culture, and literature.</li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card flag-card" style="background-color: #ede8e1; border-radius: 10px; ">
+                        <div class="card-body" style="padding: 20px;">
+                            <div class="flag-container" style="background-color: white; padding: 20px; width: 100px; height: 100px;">
+                                <img src="{% static 'app/images/us.svg' %}" alt="Flag 3" style="width: 50px; height: 60px;">
+                            </div>
+                            <h4 class="card-title" style="font-size: 25px; font-family: sans-serif;">English</h4>
+                            <ul class="language-stats">
+                                <li><b>Classification: </b>Germanic</li>
+                                <li><b>Speakers: </b>1.3B</li>
+                                <li><b>Origin: </b>England</li>
+                                <li><b>Essence: </b>Global lingua franca, business, science, media.</li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card flag-card" style="background-color: #def4ef; border-radius: 10px;">
+                        <div class="card-body" style="padding: 20px;">
+                            <div class="flag-container" style="background-color: white; padding: 20px; width: 100px; height: 100px;">
+                                <img src="{% static 'app/images/es.svg' %}" alt="Flag 4" style="width: 50px; height: 60px;">
+                            </div>
+                            <h4 class="card-title" style="font-size: 25px; font-family: sans-serif;">Spanish</h4>
+                            <ul class="language-stats">
+                                <li><b>Classification: </b>Romance</li>
+                                <li><b>Speakers: </b>460M</li>
+                                <li><b>Origin: </b>Spain</li>
+                                <li><b>Essence: </b>Second most spoken, Americas, Europe, culture, communication.</li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+</div>
+
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <h2>High Quality Translations for All Industries</h2>
         <p>
             Our professional translation services cover a wide range of industries and domains, ensuring that your documents are accurately translated for your target audience. We specialize in translating documents for the following industries:
@@ -74,57 +226,9 @@
                 </ul>
             </div>
         </div>
-       
-    </div>
-    <div class="col-md-6">
-        <h2>Supported Languages</h2>
-        <style>
-            h2 {
-                color: #363446;
-                margin-top: 20px;
-                margin-bottom: 10px;
-                font-size: 3rem;
-                font-weight: 700;
-                line-height: 120%;
-            }
 
-            .testimonial-content {
-  width: 100%;
-  background-color: #363446;
-  border-radius: 12px;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  transition: background-color .2s, box-shadow .2s;
-  display: flex;
-  box-shadow: 4px 4px #87f8ae;
-}
-        </style>
-        <p>
-           Professional multilingual system that can translate all of your documents and texts between french, english, haitian creole, spanish.
-        </p>
-        <ul style="list-style: none;">
-            <li class="flag-item">
-                <img src="{% static 'app/images/ht.svg' %}" alt="Flag 1" class="flag-image">
-                <span class="flag-name">Haitian Creole</span>
-            </li>
-            <li class="flag-item">
-                <img src="{% static 'app/images/fr.svg' %}" alt="Flag 2" class="flag-image">
-                <span class="flag-name">French</span>
-            </li>
-            <li class="flag-item">
-                <img src="{% static 'app/images/us.svg' %}" alt="Flag 3" class="flag-image">
-                <span class="flag-name">English</span>
-            </li>
-            <li class="flag-item">
-                <img src="{% static 'app/images/es.svg' %}" alt="Flag 4" class="flag-image">
-                <span class="flag-name">Spanish</span>
-            </li>
-        </ul>
-        
-        
-      
     </div>
+   
 </div>
 
 <div class="row bg-secondary  pb-2">

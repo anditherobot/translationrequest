@@ -1,30 +1,77 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<div class="container">
+<div class="container mt-5">
+    <!-- Step 1: Contact Details -->
     <div class="row">
-        <h3>Start by putting your information</h3>
-        <form method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="{{ form.first_name.id_for_label }}">First Name:</label>
-                {{ form.first_name }}
-            </div>
-            <div class="form-group">
-                <label for="{{ form.last_name.id_for_label }}">Last Name:</label>
-                {{ form.last_name }}
-            </div>
-            <div class="form-group">
-                <label for="{{ form.email.id_for_label }}">Email:</label>
-                {{ form.email }}
-            </div>
-            <div class="form-group">
-                <input type="checkbox" id="term_condition" name="term_condition" required>
-                <label for="term_condition">I accept the <a href="{% url 'terms_conditions' %}" target="_blank">Terms and Conditions</a></label>
-            </div>
-            <input type="submit" class="btn btn-primary" value="Create Client">
-        </form>
+        <div class="col">
+            <h3>Step 1: Contact Details</h3>
+            <form method="post"  client.id %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="last_name" name="last_name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="term_condition" name="term_condition">
+                    <label class="form-check-label" for="term_condition">I agree to the terms and conditions</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Next >></button>
+            </form>
+        </div>
     </div>
-</div>
+
+    <!-- Step 2: Upload Files -->
+    <div class="row mt-5">
+        <div class="col">
+            <h3>Step 2: Upload Files</h3>
+            <form method="post" enctype="multipart/form-data" action="">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="original_file" class="form-label">Select File</label>
+                    <input type="file" class="form-control" id="original_file" name="original_file" required>
+                </div>
+                <button type="submit" class="btn btn-success">Next >></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Step 3: Choose Language -->
+    <div class="row mt-5">
+        <div class="col">
+            <h3>Step 3: Choose Language</h3>
+            <form method="post"  translation_request.id %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="source_language" class="form-label">Source Language</label>
+                    <select class="form-select" id="source_language" name="source_language" required>
+                        <option value="" disabled selected>Select Source Language</option>
+                        <option value="French">French</option>
+                        <option value="English">English</option>
+                        <!-- Add more language options here -->
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="target_language" class="form-label">Target Language</label>
+                    <select class="form-select" id="target_language" name="target_language" required>
+                        <option value="" disabled selected>Select Target Language</option>
+                        <option value="Haitian Creole">Haitian Creole</option>
+                        <option value="Spanish">Spanish</option>
+                        <!-- Add more language options here -->
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-info">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>  
 {% endblock %}
 

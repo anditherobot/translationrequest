@@ -1,0 +1,114 @@
+{% load static %}
+
+<style>
+    .languages-title{
+        text-align:center;
+        margin-bottom:40px;
+    }
+
+
+    .flag-card {
+        text-align: center;
+        border-radius: 0px;
+        display: flex;
+        margin-top: 40px;
+       
+        border-radius: 10px;
+    }
+
+    .flag-card-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: -80px;
+        flex-grow: 1;
+        padding: 5px;
+       
+    }
+
+    .flag-image-container {
+        border: 1px solid #808080;
+        background-color: white;
+        border-radius: 20px;
+        padding: 10px;
+        width: 100px;
+        height: 100px;
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 5px;
+    }
+
+
+    .flag-item {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      
+        font-size: 18px;
+    }
+
+    .flag-image {
+        max-height: 50px;
+        margin-right: 10px;
+        display: block;
+        margin: -10px auto 0;
+    }
+
+   
+   
+
+
+    .flag-name {
+        font-weight: bold;
+    }
+
+
+    .language-stats {
+        list-style: none;
+        text-align: left;
+    }
+
+
+  
+
+    .flag-image {
+        width: 50px;
+        height: 60px;
+    }
+
+    .flag-card-title {
+        font-size: 25px;
+        font-family: Lato, sans-serif;
+        font-weight: 600;
+        color: #31274f;
+        margin-bottom: 0;
+    }
+
+    
+
+</style>
+
+            <div class="row" style="margin-bottom: 10px;">
+                <h2 class="languages-title">Supported Languages</h2>
+                {% for language in languages %}
+                <div class="col-md-3 ">
+                    <div class="card flag-card" style="background-color: {{ language.card_color }}; ">
+                        <div class="flag-card-body" >
+                            <div class="flag-image-container">
+                                <img src="{% static language.flag_image %}" alt="{{ language.name }}" style="width: 50px; height: 60px;">
+                            </div>
+                            <h4 class="flag-card-title" >{{ language.name }}</h4>
+                            <ul class="language-stats">
+                                <li><b>Classification: </b>{{ language.classification }}</li>
+                                <li><b>Speakers: </b>{{ language.speakers }}</li>
+                                <li><b>Origin: </b>{{ language.origin }}</li>
+                             
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+

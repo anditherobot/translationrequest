@@ -44,6 +44,7 @@
     <Compile Include="app\templatetags\custom_filters.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="app\templatetags\custom_tags.py" />
     <Compile Include="app\templatetags\__init__.py">
       <SubType>Code</SubType>
     </Compile>
@@ -81,6 +82,8 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="app\static\app\images\about-1.jpg" />
+    <Content Include="app\static\app\images\about-2-translator.jpg" />
+    <Content Include="app\static\app\images\about-machine-translator.jpg" />
     <Content Include="app\static\app\scripts\bootstrap.js.map" />
     <Content Include="app\static\app\scripts\jquery-3.7.0.min.js" />
     <Content Include="app\static\app\scripts\jquery-3.7.0.min.map" />
@@ -113,6 +116,10 @@
     <Content Include="app\templates\app\view_translation_request.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="app\templates\app\navpartial.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="app\templates\app\_languages.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

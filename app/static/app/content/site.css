@@ -1,6 +1,11 @@
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background: rgb(240,240,240);
+    background: -moz-radial-gradient(circle, rgba(240,240,240,1) 0%, rgba(42,123,167,1) 92%);
+    background: -webkit-radial-gradient(circle, rgba(240,240,240,1) 0%, rgba(42,123,167,1) 92%);
+    background: radial-gradient(circle, rgba(240,240,240,1) 0%, rgba(42,123,167,1) 92%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f0f0f0",endColorstr="#2a7ba7",GradientType=1);
 }
 
 /* Set padding to keep content from hitting the edges */

@@ -2,6 +2,13 @@
 {% load static %}
 {% block content %}
 
+<style>
+    .round-border-radius {
+        border-radius: 50px;
+        border: 1px solid grey;
+    }
+</style>
+
 <div class="row">
     <!-- Column 1: About Text -->
     <div class="col-md-6">
@@ -15,8 +22,54 @@
 
     <!-- Column 2: Image -->
     <div class="col-md-6">
-        <img style="border-radius: 30px;" src="{% static 'app/images/about-1.jpg' %}" class="img-fluid mt-3" alt="Mokreyol Image">
+        <img  src="{% static 'app/images/about-1.jpg' %}" class="img-fluid mt-3 round-border-radius" alt="Mokreyol Image">
     </div>
 </div>
 
-{% endblock %}
+<div class="row">
+
+    <!-- Column 2: Image -->
+    <div class="col-md-6">
+        <img src="{% static 'app/images/about-2-translator.jpg' %}" class="img-fluid mt-3 round-border-radius" alt="Mokreyol Image">
+    </div>
+    <!-- Column 1: About Text -->
+    <div class="col-md-6">
+        <h2>Professional Translators </h2>
+        <p>
+            Our human translators are the backbone of our service. 
+            Their expertise, attention to detail, and passion for 
+            languages enable us to maintain the highest level of accuracy 
+            and precision in every translation project. 
+            They possess not only linguistic proficiency but also deep cultural understanding,
+            ensuring that your message is conveyed with the appropriate tone and context.
+        </p>
+    </div>
+
+
+</div>
+
+<div class="row">
+
+    <!-- Column 2: Image -->
+    <!-- Column 1: About Text -->
+    <div class="col-md-6">
+        <h2>Machine Translators </h2>
+        <p>
+            In addition to our skilled human translators, we leverage the power 
+            of cutting-edge machine translation technology. Our advanced machine 
+            translation systems work hand in hand with our human experts to 
+            streamline the translation process and enhance efficiency without 
+            compromising on quality. While machines play a valuable role in 
+            speeding up the initial translation process, rest assured that every 
+            translation undergoes meticulous 
+            human review to guarantee accuracy and eliminate any potential errors.
+        </p>
+    </div>
+
+    <div class="col-md-6">
+        <img src="{% static 'app/images/about-machine-translator.jpg' %}" class="img-fluid mt-3 round-border-radius" alt="Mokreyol Image">
+    </div>
+    </div>
+
+
+    {% endblock %}

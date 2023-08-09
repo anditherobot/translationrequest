@@ -49,9 +49,14 @@ class BootstrapAuthenticationForm(AuthenticationForm):
 class ClientInfoForm(forms.ModelForm):
     class Meta:
         model = ClientInfo
-        fields = ['first_name', 'last_name', 'email', 'term_condition']
+        fields = ['first_name', 'last_name', 'email']
 
-   
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["first_name"].widget.attrs.update({"class": "form-control"})
+        self.fields["last_name"].widget.attrs.update({"class": "form-control"})
+        self.fields["email"].widget.attrs.update({"class": "form-control"})
+       
 
 BLACKLISTED_EXTENSIONS = ['.exe', '.bat', '.cmd']  # Add any other blacklisted extensions here
 

@@ -6,6 +6,8 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Upload Files">
+    <input type="submit" value="Upload Selected Files">
 </form>
+<p><strong>Accepted file types:</strong>doc, docx, xls, xlsx, pdf, 
+    ppt, pptx, jpg, html, idml, indd, xml, zip, pub, json, po, rtf, srt, vtt, mp3, Max. file size: 10MB.<p
 <p><a href="{% url 'view_translation_request' request_id=translation_request.id %}">Back to Translation Request Details</a></p>{% endblock %}

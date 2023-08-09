@@ -1,95 +1,13 @@
 {% extends "app/layout.html" %}
 {% load static %}
+{% load custom_tags %}
 {% block content %}
-<div class="jumbotron bg-info text-center">
-    <h1>Document Translation Services</h1>
 
-
-    <h1>User Dashboard</h1>
-    <p>Welcome to your dashboard! Here are some useful links:</p>
-
-    <h2 class="lead">Get any document translated in Haitian Kreyol, French, Spanish, English</h2>
-    <p>
-
-        <a href="{% url 'faq' %}" class="btn btn-success btn-lg">FAQ</a>
-        <a href="{% url 'services' %}" class="btn btn-success btn-lg">Services</a>
-        <a href="{% url 'create_client' %}" class="btn btn-success btn-lg">Get Started</a>
-    </p>
-</div>
 
 
 <style>
-    .doc-type:before {
-        content: '✓ ';
-    }
+    /* Common styles */
 
-    .flag-item {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        margin-bottom: 10px;
-        font-size: 18px;
-    }
-
-    .flag-image {
-        max-height: 50px;
-        margin-right: 10px;
-        display: block;
-        margin: -10px auto 0;
-    }
-
-    .flag-name {
-        font-weight: bold;
-    }
-
-    .flag-card {
-        text-align: center;
-        border-radius: 0px;
-        height: 300px;
-        margin-top: 40px;
-    }
-
-    .card-body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top:-80px;
-        padding: 20px;
-    }
-
-    .flag-container {
-        background-color: white;
-        border:1px solid #808080;
-        border-radius:20px;
-        padding: 20px;
-        width: 100px;
-        height: 100px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 5px;
-    }
-
-    .flag-image {
-        width: 50px;
-        height: 60px;
-    }
-
-    .card-title {
-        font-size: 25px;
-        font-family: Lato, sans-serif;
-        font-weight: 600;
-        color: #31274f;
-        margin-bottom: 0;
-    }
-
-    .card-text {
-        font-size: 18px;
-        font-family: Lato, sans-serif;
-        font-weight: 400;
-        line-height: 28px;
-        color: #7d7b8f;
-    }
 
     h2 {
         color: #363446;
@@ -99,246 +17,191 @@
         font-weight: 700;
         line-height: 120%;
     }
+
     .language-stats {
-        list-style:none;
-        text-align:left;
+        list-style: none;
+        text-align: left;
     }
 
+    .row {
+        display: flex;
+    }
+
+    .industry-card {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+        margin: 10px;
+        flex: 1; /* Equal width for all cards */
+        display: flex;
+        flex-direction: column;
+    }
+
+        .industry-card:nth-child(even) {
+            background-color: #ece6f2;
+        }
 </style>
 
-    <div class="row">
+{% include 'app/_jumbotron.html' %}
 
-        <div class="col-md-12">
-            <h2 class="text-center">Supported Languages</h2>
-            <style>
-              
-            </style>
-            <p style="margin-top: -10px;">
-                Professional multilingual system that can translate all of your documents and texts between french, english, haitian creole, spanish.
-            </p>
-            <div class="row" style="margin-top:30px;">
-                <div class="col-md-3">
-                    <div class="card flag-card" style="background-color: #e9f2f4; ">
-                        <div class="card-body" style="padding: 20px;">
-                            <div class=" flag-container" style="background-color: white; padding: 20px; width: 100px; height: 100px;">
-                                <img src="{% static 'app/images/ht.svg' %}" alt="Flag 1" style="width: 50px; height: 60px;">
-                            </div>
-                            <h4 class="card-title" style="font-size: 25px; font-family: sans-serif;">Haitian Creole</h4>
-                            <ul class="language-stats">
-                                <li><b>Classification: </b>French Based Creole</li>
-                                <li><b>Speakers: </b>Speakers: 12M</li>
-                                <li><b>Origin:</b> Haiti</li>
-                                <li><b>Essence:</b> Haitian Creole, French-based language spoken primarily in Haiti.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card flag-card" style="background-color: #ece6f2; border-radius: 10px; ">
-                        <div class="card-body" style="padding: 20px;">
-                            <div class=" flag-container" style="background-color: white; padding: 20px; width: 100px; height: 100px;">
-                                <img src="{% static 'app/images/fr.svg' %}" alt="Flag 2" style="width: 50px; height: 60px;">
-                            </div>
-                            <h4 class="card-title" style="font-size: 25px; font-family: sans-serif;">French</h4>
-                            <ul class="language-stats">
-                                <li><b>Classification: </b>Romance</li>
-                                <li><b>Speakers: </b>274M</li>
-                                <li><b>Origin: </b>France</li>
-                                <li><b>Essence: </b>Widely spoken, influential in diplomacy, culture, and literature.</li>
-                            </ul>
+  {% language_cards %}
 
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card flag-card" style="background-color: #ede8e1; border-radius: 10px; ">
-                        <div class="card-body" style="padding: 20px;">
-                            <div class="flag-container" style="background-color: white; padding: 20px; width: 100px; height: 100px;">
-                                <img src="{% static 'app/images/us.svg' %}" alt="Flag 3" style="width: 50px; height: 60px;">
-                            </div>
-                            <h4 class="card-title" style="font-size: 25px; font-family: sans-serif;">English</h4>
-                            <ul class="language-stats">
-                                <li><b>Classification: </b>Germanic</li>
-                                <li><b>Speakers: </b>1.3B</li>
-                                <li><b>Origin: </b>England</li>
-                                <li><b>Essence: </b>Global lingua franca, business, science, media.</li>
-                            </ul>
+<style>
+    .info-container {
+        background-color: #f2f2f2;
+        padding: 30px;
+        border-radius: 15px;
+    }
 
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card flag-card" style="background-color: #def4ef; border-radius: 10px;">
-                        <div class="card-body" style="padding: 20px;">
-                            <div class="flag-container" style="background-color: white; padding: 20px; width: 100px; height: 100px;">
-                                <img src="{% static 'app/images/es.svg' %}" alt="Flag 4" style="width: 50px; height: 60px;">
-                            </div>
-                            <h4 class="card-title" style="font-size: 25px; font-family: sans-serif;">Spanish</h4>
-                            <ul class="language-stats">
-                                <li><b>Classification: </b>Romance</li>
-                                <li><b>Speakers: </b>460M</li>
-                                <li><b>Origin: </b>Spain</li>
-                                <li><b>Essence: </b>Second most spoken, Americas, Europe, culture, communication.</li>
-                            </ul>
+    .info-content {
+        padding: 20px;
+        text-align: center;
+    }
 
-                        </div>
-                    </div>
-                </div>
-            </div>
+        .info-content h3 {
+            font-size: 24px;
+            color: #31274f;
+        }
+
+        .info-content ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+            .info-content ul li {
+                margin-bottom: 10px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+        .info-content .btn-success {
+            background-color: #4caf50;
+            border-color: #4caf50;
+        }
+
+        .info-content p {
+            color: #999;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+    .info-image {
+        border-radius: 15px;
+        max-height: 380px;
+        display: flex;
+        justify-self: end;
+    }
+</style>
 
 
-
-
-        </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-        <h2>High Quality Translations for All Industries</h2>
-        <p>
-            Our professional translation services cover a wide range of industries and domains, ensuring that your documents are accurately translated for your target audience. We specialize in translating documents for the following industries:
-        </p>
-        <div class="row">
-            <div class="col">
-                <ul class="doc-type" style="border: 4px solid black; border-radius: 15px; list-style:none">
-                    <li>Medical</li>
-                    <li>Personal</li>
-                    <li>Financial</li>
-                    <li>Marketing, Promotional</li>
-                    <li>Software, Website, Social Media</li>
-                    <li>Manuals</li>
-                    <li>Notices</li>
-                    <li>Video Subtitles</li>
-                    <li>Audio Visualization with Text</li>
+<div class="row ">
+    <div class="col-md-8">
+        <div class="info-container">
+            <div class="info-content">
+                <h3>Translate Your Document with Ease</h3>
+                <ul>
+                    <li>1. Upload your files to our platform.</li>
+                    <li>2. Make a secure online payment.</li>
+                    <li>3. Download the translated document.</li>
                 </ul>
+                <button class="btn btn-success mt-3">Start Translation</button>
+                <p>We prioritize your security and privacy. Your data is encrypted using SSL technology, and we do not store credit card information.</p>
             </div>
-            <div class="col">
-                <ul style="border: 4px solid black; border-radius: 15px; list-style:none">
-                    <li>Medical</li>
-                    <li>Personal</li>
-                    <li>Financial</li>
-                    <li>Marketing, Promotional</li>
-                    <li>Software, Website, Social Media</li>
-                    <li>Manuals</li>
-                    <li>Notices</li>
-                    <li>Video Subtitles</li>
-                    <li>Audio Visualization with Text</li>
-                </ul>
+        </div>
+    </div>
+    <div class="col-md-4">
+
+        <img class="info-image img-fluid rounded" src="{% static 'app/images/3-steps.jpg' %}" height="633" alt="Mokreyol Image">
+
+    </div>
+</div>
+
+<section class="row mb-3 pb-2 mt-3 bg-white">
+    <h2 class="text-center">Our services</h2>
+
+    <div class="col-md-4">
+        <div class="card box_1">
+            <div class="card-body">
+                <h3 class="card-title">Translation</h3>
+                <p class="card-text">Accurate and precise translations.</p>
             </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card box_2">
+            <div class="card-body">
+                <h3 class="card-title">Content Creation</h3>
+                <p class="card-text">Engaging  and culturally relevant .</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card box_3">
+            <div class="card-body">
+                <h3 class="card-title">Subtitling / Closed Captions</h3>
+                <p class="card-text">Presentations, Videos, Audio and Graphics</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="row bg-white">
+    <h2 class="text-center">Industries Served</h2>
+    <div class="col-md-4">
+        <div class="industry-card">
+            <h4 class="industry-card-title">Technology and IT</h4>
+            <p class="industry-card-description">Software companies, IT departments.</p>
+        </div>
+        <div class="industry-card">
+            <h4 class="industry-card-title">E-commerce and Retail</h4>
+            <p class="industry-card-description">E-commerce platforms, retail companies.</p>
+        </div>
+        
+
+        <div class="industry-card">
+            <h4 class="industry-card-title">Media and Entertainment</h4>
+            <p class="industry-card-description">Subtitles, video game localization.</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="industry-card">
+            <h4 class="industry-card-title">Personal</h4>
+            <p class="industry-card-description">Airlines, hotels, tourism boards.</p>
+        </div>
+        <div class="industry-card">
+            <h4 class="industry-card-title">Academia and Education</h4>
+            <p class="industry-card-description">International universities, research institutions.</p>
+        </div>
+        <div class="industry-card">
+            <h4 class="industry-card-title">Manufacturing and Engineering</h4>
+            <p class="industry-card-description">Product manuals, technical documentation.</p>
         </div>
 
     </div>
-   
-</div>
+    <div class="col-md-4">
 
-<div class="row bg-secondary  pb-2">
-    <section class="section-2 small-boxs">
-        <div class="small-box-wapper">
-            <div class="container">
-                <div class="heading-section">
-                    <div class="flags-head text-center">
-                        <h2 class="h1 blue">Unlock the Power of Certified Translation<br><p class="darg-blue">Experience the Rapid Translate Advantage</p></h2>
-                    </div>
-                    <div class="text-center content-s-2 mx-auto">
-                        <p class="content-boxs">Elevate your documents with our certified translation services backed by a trusted process.</p>
-                    </div>
-                </div>
-                <div class="boxs-container">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card box_1">
-                                <div class="card-body">
-                                    <h3 class="card-title">Expert Human Translators</h3>
-                                    <p class="card-text">Our professional translators ensure impeccable accuracy and quality in every translation.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card box_2">
-                                <div class="card-body">
-                                    <h3 class="card-title">Lightning-Fast Turnaround</h3>
-                                    <p class="card-text">Get up to 3 pages translated within 24 hours. Choose from notarized or expedited options.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card box_3">
-                                <div class="card-body">
-                                    <h3 class="card-title">Globally Accepted Accuracy</h3>
-                                    <p class="card-text">Our word-for-word translations are recognized by USCIS and various government agencies worldwide.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card box_4">
-                                <div class="card-body">
-                                    <h3 class="card-title">Effortless Upload & Retrieval</h3>
-                                    <p class="card-text">Securely upload documents from any device and effortlessly download completed translations.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card box_5">
-                                <div class="card-body">
-                                    <h3 class="card-title">Private & Secure Process</h3>
-                                    <p class="card-text">Your data is safe with us. Our website's encryption and confidentiality measures ensure peace of mind.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card box_6">
-                                <div class="card-body">
-                                    <h3 class="card-title">Trusted by Thousands</h3>
-                                    <p class="card-text">Join a community of satisfied clients. We're the preferred choice for certified translations.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="industry-card">
+            <h4 class="industry-card-title">Non-profit and NGOs</h4>
+            <p class="industry-card-description">International initiatives, communication.</p>
         </div>
-    </section>
-    
+        <div class="industry-card">
+            <h4 class="industry-card-title">Real Estate</h4>
+            <p class="industry-card-description">Contracts, agreements.</p>
+        </div>
+        <div class="industry-card">
+            <h4 class="industry-card-title">Government</h4>
+            <p class="industry-card-description">Government agencies, diplomatic relations.</p>
+        </div>
+
+        <!-- Add more industry cards here if needed -->
+    </div>
 </div>
 
-<div class="row bg-warning">
-    <div class="col-md-6">
-        <img style="max-height: 400px;" src="{% static 'app/images/3-steps.jpg' %}" class="img-fluid mt-3 round-border-radius" alt="Mokreyol Image">
-    </div>
-    <div class="col-md-6">
-        <h3>Translate Your  Document in Three Simple Steps</h3>
-        <ol>
-            <li>1. Send us your files.</li>
-            <li>2. Pay online.</li>
-            <li>3. Receive the translation.</li>
-        </ol>
-        <button class="btn btn-danger">Get Started today</button>
-        <p>Security, Privacy and Confidentiality Guarantee
-            Your information is protected by 256-bit SSL encryption.
-            We never store your credit card information.</p>
-    </div>
 
-</div>
 
-<div class="row bg-warning ">
-   
-    <div class="col-md-6">
-        <h3>Choose between 4 languages</h3>
-        <p>We offer excellent translation in between 4 languages</p>
-        <ol>
-            <li>Haitian Creole</li>
-            <li>French</li>
-            <li>English </li>
-            <li>Spanish </li>
-        </ol>
-        <button class="btn btn-danger">Get Started today</button>
-        <p>Security, Privacy and Confidentiality Guarantee
-            Your information is protected by 256-bit SSL encryption.
-            We never store your credit card information.</p>
-    </div>
-    <div class="col-md-6">
-        <img style="max-height: 400px;"  src="{% static 'app/images/3-steps.jpg' %}" class="img-fluid mt-3 round-border-radius" alt="Mokreyol Image">
-    </div>
 
-</div>
+
 {% endblock %}

@@ -103,6 +103,7 @@
     <Content Include="app\templates\app\create_translation_request.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="app\templates\app\servicesteps.html" />
     <Content Include="app\templates\app\translation_tracker.html">
       <SubType>Code</SubType>
     </Content>
@@ -119,6 +120,7 @@
     <Content Include="app\templates\app\navpartial.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="app\templates\app\_jumbotron.html" />
     <Content Include="app\templates\app\_languages.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />

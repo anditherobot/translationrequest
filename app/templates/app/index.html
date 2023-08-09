@@ -45,6 +45,7 @@
 {% include 'app/_jumbotron.html' %}
 
   {% language_cards %}
+  {% include 'app/servicesteps.html' %}
 
 <style>
     .info-container {
@@ -94,49 +95,30 @@
 </style>
 
 
-<div class="row ">
-    <div class="col-md-8">
-        <div class="info-container">
-            <div class="info-content">
-                <h3>Translate Your Document with Ease</h3>
-                <ul>
-                    <li>1. Upload your files to our platform.</li>
-                    <li>2. Make a secure online payment.</li>
-                    <li>3. Download the translated document.</li>
-                </ul>
-                <button class="btn btn-success mt-3">Start Translation</button>
-                <p>We prioritize your security and privacy. Your data is encrypted using SSL technology, and we do not store credit card information.</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
 
-        <img class="info-image img-fluid rounded" src="{% static 'app/images/3-steps.jpg' %}" height="633" alt="Mokreyol Image">
 
-    </div>
-</div>
 
 <section class="row mb-3 pb-2 mt-3 bg-white">
     <h2 class="text-center">Our services</h2>
 
-    <div class="col-md-4">
-        <div class="card box_1">
+    <div class="col-lg-4 d-flex">
+        <div class="card box_1 flex-fill">
             <div class="card-body">
                 <h3 class="card-title">Translation</h3>
                 <p class="card-text">Accurate and precise translations.</p>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card box_2">
+    <div class="col-lg-4 d-flex">
+        <div class="card box_2 flex-fill">
             <div class="card-body">
                 <h3 class="card-title">Content Creation</h3>
-                <p class="card-text">Engaging  and culturally relevant .</p>
+                <p class="card-text">Engaging and culturally relevant.</p>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card box_3">
+    <div class="col-lg-4 d-flex">
+        <div class="card box_3 flex-fill">
             <div class="card-body">
                 <h3 class="card-title">Subtitling / Closed Captions</h3>
                 <p class="card-text">Presentations, Videos, Audio and Graphics</p>
@@ -144,6 +126,7 @@
         </div>
     </div>
 </section>
+
 
 
 <div class="row bg-white">
@@ -157,7 +140,7 @@
             <h4 class="industry-card-title">E-commerce and Retail</h4>
             <p class="industry-card-description">E-commerce platforms, retail companies.</p>
         </div>
-        
+
 
         <div class="industry-card">
             <h4 class="industry-card-title">Media and Entertainment</h4>

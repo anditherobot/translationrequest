@@ -1,0 +1,124 @@
+{% load static %}
+
+<div class="row ">
+    <div class="col-md-8">
+        <div class="card" style="min-height:380px;">
+            <div class="card-header bg-dark">
+                <h3 class="card-title">The Process</h3>
+                <ul class="nav nav-tabs bg-secondary card-header-tabs" data-bs-tabs="tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#translation">Translation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#subtitle">Subtitle</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#content-gen">Content Generation</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body tab-content">
+                <div class="tab-pane active " id="translation">
+                    <h3>Translate Your Document with Ease</h3>
+                    <ul>
+                        <li>1. Upload your files to our platform.</li>
+                        <li>2. Make a secure online payment.</li>
+                        <li>3. Download the translated document.</li>
+                    </ul>
+                    <button class="btn btn-success mt-3">Start Translation</button>
+                    <p>We prioritize your security and privacy. Your data is encrypted using SSL technology, and we do not store credit card information.</p>
+                </div>
+                <div class="tab-pane " id="subtitle">
+                    <h3>Subtitle Services</h3>
+                    <ul>
+                        <li>1. Upload your video or audio file.</li>
+                        <li>2. Select the language and subtitle style.</li>
+                        <li>3. Receive your subtitled media.</li>
+                    </ul>
+                    <button class="btn btn-success mt-3">Add Subtitles</button>
+                    <p>Efficiently add subtitles to your multimedia content with our user-friendly process.</p>
+                </div>
+                <div class="tab-pane" id="content-gen">
+                    <h3>Create Content Easily</h3>
+                    <ul>
+                        <li>1. Choose a topic or subject.</li>
+                        <li>2. Select the media type (article, blog, video script, etc.).</li>
+                        <li>3. Choose the desired language and details.</li>
+                    </ul>
+                    <button class="btn btn-success mt-3">Generate Content</button>
+                    <p>Our content generation service helps you produce high-quality content efficiently for various mediums.</p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-4">
+
+        <div class="custom-info">
+            <img class="info-image img-fluid rounded" src="{% static 'app/images/3-steps.jpg' %}" alt="Mokreyol Image">
+        </div>
+    </div>
+</div>
+
+
+<style>
+
+    .custom-info {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 380px;
+    }
+
+    .info-image {
+        max-height: 100%;
+        max-width: 100%;
+    }
+
+    .card-title {
+        text-align: center;
+    }
+
+    .nav-tabs .nav-link {
+        color: white; /* Text color for inactive tabs */
+        background-color: transparent; /* Background color for inactive tabs */
+        border-color: #dee2e6; /* Border color for inactive tabs */
+    }
+
+        .nav-tabs .nav-link:hover {
+            color: #000; /* Text color on hover */
+            background-color: #ece6f2; /* Background color on hover */
+            border-color: #e2e6ea; /* Border color on hover */
+        }
+
+        .nav-tabs .nav-link.active {
+            color: #000; /* Text color for active tab */
+            background-color: #f8f9fa; /* Background color for active tab */
+            border-color: #f8f9fa; /* Border color for active tab */
+        }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var tabs = document.querySelectorAll('.nav-tabs a');
+        var customInfo = document.querySelector('.custom-info');
+
+        tabs.forEach(function (tab) {
+            tab.addEventListener('click', function () {
+                var activeTab = tab.getAttribute('href');
+                var customContent = '';
+
+                if (activeTab === '#translation') {
+                    customContent = '<img class="info-image img-fluid rounded" src="{% static 'app/images/3-steps.jpg' %}" height="633" alt="Mokreyol Image">';
+                } else if (activeTab === '#subtitle') {
+                    customContent = '<img class="info-image img-fluid rounded" src="{% static 'app/images/subtitling.png' %}" height="633" alt="Other Image">';
+                } else if (activeTab === '#content-gen') {
+                    customContent = '<img class="info-image img-fluid rounded" src="{% static 'app/images/content-gen.jpg' %}" height="633" alt="Another Image">';
+                }
+
+                customInfo.innerHTML = customContent;
+            });
+        });
+    });
+</script>

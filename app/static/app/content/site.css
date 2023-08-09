@@ -1,6 +1,6 @@
 body {
     padding-top: 50px;
-    padding-bottom: 20px;
+    padding-bottom: 30px;
     background: rgb(240,240,240);
     background: -moz-radial-gradient(circle, rgba(240,240,240,1) 0%, rgba(42,123,167,1) 92%);
     background: -webkit-radial-gradient(circle, rgba(240,240,240,1) 0%, rgba(42,123,167,1) 92%);
@@ -10,6 +10,9 @@ body {
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
+    background-color: lightblue;
+    border: 1px solid grey;
+    padding-top: 10px;
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -98,5 +101,11 @@ ul.request-list {
 .request-id {
     font-weight: bold;
 }
+
+
+
+
+
+
 
 

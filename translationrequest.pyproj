@@ -122,6 +122,7 @@
     </Content>
     <Content Include="app\templates\app\_jumbotron.html" />
     <Content Include="app\templates\app\_languages.html" />
+    <Content Include="app\templates\app\_ourservices.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

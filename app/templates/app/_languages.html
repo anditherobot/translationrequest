@@ -86,29 +86,46 @@
         margin-bottom: 0;
     }
 
+    @media (max-width: 992px) {
+        .col-md-3 {
+            width: 50%;
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+    }
+
+    /* New style for 1 column on small screens */
+
+
+    @media (max-width: 380px) {
+        .col-md-3 {
+            width: 100%;
+            flex: 0 0 50%;
+            max-width: 100%;
+        }
+    }
+
     
 
 </style>
 
-            <div class="row" style="margin-bottom: 10px;">
-                <h2 class="languages-title">Supported Languages</h2>
-                {% for language in languages %}
-                <div class="col-md-3 ">
-                    <div class="card flag-card" style="background-color: {{ language.card_color }}; ">
-                        <div class="flag-card-body" >
-                            <div class="flag-image-container">
-                                <img src="{% static language.flag_image %}" alt="{{ language.name }}" style="width: 50px; height: 60px;">
-                            </div>
-                            <h4 class="flag-card-title" >{{ language.name }}</h4>
-                            <ul class="language-stats">
-                                <li><b>Classification: </b>{{ language.classification }}</li>
-                                <li><b>Speakers: </b>{{ language.speakers }}</li>
-                                <li><b>Origin: </b>{{ language.origin }}</li>
-                             
-                            </ul>
-                        </div>
-                    </div>
+<div class="row" style="margin-bottom: 10px;">
+    <h2 class="languages-title">Supported Languages</h2>
+    {% for language in languages %}
+    <div class="col-md-3 ">
+        <div class="card flag-card" style="background-color: {{ language.card_color }}; ">
+            <div class="flag-card-body">
+                <div class="flag-image-container">
+                    <img src="{% static language.flag_image %}" alt="{{ language.name }}" style="width: 50px; height: 60px;">
                 </div>
-                {% endfor %}
+                <h4 class="flag-card-title">{{ language.name }}</h4>
+                <ul class="language-stats">
+                    <li><b>Classification: </b>{{ language.classification }}</li>
+                    <li><b>Speakers: </b>{{ language.speakers }}</li>
+                    <li><b>Origin: </b>{{ language.origin }}</li>
+                </ul>
             </div>
-
+        </div>
+    </div>
+    {% endfor %}
+</div>

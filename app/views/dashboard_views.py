@@ -135,13 +135,16 @@ def upload_files_for_request(request, request_id):
 def view_translation_request(request, request_id):
     translation_request = get_object_or_404(TranslationRequest, id=request_id)
     client_files = translation_request.files.all()
-
+    
+    
+    
     # Check if all files are not pending
     all_files_completed = all(file.status == "Completed" for file in client_files)
 
     context = {
         "translation_request": translation_request,
         "client_files": client_files,
+        'status_counts': translation_request.get_file_status_counts(),
         "all_files_completed": all_files_completed,  # Pass the check variable to the template
     }
     return render(request, "app/dashboard/view_translation_request.html", context)

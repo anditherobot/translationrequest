@@ -96,6 +96,19 @@ class TranslationRequest(models.Model):
         if self.source_language == self.target_language:
             raise ValidationError("Source and target languages cannot be the same.")
 
+    #related name is files
+    def get_file_count(self):
+        return self.files.count()
+
+    def get_file_status_counts(self):
+        status_counts = {
+            'Pending': self.files.filter(status='Pending').count(),
+            'InProgress': self.files.filter(status='In Progress').count(),
+            'Completed': self.files.filter(status='Completed').count(),
+            'Void': self.files.filter(status='Void').count(),
+        }
+        return status_counts
+
 class ClientFile(models.Model):
     PENDING = 'Pending'
     IN_PROGRESS = 'In Progress'

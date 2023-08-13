@@ -26,6 +26,8 @@
                         <tr>
                             <th>Request ID</th>
                             <th>Request Date</th>
+
+                            <th>File Count</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -35,6 +37,7 @@
                         <tr>
                             <td>{{ request.id }}</td>
                             <td>{{ request.request_date }}</td>
+                            <td>{{ request.get_file_count}}</td>
                             <td>{{ request.status }}</td>
                             <td><a href="{% url 'view_translation_request' request_id=request.id %}" class="btn btn-info">View Request</a></td>
                         </tr>

@@ -1,0 +1,23 @@
+{% extends 'app/layout.html' %}
+
+{% block content %}
+<h1>Files for {{ client.first_name }} {{ client.last_name }}</h1>
+<ul>
+    {% for request in client.translationrequest_set.all %}
+    <h2>Request ID: {{ request.id }}</h2>
+    <ul>
+        {% for file in request.clientfile_set.all %}
+        <li>
+            File ID: {{ file.id }}<br>
+            Original File: {{ file.original_file.name }}<br>
+            Status: {{ file.status }}<br>
+            {% if file.status == 'Completed' %}
+            <a href="{% url 'download_file' request_id=request.id file_id=file.id %}" class="btn btn-primary">Download File</a>
+            {% endif %}
+        </li>
+        <br>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+</ul>
+{% endblock %}

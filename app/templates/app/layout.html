@@ -10,10 +10,11 @@
 
 </head>
 <body>
-    <header>
-        {% include 'app/navpartial.html' %}
-    </header>
-    <div class="container body-content">
+    <div class="container fluid body-content">
+        <header>
+            {% include 'app/navpartial.html' %}
+        </header>
+
         <main>
             {% block content %}
             {% endblock %}

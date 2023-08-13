@@ -27,14 +27,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 CRISPY_TEMPLATE_PACK = "bootstrap5"
-
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Application references
 # https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-INSTALLED_APPS
 INSTALLED_APPS = [
     "crispy_forms",
-    "crispy_bootstrap3",
+    "crispy_bootstrap5",
     "app",
     # Add your apps here to enable them
     "django.contrib.admin",

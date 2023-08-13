@@ -1,0 +1,50 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+<h1>Translation Request Form</h1>
+
+
+<style>
+    .translation-request-form {
+        background-color: red;
+        border: 2px solid black;
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+<div class="row">
+    <div class="col-6">
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_source_language" class="form-label">Source Language</label>
+                <select name="source_language" id="id_source_language" class="form-select">
+                    <option value="">Select a language</option>
+                    {% for choice in form.source_language.field.choices %}
+                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="id_target_language" class="form-label">Target Language</label>
+                <select name="target_language" id="id_target_language" class="form-select">
+                    <option value="">Select a language</option>
+                    {% for choice in form.target_language.field.choices %}
+                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="id_content" class="form-label">Content</label>
+                <textarea name="content" id="id_content" class="form-control" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+     
+    </div>
+</div>
+
+{% endblock %}

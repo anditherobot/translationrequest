@@ -1,0 +1,51 @@
+{% extends "app/layout.html" %}
+{% load static %} <!-- Load the static files -->
+{% block content %}
+<div class="container dashboard">
+   
+    <div class="row">
+        <h1 class="mb-4">Client Request Dashboard</h1>
+        <div class="col-md-4">
+            <div class="client-info border p-3 mb-4">
+                <h2>Welcome, {{ client_info.first_name }} {{ client_info.last_name }}!</h2>
+                <p>Email: {{ client_info.email }}</p>
+                <p>Term and Conditions: {% if client_info.term_condition %}Accepted{% else %}Not Accepted{% endif %}</p>
+            </div>
+
+            <div class="file-section mt-4">
+                <a href="{% url 'create_translation_request' client_id=client_info.id %}" class="btn btn-primary">Create New Translation Request</a>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="request-section mt-4">
+                <h2>Current Translation Requests</h2>
+                {% if translation_requests %}
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            <th>Request Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for request in translation_requests %}
+                        <tr>
+                            <td>{{ request.id }}</td>
+                            <td>{{ request.request_date }}</td>
+                            <td>{{ request.status }}</td>
+                            <td><a href="{% url 'view_translation_request' request_id=request.id %}" class="btn btn-info">View Request</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>No current translation requests found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

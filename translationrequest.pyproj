@@ -33,12 +33,13 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="app\dashboard-views.py" />
     <Compile Include="app\forms.py" />
     <Compile Include="app\models.py" />
     <Compile Include="app\notification_utils.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="app\templates\app\view_files_by_status.html">
+    <Compile Include="app\templates\app\dashboard\view_files_by_status.html">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="app\templatetags\custom_filters.py">
@@ -49,7 +50,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="app\tests.py" />
-    <Compile Include="app\views.py" />
+    <Compile Include="app\views\client_views.py" />
+    <Compile Include="app\views\dashboard_views.py" />
+    <Compile Include="app\views\__init__.py" />
     <Compile Include="app\__init__.py" />
     <Compile Include="app\migrations\__init__.py" />
     <Compile Include="manage.py" />
@@ -64,7 +67,9 @@
   <ItemGroup>
     <Folder Include="app\" />
     <Folder Include="app\migrations\" />
+    <Folder Include="app\views\" />
     <Folder Include="app\static\app\images\" />
+    <Folder Include="app\templates\app\dashboard\" />
     <Folder Include="app\templatetags\" />
     <Folder Include="app\static\" />
     <Folder Include="app\static\app\" />
@@ -87,34 +92,34 @@
     <Content Include="app\static\app\scripts\bootstrap.js.map" />
     <Content Include="app\static\app\scripts\jquery-3.7.0.min.js" />
     <Content Include="app\static\app\scripts\jquery-3.7.0.min.map" />
-    <Content Include="app\templates\app\client_dashboard.html" />
-    <Content Include="app\templates\app\create_client.html" />
-    <Content Include="app\templates\app\dashboard_layout.html">
+    <Content Include="app\templates\app\dashboard\client_dashboard.html" />
+    <Content Include="app\templates\app\dashboard\create_client.html" />
+    <Content Include="app\templates\app\dashboard\dashboard_layout.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="app\templates\app\faq.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="app\templates\app\file_details.html">
+    <Content Include="app\templates\app\dashboard\file_details.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="app\templates\app\list_clients.html" />
+    <Content Include="app\templates\app\dashboard\list_clients.html" />
     <Content Include="app\templates\app\services.html" />
-    <Content Include="app\templates\app\create_translation_request.html">
+    <Content Include="app\templates\app\dashboard\create_translation_request.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="app\templates\app\servicesteps.html" />
-    <Content Include="app\templates\app\translation_tracker.html">
+    <Content Include="app\templates\app\dashboard\translation_tracker.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="app\templates\app\upload_files_for_request.html">
+    <Content Include="app\templates\app\dashboard\upload_files_for_request.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="app\templates\app\upload_translated_file.html">
+    <Content Include="app\templates\app\dashboard\upload_translated_file.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="app\templates\app\view_all_translation_request.html" />
-    <Content Include="app\templates\app\view_translation_request.html">
+    <Content Include="app\templates\app\dashboard\view_all_translation_request.html" />
+    <Content Include="app\templates\app\dashboard\view_translation_request.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="app\templates\app\navpartial.html">
@@ -123,6 +128,7 @@
     <Content Include="app\templates\app\_jumbotron.html" />
     <Content Include="app\templates\app\_languages.html" />
     <Content Include="app\templates\app\_ourservices.html" />
+    <Content Include="libman.json" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

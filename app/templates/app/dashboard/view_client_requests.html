@@ -1,0 +1,17 @@
+{% extends 'app/layout.html' %}
+
+{% block content %}
+<h1>Requests for {{ client.first_name }} {{ client.last_name }}</h1>
+<ul>
+    {% for request in client.translationrequest_set.all %}
+    <li>
+        Request ID: {{ request.id }}<br>
+        Source Language: {{ request.source_language }}<br>
+        Target Language: {{ request.target_language }}<br>
+        Status: {{ request.status }}<br>
+        <a href="{% url 'view_translation_request' request.id %}" class="btn btn-primary">View Request</a>
+    </li>
+    <br>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -51,11 +51,6 @@ class ClientInfoForm(forms.ModelForm):
         model = ClientInfo
         fields = ['first_name', 'last_name', 'email']
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["first_name"].widget.attrs.update({"class": "form-control"})
-        self.fields["last_name"].widget.attrs.update({"class": "form-control"})
-        self.fields["email"].widget.attrs.update({"class": "form-control"})
        
 
 BLACKLISTED_EXTENSIONS = ['.exe', '.bat', '.cmd']  # Add any other blacklisted extensions here
@@ -98,18 +93,7 @@ class ClientFileForm(forms.ModelForm):
 
 
 class TranslationRequestForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_method = 'post'
-        self.helper.form_class = 'translation-form'  # Add a custom CSS class to the form
-        self.helper.layout = Layout(
-            Field('client', css_class='form-control'),
-            Field('source_language', css_class='form-control'),
-            Field('target_language', css_class='form-control'),
-            Field('content', css_class='form-control'),
-            Submit('submit', 'Submit', css_class='btn btn-primary')
-        )
+    
     class Meta:
         model = TranslationRequest
         fields = ['source_language', 'target_language', 'content']

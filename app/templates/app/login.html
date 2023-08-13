@@ -4,7 +4,7 @@
 
 <h2>{{ title }}</h2>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
         <section id="loginForm">
             <form action="." method="post" class="form-horizontal">
                 {% csrf_token %}
@@ -25,7 +25,7 @@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="hidden" name="next" value="/" />
-                        <input type="submit" value="Log in" class="btn btn-default" />
+                        <input type="submit" value="Log in" class="btn btn-success mt-3" />
                     </div>
                 </div>
                 {% if form.errors %}
@@ -34,9 +34,7 @@
             </form>
         </section>
     </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm"></section>
-    </div>
+    
 </div>
 
 {% endblock %}

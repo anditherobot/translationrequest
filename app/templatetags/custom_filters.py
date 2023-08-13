@@ -16,3 +16,10 @@ def get_filename(value, keep_last_10=False):
         filename = filename[-10:]
     return filename
 
+
+@register.filter(name='add_class')
+def add_class(value, arg):
+    css_classes = value.field.widget.attrs.get('class', '')
+    css_classes += f' {arg}'
+    return value.as_widget(attrs={'class': css_classes})
+

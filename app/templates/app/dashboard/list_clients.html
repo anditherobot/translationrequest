@@ -15,6 +15,7 @@
                     <th>Term & Condition</th>
                     <th>Date Created</th>
                     <th>Date Modified</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +27,10 @@
                     <td>{{ client.term_condition|yesno:"Yes,No" }}</td>
                     <td>{{ client.date_created|date:"M d, Y" }}</td>
                     <td>{{ client.date_modified|date:"M d, Y" }}</td>
+                    <td>
+                        <a href="{% url 'view_client_requests' client.id %}" class="btn btn-primary">View All Requests</a>
+                        <a href="{% url 'view_client_files' client.id %}" class="btn btn-secondary">View Files</a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

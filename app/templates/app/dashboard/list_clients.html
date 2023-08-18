@@ -3,45 +3,65 @@
 
 {% block content %}
 <div class="container">
-    <h2>List of Current Clients</h2>
-    {% if clients %}
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-            <thead>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Term & Condition</th>
-                    <th>Date Created</th>
-                    <th>Date Modified</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for client in clients %}
-                <tr class="clickable-row" data-href="{% url 'client_dashboard' client_id=client.id %}">
-                    <td>{{ client.first_name }}</td>
-                    <td>{{ client.last_name }}</td>
-                    <td>{{ client.email }}</td>
-                    <td>{{ client.term_condition|yesno:"Yes,No" }}</td>
-                    <td>{{ client.date_created|date:"M d, Y" }}</td>
-                    <td>{{ client.date_modified|date:"M d, Y" }}</td>
-                    <td>
-                        <a href="{% url 'view_client_requests' client.id %}" class="btn btn-primary">View All Requests</a>
-                        <a href="{% url 'view_client_files' client.id %}" class="btn btn-secondary">View Files</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Logged-in User Profile</h5>
+                    <p class="card-text">Username: {{ user.username }}</p>
+                    <p class="card-text">Email: {{ user.email }}</p>
+                    <!-- Add other user details you want to display -->
+                </div>
+            </div>
+        </div>
     </div>
-    {% else %}
-    <p>No clients found.</p>
-    {% endif %}
+    <div class="row">
+        
+        <div class="col-md-12">
+            <h2>List of Current Clients</h2>
+            {% if clients %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Term & Condition</th>
+                            <th>Date Created</th>
+                            <th>Date Modified</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for client in clients %}
+                        <tr class="clickable-row" data-href="{% url 'client_dashboard' client_id=client.id %}">
+                            <td>{{ client.first_name }}</td>
+                            <td>{{ client.last_name }}</td>
+                            <td>{{ client.email }}</td>
+                            <td>{{ client.term_condition|yesno:"Yes,No" }}</td>
+                            <td>{{ client.date_created|date:"M d, Y" }}</td>
+                            <td>{{ client.date_modified|date:"M d, Y" }}</td>
+                            <td>
+                                <a href="{% url 'view_client_requests' client.id %}" class="btn btn-primary">View All Requests</a>
+                                <a href="{% url 'view_client_files' client.id %}" class="btn btn-secondary">View Files</a>
+                                <a href="#" class="btn btn-info">Message</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p>No clients found.</p>
+            {% endif %}
+        </div>
+    </div>
 </div>
 
-<script>document.addEventListener("DOMContentLoaded", function () {
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
         const rows = document.querySelectorAll(".clickable-row");
         rows.forEach(row => {
             row.addEventListener("click", function () {
@@ -51,5 +71,6 @@
                 }
             });
         });
-    });</script>
+    });
+</script>
 {% endblock %}

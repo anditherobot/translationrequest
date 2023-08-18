@@ -8,7 +8,8 @@ from django.utils.translation import gettext_lazy as _
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import ButtonHolder, Submit, Layout, Row, Column, Field
 from app.models import TranslationRequest, ClientFile, ClientInfo
-
+from django.core.exceptions import ValidationError
+from .validators import subject_verb_not_equal
 
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
@@ -93,10 +94,21 @@ class ClientFileForm(forms.ModelForm):
 
 
 class TranslationRequestForm(forms.ModelForm):
-    
+
     class Meta:
         model = TranslationRequest
-        fields = ['source_language', 'target_language', 'content']
+        fields = [
+           
+            'source_language',
+            'target_language',
+            'content',  
+        ]
+        widgets = {
+            'source_language' : forms.RadioSelect,
+            'target_language' : forms.RadioSelect
+            }
+
+
 
 
 
@@ -104,5 +116,38 @@ class TranslationRequestForm(forms.ModelForm):
 class TranslatedFileUploadForm(forms.Form):
     processed_file = forms.FileField()
 
+class SandboxForm(forms.Form):
+    LANGUAGE_CHOICES = [
+        ('fr', 'French'),
+        ('en', 'English'),
+        ('es', 'Spanish'),
+    ]
+
+    subject = forms.ChoiceField(
+        label='Your name',
+        choices=LANGUAGE_CHOICES,
+        widget=forms.RadioSelect(attrs={'class': 'vertical-select'}),
+        error_messages={
+            'required': 'Please select your name.',
+        }
+    )
+    verb = forms.ChoiceField(
+        label='Your last name',
+        choices=LANGUAGE_CHOICES,
+        widget=forms.RadioSelect(attrs={'class': 'vertical-select'}),
+        error_messages={
+            'required': 'Please select your last name.',
+        }
+    )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        subject = cleaned_data.get('subject')
+        verb = cleaned_data.get('verb')
+
+        if subject == verb and subject is not None:
+            raise forms.ValidationError("Subject and verb can't be the same.")
+
+        return cleaned_data
 
 

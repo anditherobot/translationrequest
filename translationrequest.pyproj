@@ -50,6 +50,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="app\tests.py" />
+    <Compile Include="app\validators.py" />
     <Compile Include="app\views\client_views.py" />
     <Compile Include="app\views\dashboard_views.py" />
     <Compile Include="app\views\__init__.py" />
@@ -83,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="app\templates\app\form_template.html" />
     <Content Include="app\static\app\content\dashboard.css">
       <SubType>Code</SubType>
     </Content>
@@ -104,6 +106,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="app\templates\app\dashboard\list_clients.html" />
+    <Content Include="app\templates\app\sandbox.html" />
     <Content Include="app\templates\app\services.html" />
     <Content Include="app\templates\app\dashboard\create_translation_request.html">
       <SubType>Code</SubType>

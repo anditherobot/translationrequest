@@ -13,9 +13,7 @@
         font-weight: bold;
         margin-bottom: 0.5rem;
     }
-
     .invalid-feedback {
-        display: none;
         color: red;
         margin-top: 0.25rem;
     }
@@ -29,43 +27,11 @@
 <div class="row">
     <div class="col-12">
         <h1 class="text-center mb-4">Translation Request Form</h1>
-        <form method="post" class="needs-validation" novalidate>
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="id_source_language" class="form-label">Source Language</label>
-                <select name="source_language" required id="id_source_language" class="form-select {% if form.source_language.errors %}is-invalid{% endif %}">
-                    <option value="" {% if not form.source_language.value %}selected{% endif %}>Select a source language.</option>
-                    <option value="French" {% if form.source_language.value == "French" %}selected{% endif %}>French</option>
-                    <option value="Haitian Creole" {% if form.source_language.value == "Haitian Creole" %}selected{% endif %}>Haitian Creole</option>
-                    <option value="English" {% if form.source_language.value == "English" %}selected{% endif %}>English</option>
-                    <option value="Spanish" {% if form.source_language.value == "Spanish" %}selected{% endif %}>Spanish</option>
-                </select>
-                <div class="invalid-feedback">Please select a source language.</div>
-            </div>
-            <div class="form-group">
-                <label for="id_target_language" class="form-label">Target Language</label>
-                <select name="target_language" required id="id_target_language" class="form-select {% if form.target_language.errors %}is-invalid{% endif %}">
-                    <option value="" {% if not form.target_language.value %}selected{% endif %}>Select a target language.</option>
-                    <option value="French" {% if form.target_language.value == "French" %}selected{% endif %}>French</option>
-                    <option value="Haitian Creole" {% if form.target_language.value == "Haitian Creole" %}selected{% endif %}>Haitian Creole</option>
-                    <option value="English" {% if form.target_language.value == "English" %}selected{% endif %}>English</option>
-                    <option value="Spanish" {% if form.target_language.value == "Spanish" %}selected{% endif %}>Spanish</option>
-                </select>
-                <div class="invalid-feedback">Please select a target language.</div>
-            </div>
-            <div class="form-group">
-                <label for="id_content" class="form-label">Content</label>
-                <textarea name="content" cols="40" rows="10" required id="id_content" class="form-control {% if form.content.errors %}is-invalid{% endif %}">{{ form.content.value }}</textarea>
-                <div class="invalid-feedback">Please enter content.</div>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            {% if form.errors %}
-            <div class="invalid-feedback mt-3">
-                Please correct the errors below.
-            </div>
-            {% endif %}
-        </form>
+        {% include 'app/form_template.html' with form=translation_form %}
+
+        {% include 'app/form_template.html' with form=files_form %}
+
+
     </div>
 </div>
-
 {% endblock %}

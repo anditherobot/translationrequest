@@ -83,18 +83,23 @@ def validate_different_languages(cleaned_data):
 class TranslationRequest(models.Model):
     client = models.ForeignKey('ClientInfo', on_delete=models.CASCADE)
     request_date = models.DateTimeField(auto_now_add=True)
-    source_language = models.CharField(max_length=50, choices=LANGUAGE_CHOICES )
-    target_language = models.CharField(max_length=50, choices=LANGUAGE_CHOICES)
-    content = models.TextField(help_text="Additional information")
+    source_language = models.CharField(max_length=50, choices=LANGUAGE_CHOICES, blank=False, default='Unspecified' )
+    target_language = models.CharField(max_length=50, choices=LANGUAGE_CHOICES, blank=False, default='Unspecified')
+    content = models.TextField(verbose_name="Additional information", default="")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
-    completed_files = models.PositiveIntegerField(default=0)  # New field to track completed files
+    completed_files = models.PositiveIntegerField(default=0)
+
 
     def __str__(self):
         return f"Translation Request {self.pk} - Client: {self.client}, Status: {self.status}"
 
     def clean(self):
+        super().clean()
+        cleaned_data = super().clean()
+       
         if self.source_language == self.target_language:
             raise ValidationError("Source and target languages cannot be the same.")
+          
 
     #related name is files
     def get_file_count(self):

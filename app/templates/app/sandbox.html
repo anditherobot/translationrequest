@@ -1,0 +1,5 @@
+{% extends 'app/layout.html' %} {# Your base template #}
+{% block content %}
+<h2>Submit Your Form</h2>
+    {% include 'app/form_template.html' with form=form %}
+{% endblock %}

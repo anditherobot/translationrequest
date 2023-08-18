@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from ..forms import (
+    SandboxForm,
     TranslationRequestForm,
     ClientInfoForm,
     ClientFileForm,
     TranslatedFileUploadForm,
+    
 )
 from ..models import TranslationRequest, ClientInfo, ClientFile
 from django.http import HttpResponse, Http404, JsonResponse
@@ -66,7 +68,7 @@ def create_client(request):
 
 
 def client_dashboard(request, client_id):
-    client_info = ClientInfo.objects.get(pk=client_id)
+    client_info = ClientInfo.objects    .get(pk=client_id)
     translation_requests = TranslationRequest.objects.filter(client=client_info)
 
     context = {
@@ -76,60 +78,39 @@ def client_dashboard(request, client_id):
     return render(request, "app/dashboard/client_dashboard.html", context)
 
 
-def create_translation_request_view(request, client_id):
+def create_translation_request(request, client_id):
     client = get_object_or_404(ClientInfo, id=client_id)
-    if request.method == "POST":
-        form = TranslationRequestForm(request.POST)
-        if form.is_valid():
-            translation_request = form.save(commit=False)
 
-            translation_request.client_id = (
-                client_id  # Set the client using the foreign key ID
-            )
+    if request.method == "POST":
+        translation_form = TranslationRequestForm(request.POST)
+        files_form = ClientFileForm(request.POST, request.FILES)
+
+        if translation_form.is_valid() and files_form.is_valid():
+            translation_request = translation_form.save(commit=False)
+            translation_request.client = client
             translation_request.save()
-            return redirect(
-                "upload_files_for_request", request_id=translation_request.id
-            )
-    else:
-        form = TranslationRequestForm(
-            initial={"client": client}
-        )  # Pass the client info to the form as an initial value
 
-    return render(
-        request, "app/dashboard/create_translation_request.html", {"form": form}
-    )
-
-
-def upload_files_for_request(request, request_id):
-    translation_request = get_object_or_404(TranslationRequest, id=request_id)
-    client_info = translation_request.client
-
-    if request.method == "POST":
-        form = ClientFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            files = request.FILES.getlist("file")  # Get multiple files
+            files = request.FILES.getlist("file")
 
             for file in files:
-                # Save each file and associate them with the translation request
-                client_files = ClientFile(
-                    client=client_info,
+                client_file = ClientFile(
+                    client=client,
                     translation_request=translation_request,
                     original_file=file,
                 )
-                client_files.save()
+                client_file.save()
 
-            return redirect(
-                "view_translation_request", request_id=request_id
-            )  # Redirect to the view_translation_request URL
+            return redirect("view_translation_request", request_id=translation_request.id)
     else:
-        form = ClientFileForm()
+        translation_form = TranslationRequestForm(initial={"client": client})
+        files_form = ClientFileForm()
 
     context = {
-        "form": form,
-        "translation_request": translation_request,
-        "client_info": client_info,
+        "translation_form": translation_form,
+        "files_form": files_form,
+        "client": client,
     }
-    return render(request, "app/dashboard/upload_files_for_request.html", context)
+    return render(request, "app/dashboard/create_translation_request.html", context)
 
 
 def view_translation_request(request, request_id):
@@ -342,3 +323,24 @@ def view_client_files(request, pk):
     client = get_object_or_404(ClientInfo, pk=pk)
     # Retrieve and pass files related to the client to the template
     return render(request, 'app/dashboard/view_client_files.html', {'client': client})
+
+
+
+
+def sandbox(request):
+    if request.method == 'POST':
+        form = SandboxForm(request.POST)
+        if form.is_valid():
+            # Process the form data if it's valid
+            subject = form.cleaned_data['subject']
+            verb = form.cleaned_data['verb']
+            # Do something with the subject data
+            
+            # Add the subject to the context variable
+            context = {'form': form, 'subject': subject, 'verb': verb}
+            return render(request, 'app/sandbox.html', context)
+    else:
+        form = SandboxForm()
+
+    context = {'form': form}
+    return render(request, 'app/sandbox.html', context)

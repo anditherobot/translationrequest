@@ -41,8 +41,8 @@ urlpatterns = [
 
     path('create_client/', views.create_client, name='create_client'),
     path('client/<int:client_id>/', views.client_dashboard, name='client_dashboard'),
-    path('client/<int:client_id>/create_request/', views.create_translation_request_view, name='create_translation_request'),
-    path('client/request/<int:request_id>/upload_files/', views.upload_files_for_request, name='upload_files_for_request'),
+    path('client/<int:client_id>/create_request/', views.create_translation_request, name='create_translation_request'),
+    #dddpath('client/request/<int:request_id>/upload_files/', views.upload_files_for_request, name='upload_files_for_request'),
     path('view_client_requests/<int:pk>/', views.view_client_requests, name='view_client_requests'),
      # View Translation Request Details
     path('request/<int:request_id>/', views.view_translation_request, name='view_translation_request'),
@@ -60,7 +60,7 @@ urlpatterns = [
     path('generate_receipt/', views.generate_fictional_receipt, name='generate_receipt'),
     path('terms_conditions/', views.terms_conditions, name='terms_conditions'),
     path('view_client_files/<int:pk>/', views.view_client_files, name='view_client_files'),
-
+    path('sandbox', views.sandbox, name='sandbox')
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

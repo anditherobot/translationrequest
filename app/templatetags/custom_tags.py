@@ -10,7 +10,7 @@ def language_cards():
         {
             'name': 'Haitian Creole',
             'card_color': '#e9f2f4',
-            'flag_image': 'app/images/ht.svg',
+            'flag_image': 'app/images/haitian_creole.svg',
             'classification': 'Romance',
             'speakers': 'Speakers: 12M',
             'origin': 'Haiti',
@@ -19,7 +19,7 @@ def language_cards():
         {
             'name': 'French',
             'card_color': '#ece6f2',
-            'flag_image': 'app/images/fr.svg',
+            'flag_image': 'app/images/french.svg',
             'classification': 'Romance',
             'speakers': 'Speakers: 274M',
             'origin': 'France',
@@ -28,7 +28,7 @@ def language_cards():
         {
             'name': 'English',
             'card_color': '#ede8e1',
-            'flag_image': 'app/images/us.svg',
+            'flag_image': 'app/images/english.svg',
             'classification': 'Germanic',
             'speakers': 'Speakers: 1.3B',
             'origin': 'England',
@@ -37,7 +37,7 @@ def language_cards():
         {
             'name': 'Spanish',
             'card_color': '#def4ef',
-            'flag_image': 'app/images/es.svg',
+            'flag_image': 'app/images/spanish.svg',
             'classification': 'Romance',
             'speakers': 'Speakers: 460M',
             'origin': 'Spain',

@@ -64,6 +64,11 @@
         color: red;
         font-size: 14px;
     }
+
+    .hover-item:hover {
+        background-color: red;
+    }
+
 </style>
 
 <div class="row">
@@ -101,25 +106,13 @@
             </div>
             {% endif %}
 
-            {% if form.non_field_errors %}
-            <div class="mb-3">
-                <div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <p>{{ form.non_field_errors|length }} Form error.</p>
-                    {% for error in form.non_field_errors %}
-                    {{ error|striptags }}
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
+          
 
 
             <!--Forms-->
 
             <div class="form-container">
-                <h2 class="form-title">Form Title</h2>
+          
 
                 {% for field in form %}
                 <div class="form-field {% if field.errors %}has-error{% endif %}">
@@ -127,25 +120,37 @@
                     <br />
 
                     {% if field.field.widget.input_type == "radio" %}
-                    <div class="btn-group-toggle" data-toggle="buttons">
+                    <div class="btn-group" 
+                         role="group">
                         {% for choice_value, choice_label in field.field.choices %}
-                        <div class="form-check form-check-inline">
-                            <input class="btn-check" type="radio" name="{{ field.name }}" id="id_{{ field.auto_id }}_{{ forloop.counter0 }}" value="{{ choice_value }}">
-                            <label class="btn btn-outline-success" for="id_{{ field.auto_id }}_{{ forloop.counter0 }}">
+
+                        <input type="radio" class="btn-check" autocomplete="off" name="{{ field.name }}"    id="{{ field.auto_id }}_{{ forloop.counter0 }}" value="{{ choice_value }}">
+
+                        <!--This div makes the hover work, idk why but it's there for that.'-->
+                        
+                            <label class="btn btn-outline-primary" for="{{ field.auto_id }}_{{ forloop.counter0 }}">
                                 {{ choice_label }}
-                                {% if choice_value == 'Haitian Kreyol' %}
-                                <img src="{% static 'app/images/ht.svg' %}" alt="{{ choice_label }}" style="height: 20px;">
-                                {% elif choice_value == 'French' %}
-                                <img src="{% static 'app/images/fr.svg' %}" alt="{{ choice_label }}" style="height: 20px;">
-                                {% elif choice_value == 'English' %}
-                                <img src="{% static 'app/images/us.svg' %}" alt="{{ choice_label }}" style="height: 20px;">
-                                {% elif choice_value == 'Spanish' %}
-                                <img src="{% static 'app/images/es.svg' %}" alt="{{ choice_label }}" style="height: 20px;">
-                                {% else %}
-                                <!-- Default image or no image handling -->
+
+                                {% if choice_value == 'Haitian Creole' %}
+                                <img src="{% static 'app/images/haitian_creole.svg' %}" alt="{{ choice_label }}" style="height: 20px;">
+                                {% endif %}
+
+                                {% if choice_value == 'French' %}
+                                <img src="{% static 'app/images/french.svg' %}" alt="{{ choice_label }}" style="height: 20px;">
+                                {% endif %}
+
+                                {% if choice_value == 'English' %}
+                                <img src="{% static 'app/images/english.svg' %}" alt="{{ choice_label }}" style="height: 20px;">
+                                {% endif %}
+
+                                {% if choice_value == 'Spanish' %}
+                                <img src="{% static 'app/images/spanish.svg' %}" alt="{{ choice_label }}" style="height: 20px;">
                                 {% endif %}
                             </label>
-                        </div>
+                   
+
+
+
                         {% endfor %}
                     </div>
                     {% else %}

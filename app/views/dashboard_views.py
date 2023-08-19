@@ -82,15 +82,15 @@ def create_translation_request(request, client_id):
     client = get_object_or_404(ClientInfo, id=client_id)
 
     if request.method == "POST":
-        translation_form = TranslationRequestForm(request.POST)
-        files_form = ClientFileForm(request.POST, request.FILES)
+        translation_form = TranslationRequestForm(request.POST, request.FILES)
+       
 
-        if translation_form.is_valid() and files_form.is_valid():
+        if translation_form.is_valid():
             translation_request = translation_form.save(commit=False)
             translation_request.client = client
             translation_request.save()
 
-            files = request.FILES.getlist("file")
+            files = request.FILES.getlist("files")
 
             for file in files:
                 client_file = ClientFile(
@@ -103,14 +103,16 @@ def create_translation_request(request, client_id):
             return redirect("view_translation_request", request_id=translation_request.id)
     else:
         translation_form = TranslationRequestForm(initial={"client": client})
-        files_form = ClientFileForm()
+      
 
     context = {
         "translation_form": translation_form,
-        "files_form": files_form,
+       
         "client": client,
     }
     return render(request, "app/dashboard/create_translation_request.html", context)
+
+
 
 
 def view_translation_request(request, request_id):

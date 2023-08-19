@@ -73,7 +73,7 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <form method="post" class="needs-validation" novalidate>
+        <form method="post"  enctype="multipart/form-data" class="needs-validation" novalidate>
             {% csrf_token %}
 
             {% if form.errors %}

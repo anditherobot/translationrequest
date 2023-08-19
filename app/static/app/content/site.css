@@ -22,7 +22,7 @@ input,
 select,
 textarea {
     width: 100%; /* Full width on small screens */
-    max-width: 280px;
+  
     box-sizing: border-box; /* Include padding and border in the width */
 }
 

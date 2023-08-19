@@ -14,6 +14,12 @@ from .validators import subject_verb_not_equal
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
 
+    def __init__(self, attrs=None):
+        default_attrs = {'class': 'btn btn-secondary'}  # Add the Bootstrap class here
+        if attrs:
+            default_attrs.update(attrs)
+        super().__init__(default_attrs)
+
 
 class MultipleFileField(forms.FileField):
     def __init__(self, *args, **kwargs):
@@ -94,6 +100,7 @@ class ClientFileForm(forms.ModelForm):
 
 
 class TranslationRequestForm(forms.ModelForm):
+    files = LimitedMultipleFileField()
 
     class Meta:
         model = TranslationRequest
@@ -102,10 +109,13 @@ class TranslationRequestForm(forms.ModelForm):
             'source_language',
             'target_language',
             'content',  
+          
         ]
         widgets = {
             'source_language' : forms.RadioSelect,
-            'target_language' : forms.RadioSelect
+            'target_language' : forms.RadioSelect,
+            
+            'content':forms.Textarea(attrs={'class': 'form-control', }),  # Set cols attribute to 35
             }
 
 

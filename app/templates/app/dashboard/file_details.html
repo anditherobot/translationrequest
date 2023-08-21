@@ -22,6 +22,7 @@
             <a class="btn btn-primary" href="{% url 'download_file' request_id=file.translation_request.id file_id=file.id %}">Download</a>
             <a class="btn btn-danger" href="{% url 'delete_file' request_id=file.translation_request.id file_id=file.id %}">Delete</a>
             <a class="btn btn-info" href="{% url 'message_user_about_file' request_id=file.translation_request.id file_id=file.id %}">Message User</a>
+            <a class="btn btn-success" href="{% url 'extract_text' file_id=file.id %}">Extract Text</a>
         </div>
 
 

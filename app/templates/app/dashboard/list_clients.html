@@ -5,6 +5,8 @@
 <div class="container">
 
     <div class="row">
+
+      
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-body">
@@ -19,6 +21,7 @@
     <div class="row">
         
         <div class="col-md-12">
+            <a class="btn btn-warning" href="{% url 'create_client'%}">Create New Client</a>
             <h2>List of Current Clients</h2>
             {% if clients %}
             <div class="table-responsive">

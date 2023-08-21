@@ -346,3 +346,22 @@ def sandbox(request):
 
     context = {'form': form}
     return render(request, 'app/sandbox.html', context)
+
+#all files related to a particular request id, in a table
+def request_files(request, request_id):
+    pass
+
+
+def extract_text(request, file_id):
+    file = get_object_or_404(ClientFile, id=file_id)
+
+    # Check if the file is an image (you may need to adjust the condition)
+    if file.original_file.name.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
+        try:
+            image = Image.open(file.original_file.path)
+            extracted_text = pytesseract.image_to_string(image)
+            return JsonResponse({'text': extracted_text})
+        except Exception as e:
+            return JsonResponse({'error': str(e)})
+    else:
+        return JsonResponse({'error': 'Not an image file'})

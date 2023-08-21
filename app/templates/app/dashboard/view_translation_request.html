@@ -4,46 +4,46 @@
 
 
 <style>
-    .file-counter {
-        display: inline-block;
-        background-color: #007bff; /* Blue color */
-        color: #fff; /* White text color */
-        padding: 3px 8px; /* Padding around the counter */
-        border-radius: 4px; /* Rounded corners */
-        font-weight: bold;
-    }
+  
 </style>
 
 
 <div class="row">
     <div class="col-md-12">
-        <h1>Translation Request Summary</h1>
-        <p><a href="{% url 'client_dashboard' client_id=translation_request.client.id %}">{{ translation_request.client }}</a> | Date Request: {{ translation_request.request_date }} | Status: {{ translation_request.status }}</p>
-        <p>Source Language: {{ translation_request.source_language }} | Target Language: {{ translation_request.target_language }}</p>
-        <p>Instructions: {{ translation_request.content }}</p>
+        <header class="dashboard-header">
+            <h1>Translation Request Summary</h1>
+            <div class="request-details">
+                <p class="client-name"><a href="{% url 'client_dashboard' client_id=translation_request.client.id %}">{{ translation_request.client }}</a></p>
+                <p class="request-info">Date Request: {{ translation_request.request_date }} | Status: <span class="status-badge">{{ translation_request.status }}</span></p>
+                <p class="language-info">Source Language: {{ translation_request.source_language }} | Target Language: {{ translation_request.target_language }}</p>
+            </div>
+        </header>
 
+        <div class="request-instructions">
+            <h2>Instructions</h2>
+            <p>{{ translation_request.content }}</p>
+        </div>
 
-
-
-        <div class="btn-group" role="group" aria-label="File Actions">
-            <a class="btn btn-danger" href="#">Cancel Request</a>
-            <a class="btn btn-danger" href="#">Mark Complete</a>
-            <a class="btn btn-info" href="#">Message Client</a>
-            <a class="btn btn-primary" href="#">View Log</a>
-
-            <a href="{% url 'generate_receipt' %}" target="_blank" class="btn btn-primary">Generate Fictional Receipt</a>
+        <div class="file-actions">
+            <div class="btn-group" role="group" aria-label="File Actions">
+                <a class="btn btn-danger" href="#">Cancel Request</a>
+                <a class="btn btn-danger" href="#">Mark Complete</a>
+                <a class="btn btn-info" href="#">Message Client</a>
+                <a class="btn btn-primary" href="#">View Log</a>
+                <a href="{% url 'generate_receipt' %}" target="_blank" class="btn btn-primary">Generate Fictional Receipt</a>
+            </div>
         </div>
     </div>
 </div>
 
 
 <div class="row mt-3">
-   <h3>Status of the files to translate:</h3>
-    <p>Total files:</p>
-    <div class="col-md-3 border border-secondary  border-2">
-        <h4>Void   <span class="file-counter">{{ status_counts.Void }}</span></h4>
-        <a href="{% url 'view_files_by_status' client_id=translation_request.client.id request_id=translation_request.id status='Void' %}">View All Void Files</a>
-        <ul class="list-group file-list" style="background-color: #f8f9fa; border: 1px solid #d1d3e2;">
+    <h3>Status of the files to translate:</h3>
+    <p>Total files: {{ client_files.count }}</p>
+    <div class="col-md-3 border border-secondary status-column">
+        <h4 class="status-heading void">Void <span class="file-counter">{{ status_counts.Void }}</span></h4>
+        <a class="status-link" href="{% url 'view_files_by_status' client_id=translation_request.client.id request_id=translation_request.id status='Void' %}">View All Void Files</a>
+        <ul class="list-group file-list">
             {% for file in client_files %}
             {% if file.status == 'Void' %}
             <li class="list-group-item">
@@ -54,10 +54,10 @@
         </ul>
     </div>
 
-    <div class="col-md-3 border border-secondary  border-2">
-        <h4>Pending  <span class="file-counter">{{ status_counts.Pending }}</span></h4>
-        <a href="{% url 'view_files_by_status' client_id=translation_request.client.id request_id=translation_request.id status='Pending' %}">View All Pending Files</a>
-        <ul class="list-group file-list" style="background-color: #f8f9fa; border: 1px solid #d1d3e2;">
+    <div class="col-md-3 border border-secondary status-column">
+        <h4 class="status-heading pending">Pending <span class="file-counter">{{ status_counts.Pending }}</span></h4>
+        <a class="status-link" href="{% url 'view_files_by_status' client_id=translation_request.client.id request_id=translation_request.id status='Pending' %}">View All Pending Files</a>
+        <ul class="list-group file-list">
             {% for file in client_files %}
             {% if file.status == 'Pending' %}
             <li class="list-group-item">
@@ -67,6 +67,7 @@
             {% endfor %}
         </ul>
     </div>
+
 
     <div class="col-md-3 border border-secondary  border-2">
         <h4>In Progress  <span class="file-counter">{{ status_counts.InProgress }}</span></h4>
@@ -78,7 +79,7 @@
                 <a href="{% url 'file_details' request_id=file.translation_request.id file_id=file.id %}">{{ file.original_file.name|get_filename:True }}</a>
             </li>
             {% endif %}
-            {% endfor %}
+            {% endfor %}    
         </ul>
     </div>
 

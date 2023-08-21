@@ -46,10 +46,12 @@ urlpatterns = [
     path('view_client_requests/<int:pk>/', views.view_client_requests, name='view_client_requests'),
      # View Translation Request Details
     path('request/<int:request_id>/', views.view_translation_request, name='view_translation_request'),
-     path('request/all/', views.translation_request_all, name='translation_request_all'),
+    path('request/all/', views.translation_request_all, name='translation_request_all'),
+    path('extract_text/<int:file_id>/', views.extract_text, name='extract_text'),
     path('list_clients/', views.list_clients, name='list_clients'),
 
-    #file Details
+  
+    path('request/<int:request_id>/files/', views.request_files, name='request_files'),
     path('request/<int:request_id>/file/<int:file_id>/', views.file_details, name='file_details'),
     path('request/<int:request_id>/file/<int:file_id>/download/', views.download_file, name='download_file'),
     path('request/<int:request_id>/file/<int:file_id>/updatestatus/', views.update_file_status, name='update_file_status'),

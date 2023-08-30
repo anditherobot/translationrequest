@@ -10,7 +10,7 @@
         <h1>File Details || Status: {{ file.status }}</h1>
         <h3>Source Language: {{ file.translation_request.source_language }} || Target Language: {{ file.translation_request.target_language }}</h3>
         <p class=" card card-body">Instructions: {{ file.translation_request.content }}</p>
-        
+
 
     </div>
 </div>
@@ -22,7 +22,7 @@
             <a class="btn btn-primary" href="{% url 'download_file' request_id=file.translation_request.id file_id=file.id %}">Download</a>
             <a class="btn btn-danger" href="{% url 'delete_file' request_id=file.translation_request.id file_id=file.id %}">Delete</a>
             <a class="btn btn-info" href="{% url 'message_user_about_file' request_id=file.translation_request.id file_id=file.id %}">Message User</a>
-            <a class="btn btn-success" href="{% url 'extract_text' file_id=file.id %}">Extract Text</a>
+
         </div>
 
 
@@ -46,45 +46,117 @@
 
 <div class="row mt-3">
     <div class="col-md-6">
-        <!-- Old File Preview -->
-        <h3>{{ file.original_file.name }}</h3>
-        {% if file.original_file %}
-        {% if file.original_file.url|lower|endswith:'.jpg' or file.original_file.url|lower|endswith:'.png' or file.original_file.url|lower|endswith:'.jpeg' or file.original_file.url|lower|endswith:'.gif' %}
-        <!-- Display an image preview -->
-        <img src="{{ file.original_file.url }}" alt="Old File Preview" class="img-responsive">
-        {% else %}
-        <!-- Display a link to download non-image files -->
-        <p><a href="{{ file.original_file.url }}" target="_blank">Download Old File</a></p>
-        {% endif %}
-        {% else %}
-        <p>No old file available for preview.</p>
-        {% endif %}
+        <!-- Original File Card -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Original File</h5>
+                <a class="btn btn-success" href="{% url 'extract_text' file_id=file.id %}">Extract Text</a>
+                {% if file.original_file %}
+                <p>File Name: {{ file.original_file.name }}</p>
+                <p>Upload Date: {{ file.original_file.upload_date }}</p> <!-- Add upload date here -->
+                {% if file.original_file.url|lower|endswith:'.jpg' or file.original_file.url|lower|endswith:'.png' or file.original_file.url|lower|endswith:'.jpeg' or file.original_file.url|lower|endswith:'.gif' %}
+                <!-- Display an image preview -->
+                <img src="{{ file.original_file.url }}" alt="Old File Preview" class="img-responsive" height="400">
+                {% else %}
+                <!-- Display a link to download non-image files -->
+                <p><a href="{{ file.original_file.url }}" target="_blank">Download Old File</a></p>
+                {% endif %}
+                {% else %}
+                <p>No old file available for preview.</p>
+                {% endif %}
+            </div>
+        </div>
     </div>
     <div class="col-md-6">
-        <!-- New File Preview -->
-        <h3>{{ file.processed_file.name }}</h3>
-        {% if file.processed_file %}
-        {% if file.processed_file.url|lower|endswith:'.jpg' or file.processed_file.url|lower|endswith:'.png' or file.processed_file.url|lower|endswith:'.jpeg' or file.processed_file.url|lower|endswith:'.gif' %}
-        <!-- Display an image preview -->
-        <img src="{{ file.processed_file.url }}" alt="New File Preview" class="img-responsive">
-        {% else %}
-        <!-- Display a link to download non-image files -->
-        <p><a href="{{ file.processed_file.url }}" target="_blank">Download New File</a></p>
-        {% endif %}
+        <!-- Translated File Card -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Translated File</h5>
+                {% if file.processed_file %}
+                <h3>{{ file.processed_file.name }}</h3>
+                <p>Upload Date: {{ file.processed_file.upload_date }}</p> <!-- Add upload date here -->
+                {% if file.processed_file.url|lower|endswith:'.jpg' or file.processed_file.url|lower|endswith:'.png' or file.processed_file.url|lower|endswith:'.jpeg' or file.processed_file.url|lower|endswith:'.gif' %}
+                <!-- Display an image preview -->
+                <img src="{{ file.processed_file.url }}" alt="New File Preview" class="img-responsive" height="400">
+                {% else %}
+                <!-- Display a link to download non-image files -->
+                <p><a href="{{ file.processed_file.url }}" target="_blank">Download New File</a></p>
+                {% endif %}
+                {% else %}
+                <p>No new file available for preview.</p>
+                {% endif %}
 
-        {% else %}
-        <p>No new file available for preview.</p>
-        {% endif %}
-
-        {% if file.status == 'In Progress' and file.processed_file %}
-        <!-- If file is in progress and has a processed file, display "Upload New Translated Version" -->
-        <a class="btn btn-success" href="{% url 'upload_translated_file' request_id=file.translation_request.id file_id=file.id %}">Upload and Overwrite Translated Version</a>
-        {% elif file.status == 'In Progress' %}
-        <!-- If file is in progress and has no processed file, display the regular "Upload Translated File" -->
-        <a class="btn btn-success" href="{% url 'upload_translated_file' request_id=file.translation_request.id file_id=file.id %}">Upload Translated File</a>
-        {% endif %}
+                {% if file.status == 'In Progress' and file.processed_file %}
+                <!-- If file is in progress and has a processed file, display "Upload New Translated Version" -->
+                <a class="btn btn-success" href="{% url 'upload_translated_file' request_id=file.translation_request.id file_id=file.id %}">Upload and Overwrite Translated Version</a>
+                {% elif file.status == 'In Progress' %}
+                <!-- If file is in progress and has no processed file, display the regular "Upload Translated File" -->
+                <a class="btn btn-success" href="{% url 'upload_translated_file' request_id=file.translation_request.id file_id=file.id %}">Upload Translated File</a>
+                {% endif %}
+            </div>
+        </div>
     </div>
-
 </div>
 
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- Display extracted text and editing form -->
+        <form method="post">
+            {% csrf_token %}
+            <textarea id="extractedText" name="extracted_text">{{ file.extracted_text }}</textarea>
+            <button type="submit">Save Extracted Text</button>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 mt-3">
+        <button id="extractTextButton" class="btn btn-primary">Extract Text from Image</button>
+        <div id="progressContainer" style="display: none;">
+            <p>Extracting text... Please wait.</p>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+<!-- ... Rest of your template ... -->
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- Display extracted text -->
+        <div id="extractedTextContainer">
+            <!-- Extracted text will be displayed here -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // This JavaScript code will fetch the extracted text and display it in the HTML element
+    document.addEventListener("DOMContentLoaded", function () {
+        var file_id = {{ file.id }};
+        var extractedTextContainer = document.getElementById("extractedTextContainer");
+
+        fetch(`/extract_text/${file_id}/`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.extracted_text) {
+                    extractedTextContainer.innerHTML = data.extracted_text;
+                } else {
+                    extractedTextContainer.innerHTML = "No extracted text available.";
+                }
+            })
+            .catch(error => {
+                console.error("An error occurred:", error);
+                extractedTextContainer.innerHTML = "An error occurred while fetching the extracted text.";
+            });
+    });
+</script>
+
+<!-- ... Rest of your template ... -->
     {% endblock %}

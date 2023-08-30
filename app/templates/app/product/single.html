@@ -1,0 +1,14 @@
+{% extends 'app/layout.html' %} 
+
+{% block content %}
+<h2>{{ product.name }}</h2>
+<p>Description: {{ product.description }}</p>
+<p>Price: {{ product.price }}</p>
+<h3>Images</h3>
+<ul>
+    {% for image in product.image_set.all %}
+    <li><img src="{{ image.image.url }}" alt="Product Image"></li>
+    {% endfor %}
+</ul>
+<a href="{% url 'product_list' %}">Back to Product List</a>
+{% endblock %}

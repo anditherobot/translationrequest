@@ -25,7 +25,7 @@
             <h2>List of Current Clients</h2>
             {% if clients %}
             <div class="table-responsive">
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover table-sm">
                     <thead>
                         <tr>
                             <th>First Name</th>
@@ -47,9 +47,9 @@
                             <td>{{ client.date_created|date:"M d, Y" }}</td>
                             <td>{{ client.date_modified|date:"M d, Y" }}</td>
                             <td>
-                                <a href="{% url 'view_client_requests' client.id %}" class="btn btn-primary">View All Requests</a>
-                                <a href="{% url 'view_client_files' client.id %}" class="btn btn-secondary">View Files</a>
-                                <a href="#" class="btn btn-info">Message</a>
+                                <a href="{% url 'view_client_requests' client.id %}" class="btn btn-primary btn-sm">View All Requests</a>
+                                <a href="{% url 'view_client_files' client.id %}" class="btn btn-secondary btn-sm">View Files</a>
+                                <a href="#" class="btn btn-info btn-sm">Message</a>
                             </td>
                         </tr>
                         {% endfor %}

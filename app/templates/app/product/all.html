@@ -1,0 +1,11 @@
+{% extends 'app/layout.html' %}
+
+{% block content %}
+<h2>Product List</h2>
+<ul>
+    {% for product in products %}
+    <li><a href="{% url 'product_detail' product.id %}">{{ product.name }}</a></li>
+    {% endfor %}
+</ul>
+<a href="{% url 'product_create' %}">Create New Product</a>
+{% endblock %}

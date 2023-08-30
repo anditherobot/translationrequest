@@ -3,6 +3,9 @@
 {% block content %}
 <h1>Upload Files for Translation Request</h1>
 <p>Client: {{ client_info.first_name }} {{ client_info.last_name }}</p>
+
+
+
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}

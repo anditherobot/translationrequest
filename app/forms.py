@@ -161,3 +161,25 @@ class SandboxForm(forms.Form):
         return cleaned_data
 
 
+
+
+class FileUploadForm(forms.ModelForm):
+    class Meta:
+        model = ClientFile
+        fields = ['original_file']
+
+
+
+
+        
+class MultipleImageInput(forms.ClearableFileInput):
+    allow_multiple_selected = True
+
+class MultipleImageField(forms.ImageField):
+    widget = MultipleImageInput
+
+class ProductImageForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    description = forms.CharField(widget=forms.Textarea)
+    price = forms.DecimalField(max_digits=10, decimal_places=2)
+    images = MultipleImageField(widget=MultipleImageInput(attrs={'multiple': True}))

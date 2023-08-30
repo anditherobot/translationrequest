@@ -1,45 +1,127 @@
-{% extends "app/layout.html" %}
+{% extends "app/dashboard/dashboard_layout.html" %}
 {% load custom_filters %}
 {% block content %}
 
 
 <style>
-  
+  .request-instructions {
+      border:2px solid black;
+      background-color:antiquewhite;
+      font-size: 18px;
+      padding: 5px;
+      margin: 2px;
+  }
+
+    .dashboard-header {
+        border: 2px solid black;
+        background-color: wheat;
+        font-size: 18px;
+        padding: 5px;
+        margin: 2px;
+    }
+
+   
+
+        .dashboard-header h1 {
+            margin: 0;
+        }
+
+    .request-details {
+        margin-top: 15px;
+        font-size: 16px;
+    }
+
+    .client-name a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .language-info {
+        margin-top: 5px;
+        font-size: 14px;
+    }
+
+    .request-actions h5 {
+        margin-top: 20px;
+        font-size: 18px;
+    }
+
+    .request-actions .btn {
+        margin-right: 2px;
+    }
+
+        .request-actions .btn:last-child {
+            margin-right: 0;
+        }
+
+    /* Style for badge */
+    .badge.bg-secondary {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+
+    .language-info {
+        margin-top: 10px;
+        font-size: 14px;
+        color: #6c757d;
+    }
+
+    .language-label {
+        font-weight: bold;
+        margin-right: 5px;
+    }
+
+    .language-text {
+        font-weight: normal;
+    }
+
+   
 </style>
 
 
 <div class="row">
     <div class="col-md-12">
         <header class="dashboard-header">
-            <h1>Translation Request Summary</h1>
+            <h1 class="display-4">Translation Request Summary <span class="badge bg-secondary">{{ translation_request.status }}</span></h1>
+
             <div class="request-details">
                 <p class="client-name"><a href="{% url 'client_dashboard' client_id=translation_request.client.id %}">{{ translation_request.client }}</a></p>
-                <p class="request-info">Date Request: {{ translation_request.request_date }} | Status: <span class="status-badge">{{ translation_request.status }}</span></p>
-                <p class="language-info">Source Language: {{ translation_request.source_language }} | Target Language: {{ translation_request.target_language }}</p>
+                <p class="text-primary">Date Request: {{ translation_request.request_date }}</p>
+                <p class="language-info">
+                    <span class="language-label">Source Language:</span>
+                    <span class="language-text">{{ translation_request.source_language }}</span>
+                    <span class="language-label">Target Language:</span>
+                    <span class="language-text">{{ translation_request.target_language }}</span>
+                </p>
+            </div>
+
+            <div class="request-actions mt-4">
+                <h5>Request Actions</h5>
+                <div class="btn-group" role="group" aria-label="File Actions">
+                    <a class="btn btn-danger" href="#">Cancel Request</a>
+                    <a class="btn btn-success" href="#">Mark Complete</a>
+                    <a class="btn btn-info" href="#">Message Client</a>
+                    <a class="btn btn-primary" href="#">View Log</a>
+                    <a href="{% url 'generate_receipt' %}" target="_blank" class="btn btn-primary">Generate Fictional Receipt</a>
+                    <a href="{% url 'add_files_to_translation_request' request_id=translation_request.id client_id=translation_request.client.id %}" target="_blank" class="btn btn-success">Upload New File</a>
+                </div>
             </div>
         </header>
+
 
         <div class="request-instructions">
             <h2>Instructions</h2>
             <p>{{ translation_request.content }}</p>
         </div>
 
-        <div class="file-actions">
-            <div class="btn-group" role="group" aria-label="File Actions">
-                <a class="btn btn-danger" href="#">Cancel Request</a>
-                <a class="btn btn-danger" href="#">Mark Complete</a>
-                <a class="btn btn-info" href="#">Message Client</a>
-                <a class="btn btn-primary" href="#">View Log</a>
-                <a href="{% url 'generate_receipt' %}" target="_blank" class="btn btn-primary">Generate Fictional Receipt</a>
-            </div>
-        </div>
+
     </div>
 </div>
 
 
 <div class="row mt-3">
-    <h3>Status of the files to translate:</h3>
-    <p>Total files: {{ client_files.count }}</p>
+    <h3>Files to process: <span class="badge bg-secondary">{{ client_files.count }}</span></h3>
+  
     <div class="col-md-3 border border-secondary status-column">
         <h4 class="status-heading void">Void <span class="file-counter">{{ status_counts.Void }}</span></h4>
         <a class="status-link" href="{% url 'view_files_by_status' client_id=translation_request.client.id request_id=translation_request.id status='Void' %}">View All Void Files</a>
@@ -79,7 +161,7 @@
                 <a href="{% url 'file_details' request_id=file.translation_request.id file_id=file.id %}">{{ file.original_file.name|get_filename:True }}</a>
             </li>
             {% endif %}
-            {% endfor %}    
+            {% endfor %}
         </ul>
     </div>
 

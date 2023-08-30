@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from ..forms import (
+    FileUploadForm,
     SandboxForm,
     TranslationRequestForm,
     ClientInfoForm,
@@ -19,7 +20,8 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.http import require_POST
 from django.contrib import messages
-
+import pytesseract
+from PIL import Image
 
 def translation_request_view(request):
     form = TranslationRequestForm(request.POST or None, request.FILES or None)
@@ -143,7 +145,10 @@ def file_details(request, request_id, file_id):
     translation_request = get_object_or_404(TranslationRequest, id=request_id)
     file_object = get_object_or_404(ClientFile, id=file_id)
 
-    # Your view logic here
+    if request.method == "POST":
+        extracted_text = request.POST.get("extracted_text", "")
+        file_object.extracted_text = extracted_text
+        file_object.save()
 
     return render(
         request,
@@ -273,6 +278,31 @@ def upload_translated_file(request, request_id, file_id):
     )
 
 
+#upload file attached to translation request.
+def add_files_to_translation_request(request, request_id, client_id):
+    translation_request = get_object_or_404(TranslationRequest, id=request_id)
+    client_info = get_object_or_404(ClientInfo, id=client_id)
+
+    if request.method == "POST":
+        form = FileUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_file = form.save(commit=False)
+            new_file.translation_request = translation_request
+            new_file.client = client_info  # Associate the client
+            new_file.save()
+
+            # Redirect back to the translation request details page
+            return redirect("view_translation_request", request_id=translation_request.id)
+    else:
+        form = FileUploadForm()
+
+    return render(
+        request,
+        "app/dashboard/add_files_to_translation_request.html",
+        {"form": form, "translation_request": translation_request, "client_info": client_info},
+    )
+
+
 def view_files_by_status(request, client_id, request_id, status):
     client = get_object_or_404(ClientInfo, id=client_id)
     translation_request = get_object_or_404(TranslationRequest, id=request_id)
@@ -355,13 +385,19 @@ def request_files(request, request_id):
 def extract_text(request, file_id):
     file = get_object_or_404(ClientFile, id=file_id)
 
-    # Check if the file is an image (you may need to adjust the condition)
     if file.original_file.name.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
         try:
             image = Image.open(file.original_file.path)
-            extracted_text = pytesseract.image_to_string(image)
-            return JsonResponse({'text': extracted_text})
+
+            languages = 'hat+fra'  # Replace with the appropriate language codes
+            extracted_text = pytesseract.image_to_string(image, lang=languages)
+
+            return JsonResponse({'extracted_text': extracted_text})
+
         except Exception as e:
-            return JsonResponse({'error': str(e)})
+            error_response = f'Error: {str(e)}'
+            return JsonResponse({'error': error_response})
+
     else:
-        return JsonResponse({'error': 'Not an image file'})
+        error_response = 'Error: Not an image file'
+        return JsonResponse({'error': error_response})

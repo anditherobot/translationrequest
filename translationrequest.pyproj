@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="app\templates\app\dashboard\add_files_to_translation_request.html" />
     <Content Include="app\templates\app\form_template.html" />
     <Content Include="app\static\app\content\dashboard.css">
       <SubType>Code</SubType>

@@ -2,6 +2,7 @@
 
 {% block content %}
 <h1>Files for {{ client.first_name }} {{ client.last_name }}</h1>
+{% if client.translationrequest_set.exists %}
 <ul>
     {% for request in client.translationrequest_set.all %}
     <h2>Request ID: {{ request.id }}</h2>
@@ -20,4 +21,7 @@
     </ul>
     {% endfor %}
 </ul>
+{% else %}
+<p>No files available.</p>
+{% endif %}
 {% endblock %}

@@ -10,6 +10,8 @@ from app import forms, views
 
 from django.conf.urls.static import static
 
+from app.views.product_views import ProductCreateView, ProductDetailView, ProductListView
+
 urlpatterns = [
     path('', views.home, name='home'),
     path('contact/', views.contact, name='contact'),
@@ -58,11 +60,17 @@ urlpatterns = [
     path('request/<int:request_id>/file/<int:file_id>/message/', views.message_user_about_file, name='message_user_about_file'),
     path('request/<int:request_id>/file/<int:file_id>/delete/', views.delete_file, name='delete_file'),
     path('request/<int:request_id>/file/<int:file_id>/upload/', views.upload_translated_file, name='upload_translated_file'),
+    path('request/<int:request_id>/client/<int:client_id>/file/upload/', views.add_files_to_translation_request, name='add_files_to_translation_request'),
     path('view_files_by_status/<int:client_id>/<int:request_id>/<str:status>/', views.view_files_by_status, name='view_files_by_status'),
     path('generate_receipt/', views.generate_fictional_receipt, name='generate_receipt'),
     path('terms_conditions/', views.terms_conditions, name='terms_conditions'),
     path('view_client_files/<int:pk>/', views.view_client_files, name='view_client_files'),
-    path('sandbox', views.sandbox, name='sandbox')
+    path('sandbox', views.sandbox, name='sandbox'),
+
+
+    path('products/', ProductListView.as_view(), name='product_list'),
+    path('product/<int:product_id>/', ProductDetailView.as_view(), name='product_detail'),
+    path('product/create/', ProductCreateView.as_view(), name='product_create'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

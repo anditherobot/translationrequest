@@ -1,17 +1,44 @@
 {% extends 'app/layout.html' %}
 
 {% block content %}
-<h1>Requests for {{ client.first_name }} {{ client.last_name }}</h1>
-<ul>
-    {% for request in client.translationrequest_set.all %}
-    <li>
-        Request ID: {{ request.id }}<br>
-        Source Language: {{ request.source_language }}<br>
-        Target Language: {{ request.target_language }}<br>
-        Status: {{ request.status }}<br>
-        <a href="{% url 'view_translation_request' request.id %}" class="btn btn-primary">View Request</a>
-    </li>
-    <br>
-    {% endfor %}
-</ul>
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <h1 class="display-5">Translation Requests for:</h1>
+        <h2 class="mb-4">{{ client.first_name }} {{ client.last_name }}</h2>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Request ID</th>
+            <th>Source Language</th>
+            <th>Target Language</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for request in client.translationrequest_set.all %}
+        <tr>
+            <td>{{ request.id }}</td>
+            <td>{{ request.source_language }}</td>
+            <td>{{ request.target_language }}</td>
+            <td>{{ request.status }}</td>
+            <td>
+                <a href="{% url 'view_translation_request' request_id=request.id %}" class="btn btn-primary btn-sm">View</a>
+                <!-- Surround with form and action -->
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+
+                {% if request.status != 'Completed' %}
+                <!-- Surround with form and action -->
+                <button type="submit" class="btn btn-success btn-sm">Mark Complete</button>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
 {% endblock %}

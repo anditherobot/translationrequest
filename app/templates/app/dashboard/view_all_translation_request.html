@@ -1,39 +1,38 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-<h1>All Translation Requests</h1>
-<table class="table">
-    <thead>
-    <tr>
-        <th>Request ID</th>
-        <th>Source Language</th>
-        <th>Target Language</th>
-        <th>Status</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-        {% for request in allrequests %}
-        <tr>
+<div class="container">
+    <h1>All Translation Requests</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Request ID</th>
+                <th>Source Language</th>
+                <th>Target Language</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in allrequests %}
+            <tr>
+                <td>{{ request.id }}</td>
+                <td>{{ request.source_language }}</td>
+                <td>{{ request.target_language }}</td>
+                <td>{{ request.status }}</td>
+                <td>
+                    <a href="{% url 'view_translation_request' request_id=request.id %}" class="btn btn-primary btn-sm">View</a>
+                    <!-- Surround with form and action -->
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
 
-            <td>{{ request.id }}</td>
-            <td>{{ request.source_language }}</td>
-            <td>{{ request.target_language }}</td>
-            <td>{{ request.status }}</td>
-            <td>
-                <a href="{% url 'view_translation_request' request_id=request.id %}" class="btn btn-primary btn-sm">View</a>
-                <!--Surrond with form and action-->
-                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-
-                {% if request.status != 'Completed' %}
-
-                <!--Surrond with form and action-->
-                <button type="submit" class="btn btn-success btn-sm">Mark Complete</button>
-
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                    {% if request.status != 'Completed' %}
+                    <!-- Surround with form and action -->
+                    <button type="submit" class="btn btn-success btn-sm">Mark Complete</button>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

@@ -34,15 +34,7 @@ def language_cards():
             'origin': 'England',
             'essence': 'Global lingua franca, business, science, media.',
         },
-        {
-            'name': 'Spanish',
-            'card_color': '#def4ef',
-            'flag_image': 'app/images/spanish.svg',
-            'classification': 'Romance',
-            'speakers': 'Speakers: 460M',
-            'origin': 'Spain',
-            'essence': 'Second most spoken, Americas, Europe, culture, communication.',
-        },
+       
    ]
     
    return {'languages': languages}

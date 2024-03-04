@@ -128,5 +128,5 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
-LOGIN_REDIRECT_URL = 'list_clients'
+LOGIN_URL = 'accounts/login/'
+LOGIN_REDIRECT_URL = 'scene_list'

@@ -6,12 +6,12 @@ from datetime import datetime
 from django.http import HttpResponse    
 from django.shortcuts import render, redirect,  get_object_or_404
 from django.http import HttpRequest
-from ..models import ClientInfo, TranslationRequest, ClientFile
+from ..models import ClientInfo, TranslationRequest, ClientFile, UserProfile
 from ..forms import ClientInfoForm, TranslationRequestForm, ClientFileForm
 import mimetypes, os
 from ..notification_utils import send_email_receipt, notify_admin
 from django.http import JsonResponse
-
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -61,4 +61,13 @@ def services(request):
 
 def terms_conditions(request):
         return HttpResponse("Faq and stuff here, accept" )
+
+
+@login_required
+def scene_list(request):
+    # Retrieve scenes associated with the logged-in user
+    user_profile = UserProfile.objects.get(user=request.user)
+    scenes = user_profile.scenes.all()
+
+    return render(request, 'app/scenes.html', {'scenes': scenes})
 

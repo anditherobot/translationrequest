@@ -113,6 +113,7 @@
     <Content Include="app\templates\app\dashboard\create_translation_request.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="app\templates\app\scenes.html" />
     <Content Include="app\templates\app\servicesteps.html" />
     <Content Include="app\templates\app\dashboard\translation_tracker.html">
       <SubType>Code</SubType>
@@ -128,6 +129,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="app\templates\app\navpartial.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="app\templates\app\_industries.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="app\templates\app\_jumbotron.html" />

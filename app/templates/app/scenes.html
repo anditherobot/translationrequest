@@ -1,0 +1,14 @@
+<!-- templates/app/services.html -->
+{% extends "app/layout.html" %}
+{% load static %}
+{% load custom_tags %}
+{% block content %}
+<div class="container">
+    <h1>Translation Services</h1>
+    <h2>Scene List</h2>
+    {% for scene in scenes %}
+    {{ scene.name }}<br>
+    {% endfor %}
+
+</div>
+{% endblock %}

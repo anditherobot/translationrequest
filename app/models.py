@@ -10,7 +10,7 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from django.contrib.auth.models import User
 import pytesseract
 from PIL import Image
 # models.py
@@ -182,3 +182,27 @@ class Image(models.Model):
 
     def __str__(self):
         return f"Image for {self.product.name}"
+
+
+
+#Related to Scene rating.
+class Scene(models.Model):
+    name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class SceneImage(models.Model):
+    scene = models.ForeignKey(Scene, on_delete=models.CASCADE)
+    image_file = models.ImageField(upload_to='images/')
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    scenes = models.ManyToManyField(Scene, related_name='user_profiles')
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+class SceneRating(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    scene_image = models.ForeignKey(SceneImage, on_delete=models.CASCADE, related_name='ratings')
+    rating = models.IntegerField(choices=[(1, 'Primary'), (2, 'Secondary'), (3, 'Ternary')])
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
